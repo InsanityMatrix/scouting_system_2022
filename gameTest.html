@@ -7,7 +7,12 @@
    <body>
       <div id="overlay">
         <center>
-          <h1 style="color:white">Log this Shot</h1>
+          <select id="shot" name="shot">
+            <option value="topbasket">Top Basket</option>
+            <option value="bottombasket">Bottom Basket</option>
+            <option value="bounced">Bounced</option>
+            <option value="missed">Missed</option>
+          </select>
         </center>
       </div>
       <canvas id="game" width="850" height="350"></canvas>

@@ -2,16 +2,26 @@ body {
 	background-color: #3c3c3c;
 	margin: 0px
 }
+/* Navbar code */
 .navbar {
-	height: 50px;
+	height: 45px;
 	width: 100%;
 	background-color: black;
-	color: white;
 }
 .navLink {
-        display: inline-block;
+    display: inline-block;
 	margin-left: 5px;
+	margin-top: 10px;
+	color: white;
+	font-family: 'Oswald', sans-serif;
 }
+.navBottom {
+	width: 100%;
+	height: 5px;
+	border: 0px;
+	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
+}
+/* Field map code */
 #overlay {
 	position: fixed; /* Sit on top of the page content */
 	display: none; /* Hidden by default */

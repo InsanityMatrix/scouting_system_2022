@@ -1,0 +1,11 @@
+body {
+	background-color: #3c3c3c;
+	margin: 0px
+}
+.navbar {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	color: white;
+}

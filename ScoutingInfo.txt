@@ -1,0 +1,23 @@
+HotSpots (MAP OF THE FIELD, CLICK AND SCORING INFO)
+Scouting System:
+Before Round Starts:
+-Preloaded with cargo?
+
+Auton:
+Scoring: Bottom Basket, Top Basket, Missed (location?)
+Picked up cargo, Drop Cargo
+Move out of start
+
+Teleop:
+Scoring: Bottom Basket, Top Basket, Missed
+Picked up cargo, Drop Cargo
+
+End Game:
+Hanging, which bar
+
+
+Others:
+intake system?
+Defense yes/no
+hoard other colors balls
+use the terminal?

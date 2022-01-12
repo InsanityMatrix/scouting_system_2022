@@ -13,9 +13,10 @@ function make_field() {
 }
 
 canvas.addEventListener("click", function(evt){
+  console.log("Clicked");
   let mousePos = getMousePos(canvas, evt);
   //Show a Scoring Menu
-  
+  document.getElementById("overlay").style.display = "block";
 });
 function getMousePos(canvas, evt) {
   var rect = canvas.getBoundingClientRect();

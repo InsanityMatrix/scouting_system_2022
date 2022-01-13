@@ -21,6 +21,27 @@ body {
 	border: 0px;
 	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
 }
+/* Text/page element parameters for all pages*/
+p {
+	color: white;
+	font-family: 'Oswald', sans-serif;
+	display: inline-block;
+}
+.title {
+	font-size: 2em;
+}
+.underline {
+	width: 60%;
+	height: 2px;
+	border: 0px;
+	background-image: linear-gradient(to right, #1e5aa8, #68c2e1);
+}
+.info {
+	height: 24px;
+}
+input {
+	display: inline-block;
+}
 /* Field map code */
 #overlay {
 	position: fixed; /* Sit on top of the page content */

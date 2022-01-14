@@ -6,14 +6,16 @@
    </head>
    <body>
       <div id="overlay">
-        <center>
-          <select id="shot" name="shot">
-            <option value="topbasket">Top Basket</option>
-            <option value="bottombasket">Bottom Basket</option>
-            <option value="bounced">Bounced</option>
-            <option value="missed">Missed</option>
-          </select>
-        </center>
+        <div class="vertical-center">
+          <center>
+            <select class="scouting-options" id="shot" name="shot">
+              <option value="topbasket">Top Basket</option>
+              <option value="bottombasket">Bottom Basket</option>
+              <option value="bounced">Bounced</option>
+              <option value="missed">Missed</option>
+            </select>
+          </center>
+        </div>
       </div>
       <canvas id="game" width="850" height="350"></canvas>
       <script src="scoring.js"></script>

@@ -1,0 +1,7 @@
+//Scouting Database Columns
+//Match Number, Team Number, Alliance Station Text, Preloaded bool
+//movedStart bool, autonShots (Separate Table)
+//topIntake bool, floorIntake bool, teleopShots (Separate Table)
+//Rungs (0-no climb attempted, 1-8)
+//Defense bool, disconnected bool, 
+//Comments text

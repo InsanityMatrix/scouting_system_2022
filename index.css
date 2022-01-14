@@ -47,6 +47,9 @@ p {
 }
 .info {
 	height: 24px;
+	color: white;
+	font-family: 'Oswald', sans-serif;
+	margin: 10px;
 }
 input {
 	display: inline-block;

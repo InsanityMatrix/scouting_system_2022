@@ -3,8 +3,8 @@
 <head>
 	<title>Pregame</title>
 	<link rel = "stylesheet" href = "index.css"></link>
-	<!--<link rel = "stylesheet" href = "bootstrap.css"></link>
-	<script src = "bootstrap.js"></script>-->
+	<link rel = "stylesheet" href = "bootstrap.css"></link>
+
 	<!-- Oswald font code -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,32 +12,32 @@
 </head>
 <body id = "bootOverride">
 	<div class = "navbar">
-		<!--<ul class = "nav nav-tabs">
-			<li class="nav-item active">
+		<ul class = "nav nav-tabs">
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href = "#pregameTab">Pregame</a>
 			</li>
-			<li class="nav-item active">
-				<button class="nav-link" data-toggle="tab">Auton</a>
+			<li class="nav-item ">
+				<a class="nav-link" data-toggle="tab" href = "#autonTab">Auton</a>
 			</li>
-			<li class="nav-item active">
+			<li class="nav-item ">
 				<a class="nav-link" data-toggle="tab" href = "#teleopTab">Teleop</a>
 			</li>
-			<li class="nav-item active">
-				<button class="nav-link" data-toggle="tab">Endgame</a>
+			<li class="nav-item ">
+				<a class="nav-link" data-toggle="tab" href = "#endgameTab">Endgame</a>
 			</li>
-			<li class="nav-item active">
-				<button class="nav-link" data-toggle="tab">Postgame</a>
+			<li class="nav-item ">
+				<a class="nav-link" data-toggle="tab" href = "#postgameTab">Postgame</a>
 			</li>
-		</ul>-->
-		<a class = "navLink" href = "pregame.html">1- Pregame</a>
+		</ul>
+		<!--<a class = "navLink" href = "pregame.html">1- Pregame</a>
 		<a class = "navLink">2- Auton</a>
 		<a class = "navLink" href = "gameTest.html">3- Teleop</a>
 		<a class = "navLink">4- Endgame</a>
-		<a class = "navLink">5- Postgame</a>
+		<a class = "navLink">5- Postgame</a>-->
 		<hr class = "navBottom"></hr>
 	</div>
 	<div class = "tab-content">
-		<div class = "tab-pane-active" id = "pregameTab">
+		<div class = "tab-pane tab-pane-active" id = "pregameTab">
 			<center>
 				<p class = "title">Pregame</p>
 				<hr class = "underline"></hr>
@@ -45,11 +45,35 @@
 					<p>What team are you scouting?</p>
 					<input type = "text"></input>
 				</div>
+				<div class = "info">
+					<p>Which alliance station are they at?</p>
+					<input type = "text"></input>
+				</div>
+				<div class = "info">
+					<p>What is the match number?</p>
+					<input type = "text"></input>
+				</div>
+				<div class = "info">
+					<p>Did they preload any cargo?</p>
+					<input type = "radio" id = "preloadYes">Yes</input>
+					<input type = "radio" id = "preloadNo">No</input>
+				</div>
 			</center>
+		</div>
+		<div class = "tab-pane" id = "autonTab">
+			<p>Yes.</p>
 		</div>
 		<div class = "tab-pane" id = "teleopTab">
 			<p>Yes.</p>
 		</div>
+		<div class = "tab-pane" id = "endgameTab">
+			<p>Yes.</p>
+		</div>
+		<div class = "tab-pane" id = "postgameTab">
+			<p>Yes.</p>
+		</div>
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src = "bootstrap.js"></script>
 </body>
 </html>

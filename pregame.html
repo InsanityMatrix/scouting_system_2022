@@ -3,13 +3,32 @@
 <head>
 	<title>Pregame</title>
 	<link rel = "stylesheet" href = "index.css"></link>
+	<!--<link rel = "stylesheet" href = "bootstrap.css"></link>
+	<script src = "bootstrap.js"></script>-->
 	<!-- Oswald font code -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 </head>
-<body id = "back">
+<body id = "bootOverride">
 	<div class = "navbar">
+		<!--<ul class = "nav nav-tabs">
+			<li class="nav-item active">
+				<a class="nav-link" data-toggle="tab" href = "#pregameTab">Pregame</a>
+			</li>
+			<li class="nav-item active">
+				<button class="nav-link" data-toggle="tab">Auton</a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" data-toggle="tab" href = "#teleopTab">Teleop</a>
+			</li>
+			<li class="nav-item active">
+				<button class="nav-link" data-toggle="tab">Endgame</a>
+			</li>
+			<li class="nav-item active">
+				<button class="nav-link" data-toggle="tab">Postgame</a>
+			</li>
+		</ul>-->
 		<a class = "navLink" href = "pregame.html">1- Pregame</a>
 		<a class = "navLink">2- Auton</a>
 		<a class = "navLink" href = "gameTest.html">3- Teleop</a>
@@ -17,13 +36,20 @@
 		<a class = "navLink">5- Postgame</a>
 		<hr class = "navBottom"></hr>
 	</div>
-	<center>
-		<p class = "title">Pregame</p>
-		<hr class = "underline"></hr>
-		<div class = "info">
-			<p>What team are you scouting?</p>
-			<input type = "text"></input>
+	<div class = "tab-content">
+		<div class = "tab-pane-active" id = "pregameTab">
+			<center>
+				<p class = "title">Pregame</p>
+				<hr class = "underline"></hr>
+				<div class = "info">
+					<p>What team are you scouting?</p>
+					<input type = "text"></input>
+				</div>
+			</center>
 		</div>
-	</center>
+		<div class = "tab-pane" id = "teleopTab">
+			<p>Yes.</p>
+		</div>
+	</div>
 </body>
 </html>

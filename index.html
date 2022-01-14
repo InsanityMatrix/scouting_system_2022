@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Pregame</title>
-	<link rel = "stylesheet" href = "index.css"></link>
-	<link rel = "stylesheet" href = "bootstrap.css"></link>
+	<link rel = "stylesheet" href = "assets/index.css"></link>
+	<link rel = "stylesheet" href = "assets/bootstrap.css"></link>
 
 	<!-- Oswald font code -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,19 +13,19 @@
 <body id = "bootOverride">
 	<div class = "navbar">
 		<ul class = "nav nav-tabs">
-			<li class="nav-item">
+			<li class="nav-item active">
 				<a class="nav-link" data-toggle="tab" href = "#pregameTab">Pregame</a>
 			</li>
-			<li class="nav-item ">
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href = "#autonTab">Auton</a>
 			</li>
-			<li class="nav-item ">
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href = "#teleopTab">Teleop</a>
 			</li>
-			<li class="nav-item ">
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href = "#endgameTab">Endgame</a>
 			</li>
-			<li class="nav-item ">
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href = "#postgameTab">Postgame</a>
 			</li>
 		</ul>
@@ -37,7 +37,7 @@
 		<hr class = "navBottom"></hr>
 	</div>
 	<div class = "tab-content">
-		<div class = "tab-pane tab-pane-active" id = "pregameTab">
+		<div class = "tab-pane active" id = "pregameTab">
 			<center>
 				<p class = "title">Pregame</p>
 				<hr class = "underline"></hr>
@@ -47,7 +47,12 @@
 				</div>
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
-					<input type = "text"></input>
+					<select id = "station">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
 				</div>
 				<div class = "info">
 					<p>What is the match number?</p>
@@ -67,13 +72,16 @@
 			<p>Yes.</p>
 		</div>
 		<div class = "tab-pane" id = "endgameTab">
-			<p>Yes.</p>
+			<center>
+				<p class = "title">Endgame</p>
+				<hr class = "underline"></hr>
+			</center>
 		</div>
 		<div class = "tab-pane" id = "postgameTab">
 			<p>Yes.</p>
 		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src = "bootstrap.js"></script>
+	<script src = "assets/bootstrap.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+/* Add this when you need to override bootstrap's native styles */
 #bootOverride {
 	background-color: #3c3c3c;
 	margin: 0px
@@ -12,7 +13,7 @@
   transform: translate(-50%, -50%);
 }
 /* Navbar code */
-.navbar {
+#bootOverride.navbar {
 	height: 45px;
 	width: 100%;
 	background-color: black;
@@ -53,6 +54,10 @@ p {
 }
 input {
 	display: inline-block;
+}
+/* Pregame-specific */
+#station {
+	color: black;
 }
 /* Field map code */
 

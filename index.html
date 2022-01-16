@@ -88,6 +88,39 @@
 					</div>
 					<div class="col-md-4"></div>
 				</div>
+				<canvas id="teleopField" width="824" height="346"></canvas>
+				<script>
+					var telField = {
+						canvas: document.getElementById("teleopField"),
+						context: null,
+						currPos: {x: 0, y: 0}
+					};
+					telField.context = telField.canvas.getContext('2d')
+					window.onload = function() {
+						makeTeleopField();
+					}
+					telField.canvas.addEventListener("click", function(evt){
+						telField.currPos = getMousePos(telField.canvas, evt);
+						//Show a Scoring Menu
+						document.getElementById("overlay").style.display = "block";
+						
+					});
+					function makeTeleopField() {
+						let field_image = new Image();
+						field_image.src = "/assets/field.png";
+						field_image.onload = function() {
+							telField.context.drawImage(field_image, 0,0)
+						};
+					}
+
+					function getMousePos(canvas, evt) {
+						var rect = canvas.getBoundingClientRect();
+						return {
+							x: evt.clientX - rect.left,
+							y: evt.clientY - rect.top
+						};
+					}
+				</script>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "endgameTab">

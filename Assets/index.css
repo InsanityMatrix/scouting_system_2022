@@ -55,6 +55,13 @@ p {
 input {
 	display: inline-block;
 }
+input[type=checkbox] {
+	margin-right: 8px;
+}
+label {
+	color: white;
+	font-family: inherit;
+}
 /* Pregame-specific */
 #station {
 	color: black;

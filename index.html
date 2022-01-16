@@ -60,8 +60,8 @@
 				</div>
 				<div class = "info">
 					<p>Did they preload any cargo?</p>
-					<input type = "radio" id = "preloadYes">Yes</input>
-					<input type = "radio" id = "preloadNo">No</input>
+					<input type = "radio" name="preloaded" id = "preloadYes" value="yes">Yes</input>
+					<input type = "radio" name="preloaded" id = "preloadNo" value="no">No</input>
 				</div>
 			</center>
 		</div>
@@ -69,7 +69,26 @@
 			<p>Yes.</p>
 		</div>
 		<div class = "tab-pane" id = "teleopTab">
-			<p>Yes.</p>
+			<center>
+				<p class="title">Tele-Op</p>
+				<hr class = "underline"></hr>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-2">
+						<center>
+							<input type="checkbox" name="topIntake" id="topIntake">
+							<label for="topIntake">Top Intake</label>
+						</center>
+					</div>
+					<div class="col-md-2">
+						<center>
+							<input type="checkbox" name="floorIntake" id="floorIntake">
+							<label for="floorIntake">Floor Intake</label>
+						</center>
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+			</center>
 		</div>
 		<div class = "tab-pane" id = "endgameTab">
 			<center>

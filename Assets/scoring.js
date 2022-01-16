@@ -7,7 +7,7 @@ window.onload = function(){
 }
 function make_field() {
    field_image = new Image();
-   field_image.src = "field.png";
+   field_image.src = "/assets/field.png";
    field_image.onload = function(){
      context.drawImage(field_image, 0,0);
    };

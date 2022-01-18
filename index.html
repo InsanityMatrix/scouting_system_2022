@@ -43,7 +43,7 @@
 				<hr class = "underline"></hr>
 				<div class = "info">
 					<p>What team are you scouting?</p>
-					<input type = "text"></input>
+					<input id="teamNum" type = "text"></input>
 				</div>
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
@@ -56,7 +56,7 @@
 				</div>
 				<div class = "info">
 					<p>What is the match number?</p>
-					<input type = "text"></input>
+					<input id="matchNum" type = "text"></input>
 				</div>
 				<div class = "info">
 					<p>Did they preload any cargo?</p>
@@ -135,5 +135,23 @@
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src = "assets/bootstrap.js"></script>
+	<script>
+		function submit() {
+			//PRE-GAME
+			let teamNum = document.getElementById("teamNum").value;
+			let station = document.getElementById("station").value;
+			let matchNum = document.getElementById("matchNum").value;
+			//Preloaded logic TODO: TEST
+			let preloaded = document.getElementById("preloadedYes").value;
+
+			
+
+			//TELE-OP
+			let topIntake = document.getElementById("topIntake").value;
+			let floorIntake = document.getElementById("floorIntake").value;
+
+			
+		}
+	</script>
 </body>
 </html>

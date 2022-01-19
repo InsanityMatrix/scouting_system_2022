@@ -11,6 +11,64 @@
 	<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 </head>
 <body id = "bootOverride">
+	<script>
+		var telField = {};
+		var telShots = [];
+		
+		window.onload = function() {
+			makeTeleopField();
+		}
+		
+		function makeTeleopField() {
+			telField = {
+				canvas: document.getElementById("teleopField"),
+				context: null,
+				currPos: {x: 0, y: 0}
+			};
+			telField.context = telField.canvas.getContext('2d');
+			telField.canvas.addEventListener("click", function(evt){
+				telField.currPos = getMousePos(telField.canvas, evt);
+				//Show a Scoring Menu
+				document.getElementById("overlay").style.display = "block";
+				
+			});
+			document.getElementById("tSubmit").addEventListener("click", teleopSubmit);
+			let field_image = new Image();
+			field_image.src = "/assets/field.png";
+			field_image.onload = function() {
+				telField.context.drawImage(field_image, 0,0)
+			};
+		}
+
+		function getMousePos(canvas, evt) {
+			var rect = canvas.getBoundingClientRect();
+			return {
+				x: evt.clientX - rect.left,
+				y: evt.clientY - rect.top
+			};
+		}
+
+		function teleopSubmit() {
+			//Logic to log a shot
+			document.getElementById("overlay").style.display = "none";
+			let res = document.getElementById("teleopShot").value;
+			let newShot = {position: telField.currPos, result: res};
+			telShots.push(newShot);
+		}
+	</script>
+	<div id="overlay">
+		<div class="vertical-center">
+			<center>
+			  <select class="scouting-options" id="teleopShot" name="shot">
+				<option value="topbasket">Top Basket</option>
+				<option value="bottombasket">Bottom Basket</option>
+				<option value="bounced">Bounced</option>
+				<option value="missed">Missed</option>
+			  </select>
+			  <button id="tSubmit" type="button" class="submit">Submit</button>
+			</center>
+		  </div>
+	</div>
 	<div class = "navbar">
 		<ul class = "nav nav-tabs">
 			<li class="nav-item active">
@@ -89,38 +147,7 @@
 					<div class="col-md-4"></div>
 				</div>
 				<canvas id="teleopField" width="824" height="346"></canvas>
-				<script>
-					var telField = {
-						canvas: document.getElementById("teleopField"),
-						context: null,
-						currPos: {x: 0, y: 0}
-					};
-					telField.context = telField.canvas.getContext('2d')
-					window.onload = function() {
-						makeTeleopField();
-					}
-					telField.canvas.addEventListener("click", function(evt){
-						telField.currPos = getMousePos(telField.canvas, evt);
-						//Show a Scoring Menu
-						document.getElementById("overlay").style.display = "block";
-						
-					});
-					function makeTeleopField() {
-						let field_image = new Image();
-						field_image.src = "/assets/field.png";
-						field_image.onload = function() {
-							telField.context.drawImage(field_image, 0,0)
-						};
-					}
-
-					function getMousePos(canvas, evt) {
-						var rect = canvas.getBoundingClientRect();
-						return {
-							x: evt.clientX - rect.left,
-							y: evt.clientY - rect.top
-						};
-					}
-				</script>
+				
 			</center>
 		</div>
 		<div class = "tab-pane" id = "endgameTab">

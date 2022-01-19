@@ -1,13 +1,14 @@
 GIT COMMAND CHEAT SHEET
 cd [folder name] : goes into a folder that is in your current folder. Git always starts in C:/Users/[yourname].
 dir : shows the contents of your current folder.
-
+cd .. : brings oyu outside of the folder that you were inside
+ 
 git pull : if others have made changes, run this command in the repository folder to get those changes.
 git clone [link] : used to get a folder for the repository.
 
 HOW TO PUSH:
 git add --all
 git commit -m "put a message here that describes what you did"
-git push
+git push (have to run previous 2 cmds)
 
 If you get an error trying to push, make sure you have all the latest changes!

@@ -113,3 +113,14 @@ button.submit:hover {
 	background-color: #1e43a8;
 	border: none;
 }
+
+/* Endgame-specific */
+#small-rule {
+	width: 40%;
+	margin: 5px;
+}
+
+/* Postgame-specific */
+#comments {
+	height: 100px;
+}

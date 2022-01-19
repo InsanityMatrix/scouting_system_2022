@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Pregame</title>
+	<title>Scouting System 2022</title>
 	<link rel = "stylesheet" href = "assets/index.css"></link>
 	<link rel = "stylesheet" href = "assets/bootstrap.css"></link>
 
@@ -10,7 +10,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 </head>
-<body id = "bootOverride">
+<body id = "back">
 	<script>
 		var telField = {};
 		var telShots = [];
@@ -34,7 +34,7 @@
 			});
 			document.getElementById("tSubmit").addEventListener("click", teleopSubmit);
 			let field_image = new Image();
-			field_image.src = "/assets/field.png";
+			field_image.src = "assets/field.png";
 			field_image.onload = function() {
 				telField.context.drawImage(field_image, 0,0)
 			};
@@ -69,7 +69,7 @@
 			</center>
 		  </div>
 	</div>
-	<div class = "navbar">
+	<div class = "navbar" id = "navbar">
 		<ul class = "nav nav-tabs">
 			<li class="nav-item active">
 				<a class="nav-link" data-toggle="tab" href = "#pregameTab">Pregame</a>
@@ -87,17 +87,12 @@
 				<a class="nav-link" data-toggle="tab" href = "#postgameTab">Postgame</a>
 			</li>
 		</ul>
-		<!--<a class = "navLink" href = "pregame.html">1- Pregame</a>
-		<a class = "navLink">2- Auton</a>
-		<a class = "navLink" href = "gameTest.html">3- Teleop</a>
-		<a class = "navLink">4- Endgame</a>
-		<a class = "navLink">5- Postgame</a>-->
 		<hr class = "navBottom"></hr>
 	</div>
 	<div class = "tab-content">
 		<div class = "tab-pane active" id = "pregameTab">
 			<center>
-				<p class = "title">Pregame</p>
+				<h1 id = "title">Pregame</h1>
 				<hr class = "underline"></hr>
 				<div class = "info">
 					<p>What team are you scouting?</p>
@@ -124,11 +119,31 @@
 			</center>
 		</div>
 		<div class = "tab-pane" id = "autonTab">
-			<p>Yes.</p>
+			<center>
+				<h1 id="title">Auton</h1>
+				<hr class = "underline"></hr>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<!--<div class="col-md-2">
+						<center>
+							<input type="checkbox" name="topIntake" id="topIntake">
+							<label for="topIntake">Top Intake</label>
+						</center>
+					</div>
+					<div class="col-md-2">
+						<center>
+							<input type="checkbox" name="floorIntake" id="floorIntake">
+							<label for="floorIntake">Floor Intake</label>
+						</center>
+					</div>-->
+					<div class="col-md-4"></div>
+				</div>
+				<canvas id="teleopField" width="824" height="346"></canvas>
+			</center>
 		</div>
 		<div class = "tab-pane" id = "teleopTab">
 			<center>
-				<p class="title">Tele-Op</p>
+				<h1 id="title">Tele-Op</h1>
 				<hr class = "underline"></hr>
 				<div class="row">
 					<div class="col-md-4"></div>
@@ -147,12 +162,11 @@
 					<div class="col-md-4"></div>
 				</div>
 				<canvas id="teleopField" width="824" height="346"></canvas>
-				
 			</center>
 		</div>
 		<div class = "tab-pane" id = "endgameTab">
 			<center>
-				<p class = "title">Endgame</p>
+				<h1 id = "title">Endgame</h1>
 				<hr class = "underline"></hr>
 			</center>
 		</div>

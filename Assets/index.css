@@ -1,7 +1,6 @@
 /* Add this when you need to override bootstrap's native styles */
-#bootOverride {
-	background-color: #3c3c3c;
-	margin: 0px
+#bootOverride{
+	margin: 0px;
 }
 /* gen-tools */
 .vertical-center {
@@ -13,10 +12,12 @@
   transform: translate(-50%, -50%);
 }
 /* Navbar code */
-#bootOverride.navbar {
+#navbar {
 	height: 45px;
 	width: 100%;
 	background-color: black;
+	margin-bottom: 0px;
+	border: 0px;
 }
 .nav-link {
     display: inline-block;
@@ -25,21 +26,27 @@
 	color: white;
 	font-family: 'Oswald', sans-serif;
 	font-weight: bold;
+	border: 0px;
 }
 .navBottom {
 	width: 100%;
 	height: 5px;
 	border: 0px;
 	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
+	margin-top: 0px;
 }
 /* Text/page element parameters for all pages*/
+#back {
+	background-color: #3c3c3c;
+}
 p {
 	color: white;
 	font-family: 'Oswald', sans-serif;
 	display: inline-block;
 }
-.title {
-	font-size: 2em;
+#title {
+	color: white;
+	font-family: 'Oswald', sans-serif;
 }
 .underline {
 	width: 60%;
@@ -52,6 +59,9 @@ p {
 	color: white;
 	font-family: 'Oswald', sans-serif;
 	margin: 10px;
+}
+.tab-pane {
+	width: 98%; /*Side scroll bar appears otherwise. Just trust me. */
 }
 input {
 	display: inline-block;

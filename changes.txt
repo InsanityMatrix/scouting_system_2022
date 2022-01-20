@@ -1,0 +1,4 @@
+make text box not resizable
+make button darken on click/hover (ask allison if button looks good)
+endgame checkboxes (not avengers endgame)
+make database work

@@ -98,6 +98,7 @@ label {
 	width: 200px;
 	position: relative;
 	overflow: hidden;
+	transition: background .25s linear;
 }
 .radio-group::before {
 	content: "";
@@ -113,6 +114,9 @@ label {
 }
 .radio-group:hover::before {
 	transform: translateX(-50%);
+}
+.checked-radio-group {
+	background-color: #1E5AA8 !important;
 }
 .radio-group input,.radio-group label {
 	position: relative;

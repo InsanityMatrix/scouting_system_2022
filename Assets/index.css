@@ -34,7 +34,8 @@
 	height: 5px;
 	border: 0px;
 	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
-	margin-top: 0px;
+	margin-top: -5px;
+	z-index: 1;
 }
 /* Text/page element parameters for all pages*/
 #back {

@@ -14,6 +14,8 @@
 	<script>
 		var telField = {};
 		var telShots = [];
+		var shotsMade = 0;
+		var shotsMissed = 0;
 		
 		window.onload = function() {
 			makeTeleopField();
@@ -54,6 +56,15 @@
 			let res = document.getElementById("teleopShot").value;
 			let newShot = {position: telField.currPos, result: res};
 			telShots.push(newShot);
+			
+			//Update shot counters
+			if ((res == "topBasket") || (res == "bottomBasket")) {
+				shotsMade = shotsMade + 1;
+				document.getElementById("madeCounter").innerHTML = "Total shots made: " + shotsMade;
+			} else {
+				shotsMissed = shotsMissed + 1;
+				document.getElementById("missCounter").innerHTML = "Total shots missed: " + shotsMissed;
+			}
 		}
 	</script>
 	<div id="overlay">
@@ -147,10 +158,6 @@
 					</div>-->
 					<div class="col-md-4"></div>
 					<!-- map goes here-->
-					<div class = "info">
-						<p id = "madeCounter">Total shots made: 0</p>
-						<p id = "missCounter">Total shots missed: 0</p>
-					</div>
 				</div>
 			</center>
 		</div>
@@ -175,6 +182,10 @@
 					<div class="col-md-4"></div>
 				</div>
 				<canvas id="teleopField" width="824" height="346"></canvas>
+				<div class = "info">
+					<p id = "madeCounter">Total shots made: 0</p>
+					<p id = "missCounter">Total shots missed: 0</p>
+				</div>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "endgameTab">

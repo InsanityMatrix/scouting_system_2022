@@ -58,7 +58,7 @@
 			telShots.push(newShot);
 			
 			//Update shot counters
-			if ((res == "topBasket") || (res == "bottomBasket")) {
+			if ((res == "topbasket") || (res == "bottombasket")) {
 				shotsMade = shotsMade + 1;
 				document.getElementById("madeCounter").innerHTML = "Total shots made: " + shotsMade;
 			} else {
@@ -170,6 +170,10 @@
 					</div>-->
 					<div class="col-md-4"></div>
 					<!-- map goes here-->
+					<div class = "info">
+						<p id = "madeCounter">Total shots made: 0</p>
+						<p id = "missCounter">Total shots missed: 0</p>
+					</div>
 				</div>
 			</center>
 		</div>

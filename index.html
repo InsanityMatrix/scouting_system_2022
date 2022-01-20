@@ -49,11 +49,20 @@
 				y: evt.clientY - rect.top
 			};
 		}
-
+		
 		function teleopSubmit() {
 			//Logic to log a shot
 			document.getElementById("overlay").style.display = "none";
-			let res = document.getElementById("teleopShot").value;
+			let res = "n/a";
+			if (document.getElementById("topbasket").checked == true) {
+				res = "topbasket";
+			} else if (document.getElementById("bottombasket").checked == true) {
+				res = "bottombasket";
+			} else if (document.getElementById("bounced").checked == true) {
+				res = "bounced";
+			} else if (document.getElementById("missed").checked == true) {
+				res = "missed";
+			}
 			let newShot = {position: telField.currPos, result: res};
 			telShots.push(newShot);
 			
@@ -170,10 +179,10 @@
 					</div>-->
 					<div class="col-md-4"></div>
 					<!-- map goes here-->
-					<div class = "info">
+					<!--<div class = "info">
 						<p id = "madeCounter">Total shots made: 0</p>
 						<p id = "missCounter">Total shots missed: 0</p>
-					</div>
+					</div>-->
 				</div>
 			</center>
 		</div>

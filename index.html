@@ -274,6 +274,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src = "assets/bootstrap.js"></script>
 	<script>
+		$( ".radio-group:has(input[type=radio]:checked)" ).addClass(".checked-radio-group");
 		function submit() {
 			//PRE-GAME
 			let teamNum = document.getElementById("teamNum").value;

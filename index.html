@@ -59,13 +59,17 @@
 	<div id="overlay">
 		<div class="vertical-center">
 			<center>
-			  <select class="scouting-options" id="teleopShot" name="shot">
+			  <!--<select class="scouting-options" id="teleopShot" name="shot">
 				<option value="topbasket">Top Basket</option>
 				<option value="bottombasket">Bottom Basket</option>
 				<option value="bounced">Bounced</option>
 				<option value="missed">Missed</option>
-			  </select>
-			  
+			  </select>-->
+			  <input type="radio" name="shot" value="topbasket">Top Basket</input>
+  			  <input type="radio" name="shot" value="bottombasket">Bottom Basket</input>
+			  <input type="radio" name="shot" value="bounced">Bounced</input>
+			  <input type="radio" name="shot" value="missed">Missed</input>
+			  <button id="tSubmit" type="button" class="submit">Submit</button>
 			</center>
 		  </div>
 	</div>

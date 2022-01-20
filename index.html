@@ -76,8 +76,14 @@
 				<option value="bounced">Bounced</option>
 				<option value="missed">Missed</option>
 			  </select>-->
-			  <input type="radio" name="shot" value="topbasket">Top Basket</input>
-  			  <input type="radio" name="shot" value="bottombasket">Bottom Basket</input>
+			  <div class="radio-group">
+				<input type="radio" name="shot" value="topbasket" id="topbasket">
+				<label for="topbasket">Top Basket</label>
+			  </div>
+			  <div class="radio-group">
+				<input type="radio" name="shot" value="bottombasket" id="bottombasket">
+				<label for="bottombasket">Bottom Basket</label>
+			  </div>
 			  <input type="radio" name="shot" value="bounced">Bounced</input>
 			  <input type="radio" name="shot" value="missed">Missed</input>
 			  <button id="tSubmit" type="button" class="submit">Submit</button>

@@ -11,6 +11,7 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
 /* Navbar code */
 #navbar {
 	height: 45px;
@@ -69,6 +70,9 @@ input {
 input[type=checkbox] {
 	margin-right: 8px;
 }
+input[type=radio] {
+	color: white;
+}
 label {
 	color: white;
 	font-family: inherit;
@@ -88,6 +92,7 @@ label {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	color: white;
 	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 	cursor: pointer; /* Add a pointer on hover */

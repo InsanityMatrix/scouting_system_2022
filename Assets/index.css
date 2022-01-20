@@ -76,6 +76,9 @@ input[type=checkbox] {
 input[type=radio] {
 	color: white;
 }
+input[type=text] {
+	color: black;
+}
 label {
 	color: white;
 	font-family: inherit;
@@ -160,4 +163,12 @@ button.submit:hover {
 /* Postgame-specific */
 #comments {
 	height: 100px;
+}
+#submitButton {
+	height: 40px;
+	width: 100px;
+	background-image: linear-gradient(to right, #68c2e1, #1e5aa8);
+	border: 0px;
+	color: white;
+	font-family: 'Oswald', sans-serif;
 }

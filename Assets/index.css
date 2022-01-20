@@ -64,6 +64,9 @@ p {
 .tab-pane {
 	width: 98%; /*Side scroll bar appears otherwise. Just trust me. */
 }
+.labelOverride {
+	font-weight: normal;
+}
 input {
 	display: inline-block;
 }

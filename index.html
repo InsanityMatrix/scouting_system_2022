@@ -369,6 +369,14 @@
 			$(".radio-group:has(input[type=radio]:checked)" ).css("background", "#1E5AA8");
 			$(".radio-group:has(input[type=radio]:not(:checked))").css("background", "#3c3c3c");
 		}, 50);
+		//HotKeys
+		$(document).keyup(function(e){
+			if(e.key === "Escape") {
+				document.getElementById("overlay").style.display = "none";
+				document.getElementById("aOverlay").style.display = "none";
+			}
+		});
+		
 		function submit() {
 			//PRE-GAME
 			let teamNum = document.getElementById("teamNum").value;

@@ -40,22 +40,63 @@
 .nav-item {
 	height: inherit;
 }
-.nav-tabs > li.active > #navPregame{
+/*Tab coloration code*/
+.nav-tabs > li.active > #navPregame,
+.nav-tabs > li.active > #navPregame:hover{
 	background-image: linear-gradient(to right, rgb(206,226,132), rgb(198,220,128));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navPregame:hover {
 	background-image: linear-gradient(to right, rgb(176,196,102), rgb(168,190,98));
+	border: 0px;
+	color: 3c3c3c;
 }
-.nav-tabs > li.active > #navAuton{
-	background-image: linear-gradient(to right, rgb(196,219,127), rgb());
+.nav-tabs > li.active > #navAuton,
+.nav-tabs > li.active > #navAuton:hover{
+	background-image: linear-gradient(to right, rgb(196,219,127), rgb(190,215,124));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navAuton:hover {
-	background-image: linear-gradient(to right, rgb(166,189,197), rgb());
+	background-image: linear-gradient(to right, rgb(166,189,197), rgb(160,185,94));
+	border: 0px;
+	color: 3c3c3c;
 }
+.nav-tabs > li.active > #navTeleop,
+.nav-tabs > li.active > #navTeleop:hover{
+	background-image: linear-gradient(to right, rgb(188,214,123), rgb(181,209,120));
+	color: 3c3c3c;
+	border: 0px;
+}
+.nav-tabs > li > #navTeleop:hover {
+	background-image: linear-gradient(to right, rgb(158,184,93), rgb(151,179,90));
+	border: 0px;
+	color: 3c3c3c;
+}
+.nav-tabs > li.active > #navEndgame,
+.nav-tabs > li.active > #navEndgame:hover{
+	background-image: linear-gradient(to right, rgb(), rgb());
+	color: 3c3c3c;
+	border: 0px;
+}
+.nav-tabs > li > #navEndgame:hover {
+	background-image: linear-gradient(to right, rgb(), rgb());
+	border: 0px;
+	color: 3c3c3c;
+}
+.nav-tabs > li.active > #navPostgame,
+.nav-tabs > li.active > #navPostgame:hover{
+	background-image: linear-gradient(to right, rgb(), rgb());
+	color: 3c3c3c;
+	border: 0px;
+}
+.nav-tabs > li > #navPostgame:hover {
+	background-image: linear-gradient(to right, rgb(), rgb());
+	border: 0px;
+	color: 3c3c3c;
+}
+/*End tab coloration code*/
 .navBottom {
 	width: 100%;
 	height: 5px;

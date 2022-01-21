@@ -59,40 +59,40 @@
 	border: 0px;
 }
 .nav-tabs > li > #navAuton:hover {
-	background-image: linear-gradient(to right, rgb(166,189,197), rgb(160,185,94));
+	background-image: linear-gradient(to right, rgb(166,189,97), rgb(160,185,94)); /*Most of these need an updated color*/
 	border: 0px;
 	color: 3c3c3c;
 }
 .nav-tabs > li.active > #navTeleop,
 .nav-tabs > li.active > #navTeleop:hover{
-	background-image: linear-gradient(to right, rgb(188,214,123), rgb(181,209,120));
+	background-image: linear-gradient(to right, rgb(185,211,122), rgb(181,209,120));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navTeleop:hover {
-	background-image: linear-gradient(to right, rgb(158,184,93), rgb(151,179,90));
+	background-image: linear-gradient(to right, rgb(155,181,92), rgb(151,179,90));
 	border: 0px;
 	color: 3c3c3c;
 }
 .nav-tabs > li.active > #navEndgame,
 .nav-tabs > li.active > #navEndgame:hover{
-	background-image: linear-gradient(to right, rgb(), rgb());
+	background-image: linear-gradient(to right, rgb(174,204,116), rgb(164,197,111));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navEndgame:hover {
-	background-image: linear-gradient(to right, rgb(), rgb());
+	background-image: linear-gradient(to right, rgb(144,174,86), rgb(134,167,81));
 	border: 0px;
 	color: 3c3c3c;
 }
 .nav-tabs > li.active > #navPostgame,
 .nav-tabs > li.active > #navPostgame:hover{
-	background-image: linear-gradient(to right, rgb(), rgb());
+	background-image: linear-gradient(to right, rgb(163,196,111), rgb(151,187,105));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navPostgame:hover {
-	background-image: linear-gradient(to right, rgb(), rgb());
+	background-image: linear-gradient(to right, rgb(133,166,81), rgb(121,157,75));
 	border: 0px;
 	color: 3c3c3c;
 }
@@ -103,7 +103,7 @@
 	border: 0px;
 	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
 	margin-top: -5px;
-	z-index: 2;
+	z-index: 1;
 }
 /* Text/page element parameters for all pages*/
 #back {
@@ -205,6 +205,9 @@ label {
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 	cursor: pointer; /* Add a pointer on hover */
 }
+.escape {
+	margin-bottom: 0px;
+}
 .scouting-options {
 	background-color: #1E5AA8;
 	padding-top: 8px;
@@ -241,12 +244,13 @@ button.submit:hover {
 #submitButton {
 	height: 40px;
 	width: 100px;
-	background-image: linear-gradient(to right, #68c2e1, #1e5aa8);
+	background-color: #1e5aa8;
 	border: 0px;
+	border-radius: 6px;
 	color: white;
 	font-family: 'Oswald', sans-serif;
 }
 #submitButton:hover {
-	background-image: linear-gradient(to right, #54afcd, #0a4694);
+	background-color: #0a4694;
 	color: #eeeeee;
 }

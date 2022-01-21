@@ -140,6 +140,7 @@
 	<div class="overlay" id="aOverlay" >
 		<div class="vertical-center">
 			<center>
+				<p class = "escape">Press Escape to exit</p>
 			  <!--<select class="scouting-options" id="teleopShot" name="shot">
 				<option value="topbasket">Top Basket</option>
 				<option value="bottombasket">Bottom Basket</option>
@@ -169,6 +170,7 @@
 	<div class="overlay" id="overlay">
 		<div class="vertical-center">
 			<center>
+				<p class = "escape">Press Escape to exit</p>
 			  <!--<select class="scouting-options" id="teleopShot" name="shot">
 				<option value="topbasket">Top Basket</option>
 				<option value="bottombasket">Bottom Basket</option>
@@ -282,7 +284,15 @@
 				<h1 id="title">Tele-Op</h1>
 				<hr class = "underline"></hr>
 				<div class="row">
-					<div class="col-md-4"></div>
+					<center>
+						<div class = "info">
+							<input type="checkbox" name="topIntake" id="topIntake">
+							<label class = "labelOverride" for="topIntake">Top Intake</label>
+							<input type="checkbox" name="floorIntake" id="floorIntake">
+							<label class = "labelOverride" for="floorIntake">Floor Intake</label>
+						</div>
+					</center>
+					<!--<div class="col-md-4"></div>
 					<div class="col-md-2">
 						<center>
 							<input type="checkbox" name="topIntake" id="topIntake">
@@ -295,7 +305,7 @@
 							<label class = "labelOverride" for="floorIntake">Floor Intake</label>
 						</center>
 					</div>
-					<div class="col-md-4"></div>
+					<div class="col-md-4"></div>-->
 				</div>
 				<canvas id="teleopField" width="824" height="346"></canvas>
 				<div class = "info">

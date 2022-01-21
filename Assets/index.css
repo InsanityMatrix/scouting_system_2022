@@ -13,8 +13,12 @@
 }
 
 /* Navbar code */
+.nav {
+	height: inherit;
+	z-index: 0;
+}
 #navbar {
-	height: 45px;
+	height: 50px;
 	width: 100%;
 	background-color: black;
 	margin-bottom: 0px;
@@ -28,6 +32,21 @@
 	font-family: 'Oswald', sans-serif;
 	font-weight: bold;
 	border: 0px;
+	z-index: 0;
+}
+.nav-link:hover {
+	color: white;
+}
+.nav-item {
+	height: inherit;
+}
+.nav-tabs > li.active > #navPregame{
+	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
+	color: white;
+	border: 0px;
+}
+.nav-tabs > li > #navPregame:hover {
+	background-image: linear-gradient(to right, #cfe385, #3c7b3b); /* Make this a little darker than the normal one */
 }
 .navBottom {
 	width: 100%;
@@ -35,7 +54,7 @@
 	border: 0px;
 	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
 	margin-top: -5px;
-	z-index: 1;
+	z-index: 2;
 }
 /* Text/page element parameters for all pages*/
 #back {
@@ -168,6 +187,7 @@ button.submit:hover {
 /* Postgame-specific */
 #comments {
 	height: 100px;
+	resize: none;
 }
 #submitButton {
 	height: 40px;
@@ -176,4 +196,8 @@ button.submit:hover {
 	border: 0px;
 	color: white;
 	font-family: 'Oswald', sans-serif;
+}
+#submitButton:hover {
+	background-image: linear-gradient(to right, #54afcd, #0a4694);
+	color: #eeeeee;
 }

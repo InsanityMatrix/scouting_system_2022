@@ -1,4 +1,4 @@
-make text box not resizable
-make button darken on click/hover (ask allison if button looks good)
-endgame checkboxes (not avengers endgame)
+curvy corners button (ask allison if button looks good)
+make tabs are look good
+endgame checkboxes (not avengers endgame) - ask about tracking
 make database work

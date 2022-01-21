@@ -12,12 +12,70 @@
 </head>
 <body id = "back">
 	<script>
+	//Auton field
+	var autonField = {};
+	var autonShots = [];
+	var aShotsMade = 0;
+	var aShotsMissed = 0;
+	
+	function makeAutonField() {
+		console.log("Checkpoint 1");
+		autonField = {
+			canvas: document.getElementById("autonField"),
+			context : null,
+			currPos: {x : 0, y: 0}
+		};
+		autonField.context = autonField.canvas.getContext('2d');
+		autonField.canvas.addEventListener("click", function(evt){
+			let rect = autonField.canvas.getBoundingClientRect();
+			autonField.currPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+			document.getElementById("aOverlay").style.display = "block";
+		});
+		console.log("Checkpoint 2");
+		document.getElementById("aSubmit").addEventListener("click", autonSubmit);
+		let field_image = new Image();
+		field_image.src = "assets/field.png";
+		console.log("Checkpoint 3");
+		field_image.onload = function() {
+			autonField.context.drawImage(field_image, 0,0)
+		};
+	}
+	function autonSubmit() {
+		document.getElementById("aOverlay").style.display = "none";
+		let res = "n/a";
+		if (document.getElementById("atopbasket").checked == true) {
+			res = "topbasket";
+		} else if (document.getElementById("abottombasket").checked == true) {
+			res = "bottombasket";
+		} else if (document.getElementById("abounced").checked == true) {
+			res = "bounced";
+		} else if (document.getElementById("amissed").checked == true) {
+			res = "missed";
+		}
+		if(res == "n/a") {
+			return;
+		}
+		let newShot = {position: autonField.currPos, result: res};
+		autonShots.push(newShot);
+		
+		//Update shot counters
+		if ((res == "topbasket") || (res == "bottombasket")) {
+			aShotsMade = aShotsMade + 1;
+			document.getElementById("amadeCounter").innerHTML = "Total shots made: " + aShotsMade;
+		} else {
+			aShotsMissed = aShotsMissed + 1;
+			document.getElementById("amissCounter").innerHTML = "Total shots missed: " + aShotsMissed;
+		}
+	}
+	</script>
+	<script>
 		var telField = {};
 		var telShots = [];
 		var shotsMade = 0;
 		var shotsMissed = 0;
 		
 		window.onload = function() {
+			makeAutonField();
 			makeTeleopField();
 		}
 		
@@ -63,6 +121,9 @@
 			} else if (document.getElementById("missed").checked == true) {
 				res = "missed";
 			}
+			if(res == "n/a") {
+				return;
+			}
 			let newShot = {position: telField.currPos, result: res};
 			telShots.push(newShot);
 			
@@ -76,7 +137,36 @@
 			}
 		}
 	</script>
-	<div id="overlay">
+	<div class="overlay" id="aOverlay" >
+		<div class="vertical-center">
+			<center>
+			  <!--<select class="scouting-options" id="teleopShot" name="shot">
+				<option value="topbasket">Top Basket</option>
+				<option value="bottombasket">Bottom Basket</option>
+				<option value="bounced">Bounced</option>
+				<option value="missed">Missed</option>
+			  </select>-->
+				<div class="radio-group">
+					<input type="radio" name="shot" value="topbasket" id="atopbasket">
+					<label for="atopbasket">Top Basket</label>
+				</div>
+				<div class="radio-group">
+					<input type="radio" name="shot" value="bottombasket" id="abottombasket">
+					<label for="abottombasket">Bottom Basket</label>
+				</div>
+				<div class="radio-group">
+					<input type="radio" name="shot" value="bounced" id="abounced">
+					<label for="abounced">Bounced</label>
+				</div>
+				<div class="radio-group">
+					<input type="radio" name="shot" value="missed" id="amissed">
+					<label for="amissed">Missed</label>
+				</div>
+				<button id="aSubmit" type="button" class="submit">Submit</button>
+			</center>
+		  </div>
+	</div>
+	<div class="overlay" id="overlay">
 		<div class="vertical-center">
 			<center>
 			  <!--<select class="scouting-options" id="teleopShot" name="shot">
@@ -179,10 +269,11 @@
 					</div>-->
 					<div class="col-md-4"></div>
 					<!-- map goes here-->
-					<!--<div class = "info">
-						<p id = "madeCounter">Total shots made: 0</p>
-						<p id = "missCounter">Total shots missed: 0</p>
-					</div>-->
+					<canvas id="autonField" width="824" height="346"></canvas>
+					<div class = "info">
+						<p id = "amadeCounter">Total shots made: 0</p>
+						<p id = "amissCounter">Total shots missed: 0</p>
+					</div>
 				</div>
 			</center>
 		</div>
@@ -286,7 +377,8 @@
 			//Preloaded logic TODO: TEST
 			let preloaded = document.getElementById("preloadYes").value;
 
-			
+			//Auton
+			let leftStart = document.getElementById("leftStart").value;
 
 			//TELE-OP
 			let topIntake = document.getElementById("topIntake").value;

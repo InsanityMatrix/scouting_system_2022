@@ -12,6 +12,18 @@
 </head>
 <body id = "back">
 	<script>
+	//Pregame inputs
+	function teamInputs() {
+		setTimeout(function() {
+			var num = document.getElementById("teamNum").value;
+			if ((num < 0) || (num > 10000)) {
+				document.getElementById("teamNum").value = "";
+				document.getElementById("pregameBadTime").style.opacity = "100%";
+				document.getElementById("pregameBadTime").classList.add("fadeOut");
+			}
+		}, 100);
+	}
+	
 	//Auton field
 	var autonField = {};
 	var autonShots = [];
@@ -19,7 +31,6 @@
 	var aShotsMissed = 0;
 	
 	function makeAutonField() {
-		console.log("Checkpoint 1");
 		autonField = {
 			canvas: document.getElementById("autonField"),
 			context : null,
@@ -31,11 +42,9 @@
 			autonField.currPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
 			document.getElementById("aOverlay").style.display = "block";
 		});
-		console.log("Checkpoint 2");
 		document.getElementById("aSubmit").addEventListener("click", autonSubmit);
 		let field_image = new Image();
 		field_image.src = "assets/field.png";
-		console.log("Checkpoint 3");
 		field_image.onload = function() {
 			autonField.context.drawImage(field_image, 0,0)
 		};
@@ -224,15 +233,14 @@
 				<hr class = "underline"></hr>
 				<div class = "info">
 					<p>What team are you scouting?</p>
-					<input id="teamNum" type = "text"></input>
+					<input id="teamNum" type = "text" onKeyPress = "teamInputs()"></input>
 				</div>
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
 					<select id = "station">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+						<option>Left</option>
+						<option>Middle</option>
+						<option>Right</option>
 					</select>
 				</div>
 				<div class = "info">
@@ -244,6 +252,8 @@
 					<input type = "radio" name="preloaded" id = "preloadYes" value="yes">Yes</input>
 					<input type = "radio" name="preloaded" id = "preloadNo" value="no">No</input>
 				</div>
+				
+				<h2 class = "badTimeMessage"  id = "pregameBadTime" hidden>Invalid input!</h2>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "autonTab">
@@ -349,6 +359,11 @@
 					<p>Successful Traversal</p>
 					<input type = "checkbox" id = "sTrav"></input>
 				</div>
+				<br></br>
+				<div class = "info" id = "endgameComments">
+					<p>Please enter here if robot fell off any rungs:</p>
+				</div>
+				<textarea class = "comments"></textarea>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "postgameTab">
@@ -366,7 +381,7 @@
 				<div class = "info">
 					<p>Other things to note:</p>
 				</div>
-				<textarea id = "comments"></textarea>
+				<textarea class = "comments" id = "postgameComments"></textarea>
 				<br></br>
 				<button id = "submitButton" onClick = "submit()">Submit</button>
 			</center>
@@ -412,11 +427,12 @@
 			let sHigh = document.getElementById("sHigh").value;
 			let aTrav = document.getElementById("aTrav").value;
 			let sTrav = document.getElementById("sTrav").value;
+			let endgameComments = document.getElementById("endgameComments").value;
 			
 			//Postgame
 			let playedDefense = document.getElementById("defense").value;
 			let lostConnection = document.getElementById("lostConnect").value;
-			let comments = document.getElementById("comments").value;
+			let postgameComments = document.getElementById("postgameComments").value;
 		}
 	</script>
 </body>

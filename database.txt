@@ -1,7 +1,10 @@
 //Scouting Database Columns
-//Match Number, Team Number, Alliance Station Text, Preloaded bool
+//match integer,team integer, allianceStation char, Preloaded bool
 //movedStart bool, autonShots (Separate Table)
 //topIntake bool, floorIntake bool, teleopShots (Separate Table)
-//Rungs (0-no climb attempted, 1-8)
+//attempted bool
+//attemptedLower bool, attemptedMiddle bool, attemptedHigh bool, attemptedTraversal bool, successful num, endgameComment text
 //Defense bool, disconnected bool, 
 //Comments text
+
+//Log all attempted rungs and then the highest successful one

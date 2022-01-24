@@ -54,23 +54,23 @@
 }
 .nav-tabs > li.active > #navAuton,
 .nav-tabs > li.active > #navAuton:hover{
-	background-image: linear-gradient(to right, rgb(196,219,127), rgb(190,215,124));
+	background-image: linear-gradient(to right, rgb(194,218,126), rgb(186,212,122));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navAuton:hover {
-	background-image: linear-gradient(to right, rgb(166,189,97), rgb(160,185,94)); /*Most of these need an updated color*/
+	background-image: linear-gradient(to right, rgb(164,188,96), rgb(156,182,92));
 	border: 0px;
 	color: 3c3c3c;
 }
 .nav-tabs > li.active > #navTeleop,
 .nav-tabs > li.active > #navTeleop:hover{
-	background-image: linear-gradient(to right, rgb(185,211,122), rgb(181,209,120));
+	background-image: linear-gradient(to right, rgb(184,211,122), rgb(176,205,117));
 	color: 3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navTeleop:hover {
-	background-image: linear-gradient(to right, rgb(155,181,92), rgb(151,179,90));
+	background-image: linear-gradient(to right, rgb(154,181,92), rgb(146,175,87));
 	border: 0px;
 	color: 3c3c3c;
 }
@@ -156,6 +156,17 @@ label {
 #station {
 	color: black;
 }
+.badTimeMessage {
+	color: #58b2d1;
+	animation-name: fadeOut;
+	animation-fill-mode: forwards;
+	opacity: 0%;
+	animation-duration: 3s;
+}
+@keyframes fadeOut {
+	from {opacity: 100%;}
+	to {opacity: 0%;}
+}
 /* Field map code */
 .radio-group {
 	background: #3c3c3c;
@@ -237,7 +248,7 @@ button.submit:hover {
 }
 
 /* Postgame-specific */
-#comments {
+.comments {
 	height: 100px;
 	resize: none;
 }

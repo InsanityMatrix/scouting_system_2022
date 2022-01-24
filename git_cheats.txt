@@ -12,3 +12,5 @@ git commit -m "put a message here that describes what you did"
 git push (have to run previous 2 cmds)
 
 If you get an error trying to push, make sure you have all the latest changes!
+
+If you do not have git bash, look up "git bash downloads" and it should be the first thing there. When installing, make sure Notepad++ is the default editor. Everything else is okay as is.

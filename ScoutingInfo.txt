@@ -25,7 +25,6 @@ use the terminal?
 
 
 //TODO:
-Exit buttons on overlays
-2 overlays one auton one Teleop
-insert maps into teleop and auton
-start field collection system
+No score zone on the maps, scoring from outside of arena
+deselect scoring option on buttons after submitting shot
+Popup successful resubmit (3 seconds) then refresh

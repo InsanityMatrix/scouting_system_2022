@@ -40,6 +40,16 @@
 		autonField.canvas.addEventListener("click", function(evt){
 			let rect = autonField.canvas.getBoundingClientRect();
 			autonField.currPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+			if(autonField.currPos.x < 100) {
+				return;
+			} else if( autonField.currPos.x > 720) {
+				return;
+			}
+			if(autonField.currPos.y < 14) {
+				return;
+			} else if(autonField.currPos.y > 328) {
+				return;
+			}
 			document.getElementById("aOverlay").style.display = "block";
 		});
 		document.getElementById("aSubmit").addEventListener("click", autonSubmit);
@@ -53,12 +63,16 @@
 		document.getElementById("aOverlay").style.display = "none";
 		let res = "n/a";
 		if (document.getElementById("atopbasket").checked == true) {
+			document.getElementById("atopbasket").checked = false;
 			res = "topbasket";
 		} else if (document.getElementById("abottombasket").checked == true) {
+			document.getElementById("abottombasket").checked = false;
 			res = "bottombasket";
 		} else if (document.getElementById("abounced").checked == true) {
+			document.getElementById("abounced").checked = false;
 			res = "bounced";
 		} else if (document.getElementById("amissed").checked == true) {
+			document.getElementById("amissed").checked = false;
 			res = "missed";
 		}
 		if(res == "n/a") {
@@ -98,6 +112,16 @@
 			telField.canvas.addEventListener("click", function(evt){
 				telField.currPos = getMousePos(telField.canvas, evt);
 				//Show a Scoring Menu
+				if(telField.currPos.x < 100) {
+					return;
+				} else if( telField.currPos.x > 720) {
+					return;
+				}
+				if(telField.currPos.y < 14) {
+					return;
+				} else if(telField.currPos.y > 328) {
+					return;
+				}
 				document.getElementById("overlay").style.display = "block";
 				
 			});
@@ -122,12 +146,16 @@
 			document.getElementById("overlay").style.display = "none";
 			let res = "n/a";
 			if (document.getElementById("topbasket").checked == true) {
+				document.getElementById("topbasket").checked = false;
 				res = "topbasket";
 			} else if (document.getElementById("bottombasket").checked == true) {
+				document.getElementById("bottombasket").checked = false;
 				res = "bottombasket";
 			} else if (document.getElementById("bounced").checked == true) {
+				document.getElementById("bounced").checked = false;
 				res = "bounced";
 			} else if (document.getElementById("missed").checked == true) {
+				document.getElementById("missed").checked = false;
 				res = "missed";
 			}
 			if(res == "n/a") {
@@ -238,9 +266,9 @@
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
 					<select id = "station">
-						<option>Left</option>
-						<option>Middle</option>
-						<option>Right</option>
+						<option value="l">Left</option>
+						<option value="m">Middle</option>
+						<option value="r">Right</option>
 					</select>
 				</div>
 				<div class = "info">
@@ -360,10 +388,10 @@
 					<input type = "checkbox" id = "sTrav"></input>
 				</div>
 				<br></br>
-				<div class = "info" id = "endgameComments">
+				<div class = "info" >
 					<p>Please enter here if robot fell off any rungs:</p>
 				</div>
-				<textarea class = "comments"></textarea>
+				<textarea class = "comments" id = "endgameComments"></textarea>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "postgameTab">
@@ -408,32 +436,61 @@
 			let station = document.getElementById("station").value;
 			let matchNum = document.getElementById("matchNum").value;
 			//Preloaded logic TODO: TEST
-			let preloaded = document.getElementById("preloadYes").value;
+			let preloaded = document.getElementById("preloadYes").checked;
 
 			//Auton
-			let leftStart = document.getElementById("leftStart").value;
+			let leftStart = document.getElementById("leftStart").checked;
 
 			//TELE-OP
-			let topIntake = document.getElementById("topIntake").value;
-			let floorIntake = document.getElementById("floorIntake").value;
+			let topIntake = document.getElementById("topIntake").checked;
+			let floorIntake = document.getElementById("floorIntake").checked;
 
 			//ENDGAME
 			let attempted = document.getElementById("noAttempt").value;
-			let aLow = document.getElementById("aLow").value;
-			let sLow = document.getElementById("sLow").value;
-			let aMid = document.getElementById("aMid").value;
-			let sMid = document.getElementById("sMid").value;
-			let aHigh = document.getElementById("aHigh").value;
-			let sHigh = document.getElementById("sHigh").value;
-			let aTrav = document.getElementById("aTrav").value;
-			let sTrav = document.getElementById("sTrav").value;
+			let aLow = document.getElementById("aLow").checked;
+			let sLow = document.getElementById("sLow").checked;
+			let aMid = document.getElementById("aMid").checked;
+			let sMid = document.getElementById("sMid").checked;
+			let aHigh = document.getElementById("aHigh").checked;
+			let sHigh = document.getElementById("sHigh").checked;
+			let aTrav = document.getElementById("aTrav").checked;
+			let sTrav = document.getElementById("sTrav").checked;
 			let endgameComments = document.getElementById("endgameComments").value;
 			
 			//Postgame
-			let playedDefense = document.getElementById("defense").value;
-			let lostConnection = document.getElementById("lostConnect").value;
+			let playedDefense = document.getElementById("defense").checked;
+			let lostConnection = document.getElementById("lostConnect").checked;
 			let postgameComments = document.getElementById("postgameComments").value;
+			let successful = sTrav ? 4 : (sHigh ? 3 : (sMid ? 2 : (sLow ? 1 : 0)));
+			$.ajax({
+				url: '/submit',
+				type: 'POST',
+				data: {
+					match: matchNum,
+					team: teamNum,
+					allianceStation: station,
+					preloaded: preloaded,
+					moveStart: leftStart,
+					topIntake: topIntake,
+					floorIntake: floorIntake,
+					attemptedLower: aLow,
+					attemptedMiddle: aMid,
+					attemptedHigh: aHigh,
+					attemptedTraversal: aTrav,
+					successful: successful,
+					endgameComment: endgameComments,
+					defense: playedDefense,
+					attempted: attempted,
+					disconnected: lostConnection,
+					comments: postgameComments
+				},
+				success: function(response) {
+					//REFRESH
+					location.reload(true);
+				}
+			});
 		}
+
 	</script>
 </body>
 </html>

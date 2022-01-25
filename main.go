@@ -40,6 +40,7 @@ func main() {
   if err != nil {
     panic(err)
   }
+  fmt.Println("Database open!")
   db.SetMaxOpenConns(25)
   db.SetMaxIdleConns(10)
   db.SetConnMaxLifetime(time.Hour)
@@ -69,7 +70,7 @@ func gameTestHandler(w http.ResponseWriter, r *http.Request) {
 func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   //Will parse form, log, redirect
   err := r.ParseForm()
-
+  fmt.Println("Submit accessed")
   if err != nil {
     fmt.Println(fmt.Errorf("Error: %v", err))
     w.WriteHeader(http.StatusInternalServerError)
@@ -78,8 +79,7 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   //Get all Variables
   match, _ := strconv.Atoi(r.Form.Get("match"))
   team, _ := strconv.Atoi(r.Form.Get("team"))
-  sString := []rune(r.Form.Get("allianceStation"))
-  allianceStation := sString[0]
+  allianceStation := r.Form.Get("allianceStation")
   preloaded, _ := strconv.ParseBool(r.Form.Get("preloaded"))
   movedStart, _ := strconv.ParseBool(r.Form.Get("moveStart"))
   topIntake, _ := strconv.ParseBool(r.Form.Get("topIntake"))
@@ -95,6 +95,7 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   disconnected, _ := strconv.ParseBool(r.Form.Get("disconnected"))
   comments := r.Form.Get("comments")
 
+  fmt.Println("Submitting to database")
   store.logScout(match, team, allianceStation, preloaded,movedStart,
   topIntake, floorIntake,attemptedLower,attemptedMiddle,attemptedHigh,
   attemptedTraversal,successful,endgameComment,defense,attempted,disconnected,comments)

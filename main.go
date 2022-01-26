@@ -4,7 +4,6 @@ import (
   "github.com/gorilla/mux"
   "net/http"
   "html/template"
-  "encoding/json"
   "database/sql"
   "strconv"
   "fmt"
@@ -76,6 +75,7 @@ func gameTestHandler(w http.ResponseWriter, r *http.Request) {
 }
 func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   //Will parse form, log, redirect
+
   err := r.ParseForm()
   fmt.Println("Submit accessed")
   if err != nil {
@@ -102,18 +102,29 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   disconnected, _ := strconv.ParseBool(r.Form.Get("disconnected"))
   comments := r.Form.Get("comments")
 
-  aShotsJson := r.Form.Get("autonShots")
+  aShotsL, _  := strconv.Atoi(r.Form.Get("ashotLength"))
   var autonShots []Shot
-  err = json.Unmarshal([]byte(aShotsJson), &autonShots)
-  if err != nil {
-    fmt.Println(err)
+  for i := 0; i < aShotsL; i++ {
+    var newShot Shot
+    newShot.X, _ = strconv.ParseFloat(r.Form.Get("autonShots["+strconv.Itoa(i)+"][position][x]"),64)
+    newShot.Y, _ = strconv.ParseFloat(r.Form.Get("autonShots["+strconv.Itoa(i)+"][position][y]"),64)
+    newShot.Result = r.Form.Get("autonShots["+strconv.Itoa(i)+"][result]")
+    fmt.Println(newShot)
+    autonShots = append(autonShots, newShot)
   }
-  tShotsJson := r.Form.Get("teleopShots")
+  fmt.Println(autonShots)
+  tShotsL, _ := strconv.Atoi(r.Form.Get("tshotLength"))
   var teleopShots []Shot
-  err = json.Unmarshal([]byte(tShotsJson), &teleopShots)
-  if err != nil {
-    fmt.Println(err)
+  for i := 0; i < tShotsL; i++ {
+    var newShot Shot
+    newShot.X, _ = strconv.ParseFloat(r.Form.Get("teleopShots["+strconv.Itoa(i)+"][position][x]"),64)
+    newShot.Y, _ = strconv.ParseFloat(r.Form.Get("teleopShots["+strconv.Itoa(i)+"][position][y]"),64)
+    newShot.Result = r.Form.Get("teleopShots["+strconv.Itoa(i)+"][result]")
+    fmt.Println(newShot)
+    teleopShots = append(teleopShots, newShot)
   }
+
+  fmt.Println(teleopShots)
   fmt.Println("Submitting to database")
 
   store.logScout(match, team, allianceStation, preloaded,movedStart,

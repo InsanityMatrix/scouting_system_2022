@@ -506,7 +506,9 @@
 					disconnected: lostConnection,
 					comments: postgameComments,
 					autonShots: autonShots,
-					teleopShots: teleopShots
+					teleopShots: telShots,
+					ashotLength: autonShots.length,
+					tshotLength: telShots.length
 				},
 				success: function(response) {
 					//REFRESH

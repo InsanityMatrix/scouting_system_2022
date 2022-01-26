@@ -8,3 +8,6 @@
 //Comments text
 
 //Log all attempted rungs and then the highest successful one
+
+//SHOTS (auton_matchNo_teamNo)
+//x decimal, y decimal, result text

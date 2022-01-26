@@ -4,12 +4,19 @@ import (
   "github.com/gorilla/mux"
   "net/http"
   "html/template"
+  "encoding/json"
   "database/sql"
   "strconv"
   "fmt"
   "time"
   _ "github.com/lib/pq"
 )
+
+type Shot struct {
+  X float64 `json:"X"`
+  Y float64 `json:"Y"`
+  Result string `json:"Result"`
+}
 
 func newRouter() *mux.Router {
   r := mux.NewRouter()
@@ -95,8 +102,21 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   disconnected, _ := strconv.ParseBool(r.Form.Get("disconnected"))
   comments := r.Form.Get("comments")
 
+  aShotsJson := r.Form.Get("autonShots")
+  var autonShots []Shot
+  err = json.Unmarshal([]byte(aShotsJson), &autonShots)
+  if err != nil {
+    fmt.Println(err)
+  }
+  tShotsJson := r.Form.Get("teleopShots")
+  var teleopShots []Shot
+  err = json.Unmarshal([]byte(tShotsJson), &teleopShots)
+  if err != nil {
+    fmt.Println(err)
+  }
   fmt.Println("Submitting to database")
+
   store.logScout(match, team, allianceStation, preloaded,movedStart,
   topIntake, floorIntake,attemptedLower,attemptedMiddle,attemptedHigh,
-  attemptedTraversal,successful,endgameComment,defense,attempted,disconnected,comments)
+  attemptedTraversal,successful,endgameComment,defense,attempted,disconnected,comments, autonShots,teleopShots)
 }

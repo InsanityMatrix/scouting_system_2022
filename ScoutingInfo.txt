@@ -25,6 +25,6 @@ use the terminal?
 
 
 //TODO:
-No score zone on the maps, scoring from outside of arena
-deselect scoring option on buttons after submitting shot
 Popup successful resubmit (3 seconds) then refresh
+Explain map things more
+Make top buttons more prominent on teleop

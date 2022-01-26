@@ -234,6 +234,13 @@
 			</center>
 		  </div>
 	</div>
+	<div id = "endPopup" hidden>
+		<div class = "vertical-center">
+			<center>
+				<p>You did it.</p>
+			</center>
+		</div>
+	</div>
 	<div class = "navbar" id = "navbar">
 		<ul class = "nav nav-tabs">
 			<li class="nav-item active">
@@ -486,7 +493,13 @@
 				},
 				success: function(response) {
 					//REFRESH
-					location.reload(true);
+					
+					document.getElementById("endPopup").hidden = false;
+					
+					setTimeout(function() {
+						document.getElementById("endPopup").hidden = true;
+						location.reload(true);
+					}, 3000);
 				}
 			});
 		}

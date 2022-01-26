@@ -302,6 +302,10 @@
 							<label class = "labelOverride" for="leftStart">Moved out of starting area</label>
 							<!-- ADD LABEL OVERRIDE CLASS TO CSS-->
 						</div>
+						<br></br>
+						<div class = "explain">
+							<p>Click on the field position where your robot shot from.</p>
+						</div>
 					<!--<div class="col-md-2">
 						<center>
 							<input type="checkbox" name="topIntake" id="topIntake">
@@ -317,6 +321,7 @@
 					<div class="col-md-4"></div>
 					<!-- map goes here-->
 					<canvas id="autonField" width="824" height="346"></canvas>
+					<br></br>
 					<div class = "info">
 						<p id = "amadeCounter">Total shots made: 0</p>
 						<p id = "amissCounter">Total shots missed: 0</p>
@@ -337,6 +342,10 @@
 							<label class = "labelOverride" for="floorIntake">Floor Intake</label>
 						</div>
 					</center>
+					<br></br>
+					<div class = "explain">
+					<p>Click on the field position where your robot shot from.</p>
+				</div>
 					<!--<div class="col-md-4"></div>
 					<div class="col-md-2">
 						<center>
@@ -353,6 +362,7 @@
 					<div class="col-md-4"></div>-->
 				</div>
 				<canvas id="teleopField" width="824" height="346"></canvas>
+				<br></br>
 				<div class = "info">
 					<p id = "madeCounter">Total shots made: 0</p>
 					<p id = "missCounter">Total shots missed: 0</p>
@@ -469,6 +479,11 @@
 			let lostConnection = document.getElementById("lostConnect").checked;
 			let postgameComments = document.getElementById("postgameComments").value;
 			let successful = sTrav ? 4 : (sHigh ? 3 : (sMid ? 2 : (sLow ? 1 : 0)));
+			
+			if ((teamNum == "") || (matchNum == "")) {
+				return;
+			}
+			
 			$.ajax({
 				url: '/submit',
 				type: 'POST',

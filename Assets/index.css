@@ -168,6 +168,9 @@ label {
 	to {opacity: 0%;}
 }
 /* Field map code */
+.explain {
+	
+}
 .radio-group {
 	background: #3c3c3c;
 	padding-left: 10px;
@@ -267,7 +270,6 @@ button.submit:hover {
 }
 #endPopup {
 	position: fixed; /* Sit on top of the page content */
-	display: none; /* Hidden by default */
 	width: 100%; /* Full width (cover the whole page) */
 	height: 100%; /* Full height (cover the whole page) */
 	top: 0;

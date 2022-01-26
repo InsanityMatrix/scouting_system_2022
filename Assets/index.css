@@ -158,19 +158,19 @@ label {
 }
 .badTimeMessage {
 	color: #58b2d1;
+	opacity: 0;
+	animation-fill-mode: forwards;
+}
+.fadeOut {
 	animation-name: fadeOut;
 	animation-fill-mode: forwards;
-	opacity: 0%;
 	animation-duration: 3s;
 }
 @keyframes fadeOut {
-	from {opacity: 100%;}
-	to {opacity: 0%;}
+	from {opacity: 1;}
+	to {opacity: 0;}
 }
 /* Field map code */
-.explain {
-	
-}
 .radio-group {
 	background: #3c3c3c;
 	padding-left: 10px;
@@ -279,5 +279,9 @@ button.submit:hover {
 	color: white;
 	background-color: rgba(0,0,0,0.5);	/* Black background with opacity */
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-	cursor: pointer; /* Add a pointer on hover */
+}
+#congrats {
+	background-color: #1E5AA8;
+	border: 20px solid;
+	border-color: #1E5AA8;
 }

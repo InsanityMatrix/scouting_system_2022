@@ -14,14 +14,25 @@
 	<script>
 	//Pregame inputs
 	function teamInputs() {
+		var num = document.getElementById("teamNum").value;
+		if (!((num >= 0) || (num < 10000))) {
+			document.getElementById("teamNum").value = "";
+			document.getElementById("pregameBadTime").classList.add("fadeOut");
+		}
 		setTimeout(function() {
-			var num = document.getElementById("teamNum").value;
-			if ((num < 0) || (num > 10000)) {
-				document.getElementById("teamNum").value = "";
-				document.getElementById("pregameBadTime").style.opacity = "100%";
-				document.getElementById("pregameBadTime").classList.add("fadeOut");
-			}
-		}, 100);
+			document.getElementById("pregameBadTime").classList.remove("fadeOut");
+		}, 3010);
+	}
+	
+	function matchInputs() {
+		var num = document.getElementById("matchNum").value;
+		if (!((num >= 0) || (num < 1000))) {
+			document.getElementById("matchNum").value = "";
+			document.getElementById("pregameBadTime").classList.add("fadeOut");
+		}
+		setTimeout(function() {
+			document.getElementById("pregameBadTime").classList.remove("fadeOut");
+		}, 3010);
 	}
 	
 	//Auton field
@@ -234,10 +245,10 @@
 			</center>
 		  </div>
 	</div>
-	<div id = "endPopup" hidden>
+	<div id = "endPopup"  hidden>
 		<div class = "vertical-center">
 			<center>
-				<p>You did it.</p>
+				<p id = "congrats">You did it!</p>
 			</center>
 		</div>
 	</div>
@@ -280,15 +291,14 @@
 				</div>
 				<div class = "info">
 					<p>What is the match number?</p>
-					<input id="matchNum" type = "text"></input>
+					<input id="matchNum" type = "text" onKeyPress = "matchInputs()"></input>
 				</div>
 				<div class = "info">
 					<p>Did they preload any cargo?</p>
 					<input type = "radio" name="preloaded" id = "preloadYes" value="yes">Yes</input>
 					<input type = "radio" name="preloaded" id = "preloadNo" value="no">No</input>
 				</div>
-				
-				<h2 class = "badTimeMessage"  id = "pregameBadTime" hidden>Invalid input!</h2>
+				<h2 class = "badTimeMessage"  id = "pregameBadTime">Invalid input!</h2>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "autonTab">

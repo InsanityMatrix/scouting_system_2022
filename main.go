@@ -109,10 +109,8 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
     newShot.X, _ = strconv.ParseFloat(r.Form.Get("autonShots["+strconv.Itoa(i)+"][position][x]"),64)
     newShot.Y, _ = strconv.ParseFloat(r.Form.Get("autonShots["+strconv.Itoa(i)+"][position][y]"),64)
     newShot.Result = r.Form.Get("autonShots["+strconv.Itoa(i)+"][result]")
-    fmt.Println(newShot)
     autonShots = append(autonShots, newShot)
   }
-  fmt.Println(autonShots)
   tShotsL, _ := strconv.Atoi(r.Form.Get("tshotLength"))
   var teleopShots []Shot
   for i := 0; i < tShotsL; i++ {
@@ -120,11 +118,9 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
     newShot.X, _ = strconv.ParseFloat(r.Form.Get("teleopShots["+strconv.Itoa(i)+"][position][x]"),64)
     newShot.Y, _ = strconv.ParseFloat(r.Form.Get("teleopShots["+strconv.Itoa(i)+"][position][y]"),64)
     newShot.Result = r.Form.Get("teleopShots["+strconv.Itoa(i)+"][result]")
-    fmt.Println(newShot)
     teleopShots = append(teleopShots, newShot)
   }
 
-  fmt.Println(teleopShots)
   fmt.Println("Submitting to database")
 
   store.logScout(match, team, allianceStation, preloaded,movedStart,

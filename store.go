@@ -35,14 +35,30 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 	}
 	
 	if exists {
-		store.db.Query("REMOVE FROM " + autonShotsTB + " WHERE 1=1;")
+		store.db.Query("DELETE FROM " + autonShotsTB + " WHERE 1=1;")
 	} else {
 		store.db.Query("CREATE TABLE " + autonShotsTB + " (id SERIAL PRIMARY KEY, X decimal, Y decimal, Result text);")
 	}
 	//To insert list into table
+	autonQuery := "INSERT INTO " + autonShotsTB + " (X,Y,Result) VALUES "
+	vals := []interface{}{}
+	ticker := 1;
 	for _, shot := range autonShots {
-		store.db.Query("INSERT INTO " + autonShotsTB + "(X,Y,Result) VALUES ($1, $2, $3)", shot.X, shot.Y, shot.Result)
+		autonQuery += fmt.Sprintf("($%d, $%d, $%d),", ticker, ticker + 1, ticker + 2)
+		ticker += 3;
+		vals = append(vals, shot.X, shot.Y, shot.Result)
 	}
+	autonQuery = autonQuery[0:len(autonQuery)-1]
+	fmt.Println(autonQuery)
+	stmt, err := store.db.Prepare(autonQuery)
+	if err != nil {
+		fmt.Println(err)
+	}
+	_, err = stmt.Exec(vals...)
+	if err != nil {
+		fmt.Println(err)
+	}
+	
 	//TELEOP
 	teleopShotsTB := "teleop_" + strconv.Itoa(match) + "_" + strconv.Itoa(team)
 	row = store.db.QueryRow("SELECT EXISTS ( SELECT FROM information_schema.tables WHERE table_schema='public' AND table_name=$1);", teleopShotsTB)
@@ -53,14 +69,22 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 	}
 	
 	if exists {
-		store.db.Query("REMOVE FROM " + teleopShotsTB + " WHERE 1=1;")
+		store.db.Query("DELETE FROM " + teleopShotsTB + " WHERE 1=1;")
 	} else {
 		store.db.Query("CREATE TABLE " + teleopShotsTB + " (id SERIAL PRIMARY KEY, X decimal, Y decimal, Result text);")
 	}
 	//To insert list into table
+	teleopQuery := "INSERT INTO " + teleopShotsTB + " (X, Y, Result) VALUES "
+	vals = []interface{}{}
+	ticker = 1
 	for _, shot := range teleopShots {
-		store.db.Query("INSERT INTO " + teleopShotsTB + "(X,Y,Result) VALUES ($1, $2, $3)", shot.X, shot.Y, shot.Result)
+		teleopQuery += fmt.Sprintf("($%d, $%d, $%d),", ticker, ticker + 1, ticker + 2)
+		ticker += 3
+		vals = append(vals, shot.X, shot.Y, shot.Result)
 	}
+	teleopQuery = teleopQuery[0:len(teleopQuery)-1]
+	stmt, _ = store.db.Prepare(teleopQuery)
+	stmt.Exec(vals...)
 }
 
 

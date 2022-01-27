@@ -47,8 +47,6 @@ func main() {
     panic(err)
   }
   fmt.Println("Database open!")
-  db.SetMaxOpenConns(25)
-  db.SetMaxIdleConns(10)
   db.SetConnMaxLifetime(time.Hour)
   InitStore(dbStore{db:db})
   http.ListenAndServe(port, router)

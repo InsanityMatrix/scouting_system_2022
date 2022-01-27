@@ -25,6 +25,8 @@ use the terminal?
 
 
 //TODO:
-Popup successful resubmit (3 seconds) then refresh
-Explain map things more
-Make top buttons more prominent on teleop
+navbar thing make noticeable
+take away the suggestions on text inputs
+make auton page other color
+submit button disable after click
+text limit on textbox (144 char)

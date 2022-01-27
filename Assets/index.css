@@ -11,14 +11,6 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-.banner {
-	background-color: #1e5AA8;
-	margin: 20 auto;
-	padding: 20 50;
-	color: white;
-	width: 100%;
-	text-align: center;
-}
 /* Navbar code */
 .nav {
 	height: inherit;
@@ -287,8 +279,16 @@ button.submit:hover {
 	background-color: rgba(0,0,0,0.5);	/* Black background with opacity */
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
+.banner {
+	background-image: linear-gradient(to right, #cfe385, #3c7b3b);
+	margin: 20 auto;
+	padding: 20 50;
+	color: white;
+	width: 100%;
+	text-align: center;
+	height: 55px;
+}
 #congrats {
-	background-color: #1E5AA8;
-	border: 20px solid;
-	border-color: #1E5AA8;
+	display: inline-block;
+	margin: 0px;
 }

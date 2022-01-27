@@ -245,10 +245,9 @@
 			</center>
 		  </div>
 	</div>
-	<div id = "endPopup"  hidden>
-		<div class="banner">
-
-				<p id = "congrats">You did it!</p>
+	<div id = "endPopup" hidden>
+		<div class="banner vertical-center">
+			<p id = "congrats" class = "vertical-center">You did it!</p>
 		</div>
 	</div>
 	<div class = "navbar" id = "navbar">
@@ -523,6 +522,7 @@
 					//REFRESH
 					
 					document.getElementById("endPopup").hidden = false;
+					document.getElementById("banner").classList.add("comesDown");
 					
 					setTimeout(function() {
 						document.getElementById("endPopup").hidden = true;

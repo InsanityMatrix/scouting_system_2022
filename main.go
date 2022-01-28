@@ -47,7 +47,8 @@ func main() {
     panic(err)
   }
   fmt.Println("Database open!")
-  db.SetConnMaxLifetime(time.Hour)
+  db.SetMaxOpenConns(100)
+  db.SetConnMaxLifetime(30 * time.Second)
   InitStore(dbStore{db:db})
   http.ListenAndServe(port, router)
 }
@@ -99,6 +100,13 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
   attempted, _ := strconv.ParseBool(r.Form.Get("attempted"))
   disconnected, _ := strconv.ParseBool(r.Form.Get("disconnected"))
   comments := r.Form.Get("comments")
+
+  if len(endgameComment) > 144 {
+    endgameComment = endgameComment[0:143]
+  }
+  if len(comments) > 144 {
+    comments = comments[0:143]
+  }
 
   aShotsL, _  := strconv.Atoi(r.Form.Get("ashotLength"))
   var autonShots []Shot

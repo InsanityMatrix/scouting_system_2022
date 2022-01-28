@@ -1,4 +1,2 @@
-dont be able to type that many ones into comments (144 chars)
-submit button disable
 overlay buttons more clicky
 disable checks on endgame if did not attempt is checked

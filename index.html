@@ -277,7 +277,7 @@
 				<hr class = "underline"></hr>
 				<div class = "info">
 					<p>What team are you scouting?</p>
-					<input id="teamNum" type = "text" onKeyPress = "teamInputs()"></input>
+					<input id="teamNum" type = "text" onKeyPress = "teamInputs()" autocomplete="off"></input>
 				</div>
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
@@ -289,7 +289,7 @@
 				</div>
 				<div class = "info">
 					<p>What is the match number?</p>
-					<input id="matchNum" type = "text" onKeyPress = "matchInputs()"></input>
+					<input id="matchNum" type = "text" onKeyPress = "matchInputs()" autocomplete="off"></input>
 				</div>
 				<div class = "info">
 					<p>Did they preload any cargo?</p>
@@ -416,7 +416,7 @@
 				<div class = "info" >
 					<p>Please enter here if robot fell off any rungs:</p>
 				</div>
-				<textarea class = "comments" id = "endgameComments"></textarea>
+				<textarea class = "comments" id = "endgameComments" maxlength="144"></textarea>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "postgameTab">
@@ -434,7 +434,7 @@
 				<div class = "info">
 					<p>Other things to note:</p>
 				</div>
-				<textarea class = "comments" id = "postgameComments"></textarea>
+				<textarea class = "comments" id = "postgameComments" maxlength="144"></textarea>
 				<br></br>
 				<button id = "submitButton" onClick = "submit()">Submit</button>
 			</center>
@@ -491,7 +491,7 @@
 			if ((teamNum == "") || (matchNum == "")) {
 				return;
 			}
-			
+			document.getElementById("submitButton").disabled = true;
 			$.ajax({
 				url: '/submit',
 				type: 'POST',

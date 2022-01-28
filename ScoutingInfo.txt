@@ -26,7 +26,4 @@ use the terminal?
 
 //TODO:
 navbar thing make noticeable
-take away the suggestions on text inputs
 make auton page other color
-submit button disable after click
-text limit on textbox (144 char)

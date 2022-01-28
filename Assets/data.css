@@ -4,7 +4,8 @@
     border: none;
     margin-top: 8px;
     margin-right: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 0px;
     font-size: 17px;
     font-family: 'Oswald';
+	height: 40px;
 }

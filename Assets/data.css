@@ -9,3 +9,14 @@
     font-family: 'Oswald';
 	height: 40px;
 }
+
+.mapControl div button {
+    background-color: #333;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: white;
+    font-weight: bold;
+}
+.mapControl div button.active {
+    background-color: #1E5AA8;
+}

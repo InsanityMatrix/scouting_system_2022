@@ -25,7 +25,8 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 	for rows.Next() {
 		data := TeamData{}
 
-		err = rows.Scan(&data.Match, team, &data.AllianceStation, &data.Preloaded, &data.MovedStart, &data.TopIntake, &data.FloorIntake, &data.AttemptedLower, &data.AttemptedMiddle, &data.AttemptedHigh, &data.AttemptedTraversal, &data.Successful, &data.EndgameComment, &data.Defense, &data.Attempted, &data.Disconnected, &data.Comments)
+		err = rows.Scan(&data.Match, &data.AllianceStation, &data.Preloaded, &data.MovedStart, &data.TopIntake, &data.FloorIntake, &data.AttemptedLower, &data.AttemptedMiddle, &data.AttemptedHigh, &data.AttemptedTraversal, &data.Successful, &data.EndgameComment, &data.Defense, &data.Attempted, &data.Disconnected, &data.Comments)
+		data.Team = team
 		if err != nil {
 			fmt.Println(err)
 			return []TeamData{}, []Shot{}, []Shot{}
@@ -66,7 +67,7 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 			if err != nil {
 				fmt.Println(err)
 			}
-			teleopShots = append(autonShots, shot)
+			teleopShots = append(teleopShots, shot)
 		}
 	}
 

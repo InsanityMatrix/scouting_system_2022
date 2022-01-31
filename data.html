@@ -10,33 +10,92 @@
 	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body id="back">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Navbar with search functionality -->
         <div class="navbar" id="navbar">
 			<ul class = "nav nav-tabs">
 				<li class="nav-item active">
 					<a class="nav-link" id = "navPregame" data-toggle="tab" href = "#pregameTab">Data</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" id = "navAuton" data-toggle="tab" href = "#autonTab">Also Data</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id = "navTeleop" data-toggle="tab" href = "#teleopTab">Some More Data</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id = "navEndgame" data-toggle="tab" href = "#endgameTab">Lots of Data Here</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id = "navPostgame" data-toggle="tab" href = "#postgameTab">Data has Became Data</a>
-				</li>
 				<input type="text" class = "nav-item" id = "search" placeholder="Search....">
 			</ul>
             <hr class="navBottom" />
         </div>
         <!-- Page with all the data -->
-        
+		<div id="dataField">
+			<center>
+				<canvas id="hotSpotMap" width="824" height="346"></canvas>
+			</center>
+			<!-- Auton/Teleop Buttons-->
+			<div class="row mapControl">
+				<div class="col-md-6" >
+					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Auton');">Auton</button>
+				</div>
+				<div class="col-md-6" >
+					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Teleop');">Teleop</button>
+				</div>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script>
+			var canvas = document.getElementById("hotSpotMap");
+			var context = canvas.getContext('2d');
+			var currentData;
+			document.getElementById("search").addEventListener("keypress",function(event) {
+				//Enter Key Code: 13
+				if(event.keyCode === 13) {
+					event.preventDefault();
+					//Get Team Data
+					getData();
+				}
+			});
+
+			function getData() {
+				let team = document.getElementById("search").value;
+				$.getJSON("/team/" + team, function(data){
+					currentData = data;
+					let field_image = new Image();
+					field_image.src = "assets/field.png";
+					field_image.onload = function() {
+						context.drawImage(field_image, 0,0);
+						//Draw Auton dots on the map
+						drawShotDots(data["Auton"]);
+					};	
+					
+				});
+			}
+			function updateMap(mode) {
+				let autonBtn = document.getElementById("autonBtn");
+				let teleopBtn = document.getElementById("teleopBtn");
+				if(mode == "Auton") {
+					drawShotDots(currentData["Auton"]);
+					autonBtn.classList.add("active");
+					teleopBtn.classList.remove("active");
+				} else {
+					drawShotDots(currentData["Teleop"]);
+					autonBtn.classList.remove("active");
+					teleopBtn.classList.add("active");
+				}
+			}
+			function drawShotDots(auton) {
+				context.clearRect(0,0, canvas.width, canvas.height);
+
+				let field_image = new Image();
+				field_image.src = "assets/field.png";
+				field_image.onload = function (){
+					context.fillStyle = 'orange';
+					for(var i = 0; i < auton.length; i++) {
+						let shot = auton[i];
+						
+
+						context.fillRect(shot.X, shot.Y, 5, 5);
+					}
+				};
+			}
+		</script>
         <!-- Sources -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
 	    <script src = "assets/bootstrap.js"></script>
     </body>
 </html>

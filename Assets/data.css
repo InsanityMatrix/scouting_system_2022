@@ -20,3 +20,17 @@
 .mapControl div button.active {
     background-color: #1E5AA8;
 }
+#dataField table {
+    width: 80%;
+    margin: 10px auto;
+    color: white;
+    border: 2px solid white;
+    border-collapse: collapse;
+    text-align: center;
+}
+#dataField table tr {
+    border: 1px solid white;
+}
+#dataField table tr td {
+    border: 1px solid white;
+}

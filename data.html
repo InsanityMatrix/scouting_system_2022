@@ -30,10 +30,10 @@
 			<!-- Auton/Teleop Buttons-->
 			<div class="row mapControl">
 				<div class="col-md-6" >
-					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Auton');">Auton</button>
+					<button id="autonBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Auton');">Auton</button>
 				</div>
 				<div class="col-md-6" >
-					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Teleop');">Teleop</button>
+					<button id="teleopBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Teleop');">Teleop</button>
 				</div>
 			</div>
 		</div>
@@ -61,9 +61,69 @@
 						context.drawImage(field_image, 0,0);
 						//Draw Auton dots on the map
 						drawShotDots(data["Auton"]);
+
+						//Make Table of all the data and put it on the dataField
+						let table = document.createElement('table');
+						
+						insertIntakes(table);
+
+						var typicalAllianceStation;
+
+						let timesL = 0;
+						let timesM = 0;
+						let timesR = 0;
+						for(var i = 0; i < data["Data"].length; i++) {
+							if(data["Data"][i].AllianceStation == "l") {
+								timesL++;
+							} else if (data["Data"][i].AllianceStation == "m") {
+								timesM++;
+							} else {
+								timesR++;
+							}
+						}
+						let total = timesL + timesM + timesR;
+						let avgL = timesL / total;
+						let avgR = timesR / total;
+						let avgM = timesM / total;
+						if(avgL > avgM) {
+							if(avgL > avgR) {
+								typicalAllianceStation = 'left';
+							} else {
+								typicalAllianceStation = 'right';
+							}
+						} else {
+							if(avgM > avgR) {
+								typicalAllianceStation = 'middle';
+							} else {
+								typicalAllianceStation = 'right';
+							}
+						}
+						insertAS(table,typicalAllianceStation);
+
+						document.getElementById("dataField").appendChild(table);
 					};	
 					
 				});
+			}
+			function insertAS(table, as) {
+				let tr = table.insertRow();
+				let td = tr.insertCell();
+				td.appendChild(document.createTextNode('Typical Alliance Station'));
+				td = tr.insertCell();
+				td.appendChild(document.createTextNode(as));
+			}
+			function insertIntakes(table) {
+				let tr = table.insertRow();
+				let td = tr.insertCell();
+				td.appendChild(document.createTextNode('Top Intake'));
+				td = tr.insertCell();
+				td.appendChild(document.createTextNode(currentData["Data"][0].TopIntake));
+				tr = table.insertRow();
+				td = tr.insertCell();
+				td.appendChild(document.createTextNode('Floor Intake'));
+				td = tr.insertCell();
+				td.appendChild(document.createTextNode(currentData["Data"][0].FloorIntake));
+				
 			}
 			function updateMap(mode) {
 				let autonBtn = document.getElementById("autonBtn");
@@ -80,14 +140,13 @@
 			}
 			function drawShotDots(auton) {
 				context.clearRect(0,0, canvas.width, canvas.height);
-
 				let field_image = new Image();
 				field_image.src = "assets/field.png";
 				field_image.onload = function (){
+					context.drawImage(field_image, 0, 0);
 					context.fillStyle = 'orange';
 					for(var i = 0; i < auton.length; i++) {
 						let shot = auton[i];
-						
 
 						context.fillRect(shot.X, shot.Y, 5, 5);
 					}

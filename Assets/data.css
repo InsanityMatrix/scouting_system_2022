@@ -1,17 +1,7 @@
 .navbar input[type=text] {
     float: right;
     padding: 6px;
-    border: none;
-    margin-top: 8px;
-    margin-right: 16px;
-    margin-bottom: 0px;
-    font-size: 17px;
-    font-family: 'Oswald';
-	height: 40px;
-}
-
-.mapControl div button {
-    background-color: #333;
+    border: none; 
     padding-top: 12px;
     padding-bottom: 12px;
     color: white;
@@ -33,4 +23,14 @@
 }
 #dataField table tr td {
     border: 1px solid white;
+}
+
+.infoCard {
+    margin-top: 20px;
+    background-color: #333;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
 }

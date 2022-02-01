@@ -53,13 +53,6 @@ func newRouter() *mux.Router {
 	return r
 }
 
-func maintain() {
-	for {
-		time.Sleep(time.Hour)
-		store.maintainDatabase()
-	}
-}
-
 func main() {
 	router := newRouter()
 	port := ":80"
@@ -80,7 +73,6 @@ func main() {
 	db.SetConnMaxLifetime(30 * time.Second)
 	InitStore(dbStore{db: db})
 
-	go maintain()
 	http.ListenAndServe(port, router)
 }
 

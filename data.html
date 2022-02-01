@@ -36,6 +36,48 @@
 					<button id="teleopBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Teleop');">Teleop</button>
 				</div>
 			</div>
+			<div id="dataCards">
+				<div class="row">
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Top Intake</h4>
+						<p id="topIntake"></p>
+					</div>
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Floor Intake</h4>
+						<p id="floorIntake"></p>
+					</div>
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Typical Alliance Station</h4>
+						<p id="allianceStation"></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Attempted Lower</h4>
+						<p id="attemptedLower"></p>
+						<h4>Successful:</h4>
+						<p id="sLow"></p>
+					</div>
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Attempted Middle</h4>
+						<p id="attemptedMiddle"></p>
+						<h4>Successful:</h4>
+						<p id="sMid"></p>
+					</div>
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Attempted High</h4>
+						<p id="attemptedHigh"></p>
+						<h4>Successful:</h4>
+						<p id="sHigh"></p>
+					</div>
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Attempted Traversal</h4>
+						<p id="attemptedTrav"></p>
+						<h4>Successful:</h4>
+						<p id="sTrav"></p>
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- Scripts -->
 		<script>
@@ -62,17 +104,49 @@
 						//Draw Auton dots on the map
 						drawShotDots(data["Auton"]);
 
-						//Make Table of all the data and put it on the dataField
-						let table = document.createElement('table');
-						
-						insertIntakes(table);
-
 						var typicalAllianceStation;
+						var attemptedLower = 0;
+						var attemptedMiddle = 0;
+						var attemptedHigh = 0;
+						var attemptedTrav = 0;
+
+						var sLow = 0;
+						var sMid = 0;
+						var sHigh = 0;
+						var sTrav = 0;
 
 						let timesL = 0;
 						let timesM = 0;
 						let timesR = 0;
 						for(var i = 0; i < data["Data"].length; i++) {
+							let d = data["Data"][i];
+							if(d.AttemptedLower) {
+								attemptedLower++;
+							}
+							if(d.AttemptedMiddle) {
+								attemptedMiddle++;
+							}
+							if(d.AttemptedHigh) {
+								attemptedHigh++;
+							}
+							if(d.AttemptedTrav) {
+								attemptedTrav++;
+							}
+
+							switch (d.Successful) {
+								case 4:
+									sTrav++;
+									break;
+								case 3:
+									sHigh++;
+									break;
+								case 2:
+									sMid++;
+									break;
+								case 1:
+									sLow++;
+									break;
+							}
 							if(data["Data"][i].AllianceStation == "l") {
 								timesL++;
 							} else if (data["Data"][i].AllianceStation == "m") {
@@ -81,23 +155,51 @@
 								timesR++;
 							}
 						}
+
+						console.log(sHigh);
+						console.log(sMid);
 						let total = timesL + timesM + timesR;
 						let avgL = timesL / total;
 						let avgR = timesR / total;
 						let avgM = timesM / total;
 						if(avgL > avgM) {
 							if(avgL > avgR) {
-								typicalAllianceStation = 'left';
+								typicalAllianceStation = 'Left';
 							} else {
-								typicalAllianceStation = 'right';
+								typicalAllianceStation = 'Right';
 							}
 						} else {
 							if(avgM > avgR) {
-								typicalAllianceStation = 'middle';
+								typicalAllianceStation = 'Middle';
 							} else {
-								typicalAllianceStation = 'right';
+								typicalAllianceStation = 'Right';
 							}
 						}
+
+						
+						
+						//Cards
+						document.getElementById("topIntake").innerText = data["Data"][0].TopIntake ? "Yes" : "No";
+						document.getElementById("floorIntake").innerText = data["Data"][0].FloorIntake ? "Yes" : "No";
+						document.getElementById("allianceStation").innerText = typicalAllianceStation;
+						
+
+						document.getElementById("attemptedLower").innerText = attemptedLower + " times";
+						document.getElementById("attemptedMiddle").innerText = attemptedMiddle + " times";
+						document.getElementById("attemptedHigh").innerText = attemptedHigh + " times";
+						document.getElementById("attemptedTrav").innerText = attemptedTrav + " times";
+
+						document.getElementById("sLow").innerText = "0%";
+						document.getElementById("sMid").innerText = (((sTrav + sHigh + sMid) / attemptedMiddle) * 100) + "%";
+						document.getElementById("sHigh").innerText = ((sTrav + sHigh/attemptedHigh) * 100) + "%";
+						document.getElementById("sTrav").innerText = ((sTrav/attemptedTrav) * 100) + "%"; 
+
+						//Make Table of all the data and put it on the dataField
+						let table = document.createElement('table');
+						
+						insertIntakes(table);
+
+						
 						insertAS(table,typicalAllianceStation);
 
 						document.getElementById("dataField").appendChild(table);

@@ -10,9 +10,6 @@ type dbStore struct {
 	db *sql.DB
 }
 
-func (store *dbStore) maintainDatabase() {
-	store.db.Query("DELETE FROM scouting a USING scouting b WHERE a.match = b.match AND a.team = b.team")
-}
 func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 	rows, err := store.db.Query("SELECT match,alliancestation,preloaded,movedstart,topintake,floorintake,attemptedlower,attemptedmiddle,attemptedhigh,attemptedtraversal,successful,endgamecomment,defense,attempted,disconnected,comments FROM scouting WHERE team=$1", team)
 	if err != nil {

@@ -38,6 +38,13 @@ type TeamData struct {
 	Comments           string
 }
 
+type TeamOverview struct {
+	Team        int
+	Data        []TeamData
+	AutonShots  []Shot
+	TeleopShots []Shot
+}
+
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
 
@@ -45,6 +52,7 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/data", dataHandler)
 	r.HandleFunc("/submit", submitScoutHandler)
 	r.HandleFunc("/team/{team}", teamDataHandler)
+	r.HandleFunc("/overview", teamOverviewHandler)
 	//STATIC FILES
 	staticFileDirectory := http.Dir("./assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
@@ -114,6 +122,141 @@ func teamDataHandler(w http.ResponseWriter, r *http.Request) {
 	jsonInfo, _ := json.Marshal(responseData)
 	fmt.Fprint(w, string(jsonInfo))
 	//Write JSON
+}
+
+type TeamStats struct {
+	Team          int
+	PercentTop    float64
+	PercentBottom float64
+	PercentMisses float64
+	AmountTop     int
+	AmountBottom  int
+	AmountMisses  int
+}
+
+type ShotRanking struct {
+	Team       int
+	Percentage float64
+	Total      int
+}
+
+type TeamRankings struct {
+	PercentTop    []ShotRanking
+	PercentBottom []ShotRanking
+	PercentMisses []ShotRanking
+}
+
+func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
+	teams := store.getAllTeams()
+	overviewList := []TeamOverview{}
+
+	for _, team := range teams {
+		//Compile Team Data List
+		data, auton, teleop := store.getTeamData(team)
+		o := TeamOverview{
+			Team:        team,
+			Data:        data,
+			AutonShots:  auton,
+			TeleopShots: teleop,
+		}
+		overviewList = append(overviewList, o)
+	}
+	//Now get stats of each team separately
+	allStats := []TeamStats{}
+	for _, team := range overviewList {
+		totalShots := len(team.AutonShots) + len(team.TeleopShots)
+		totalMisses := 0
+		totalTop := 0
+		totalBottom := 0
+
+		for _, shot := range team.AutonShots {
+			if shot.Result == "topbasket" {
+				totalTop++
+			} else if shot.Result == "bottombasket" {
+				totalBottom++
+			} else {
+				totalMisses++
+			}
+		}
+		for _, shot := range team.TeleopShots {
+			if shot.Result == "topbasket" {
+				totalTop++
+			} else if shot.Result == "bottombasket" {
+				totalBottom++
+			} else {
+				totalMisses++
+			}
+		}
+
+		pTop := float64(totalTop) / float64(totalShots) * 100
+		pBot := float64(totalBottom) / float64(totalShots) * 100
+		pMis := float64(totalMisses) / float64(totalShots) * 100
+
+		stats := TeamStats{
+			Team:          team.Team,
+			PercentTop:    pTop,
+			PercentBottom: pBot,
+			PercentMisses: pMis,
+			AmountTop:     totalTop,
+			AmountBottom:  totalBottom,
+			AmountMisses:  totalMisses,
+		}
+		allStats = append(allStats, stats)
+	}
+
+	//SORT TOP BASKET DATA
+	rankingsTop := []ShotRanking{}
+	for _, t := range allStats {
+		rankingsTop = append(rankingsTop, ShotRanking{
+			Team:       t.Team,
+			Percentage: t.PercentTop,
+			Total:      t.AmountTop,
+		})
+	}
+	rankingsTop = sortShotList(rankingsTop, len(rankingsTop))
+	rankingsBottom := []ShotRanking{}
+	for _, t := range allStats {
+		rankingsBottom = append(rankingsBottom, ShotRanking{
+			Team:       t.Team,
+			Percentage: t.PercentBottom,
+			Total:      t.AmountBottom,
+		})
+	}
+	rankingsBottom = sortShotList(rankingsBottom, len(rankingsBottom))
+	rankingsMissed := []ShotRanking{}
+	for _, t := range allStats {
+		rankingsMissed = append(rankingsMissed, ShotRanking{
+			Team:       t.Team,
+			Percentage: t.PercentMisses,
+			Total:      t.AmountMisses,
+		})
+	}
+	rankingsMissed = sortShotList(rankingsMissed, len(rankingsMissed))
+
+	rankings := TeamRankings{
+		PercentTop:    rankingsTop,
+		PercentBottom: rankingsBottom,
+		PercentMisses: rankingsMissed,
+	}
+	info, _ := json.Marshal(rankings)
+	fmt.Fprint(w, string(info))
+}
+
+func sortShotList(list []ShotRanking, n int) []ShotRanking {
+	if n == 1 {
+		return list
+	}
+
+	for i := 0; i < n-1; i++ {
+		if list[i].Percentage < list[i+1].Percentage {
+			temp := list[i]
+			list[i] = list[i+1]
+			list[i+1] = temp
+		}
+
+		list = sortShotList(list, n-1)
+	}
+	return list
 }
 func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
 	//Will parse form, log, redirect

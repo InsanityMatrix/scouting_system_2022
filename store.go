@@ -10,6 +10,35 @@ type dbStore struct {
 	db *sql.DB
 }
 
+func (store *dbStore) getAllTeams() []int {
+	var allTeams []int
+	rows, err := store.db.Query("SELECT team FROM scouting;")
+	if err != nil {
+		fmt.Println(err)
+		return allTeams
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var team int
+		err = rows.Scan(&team)
+		if err != nil {
+			fmt.Println(err)
+			return allTeams
+		}
+		exists := false
+		for _, t := range allTeams {
+			if t == team {
+				exists = true
+			}
+		}
+		if !exists {
+			allTeams = append(allTeams, team)
+		}
+	}
+
+	return allTeams
+}
 func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 	rows, err := store.db.Query("SELECT match,alliancestation,preloaded,movedstart,topintake,floorintake,attemptedlower,attemptedmiddle,attemptedhigh,attemptedtraversal,successful,endgamecomment,defense,attempted,disconnected,comments FROM scouting WHERE team=$1", team)
 	if err != nil {

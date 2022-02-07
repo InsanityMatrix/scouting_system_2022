@@ -1,2 +1,3 @@
 overlay buttons more clicky
 disable checks on endgame if did not attempt is checked
+Make so cant be successful, without attempting.

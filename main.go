@@ -132,6 +132,10 @@ type TeamStats struct {
 	AmountTop     int
 	AmountBottom  int
 	AmountMisses  int
+	AmountTrav    int
+	AmountHigh    int
+	AmountMiddle  int
+	AmountLower   int
 }
 
 type ShotRanking struct {
@@ -139,11 +143,18 @@ type ShotRanking struct {
 	Percentage float64
 	Total      int
 }
-
+type AmountRanking struct {
+	Team   int
+	Amount int
+}
 type TeamRankings struct {
 	PercentTop    []ShotRanking
 	PercentBottom []ShotRanking
 	PercentMisses []ShotRanking
+	AmountTrav    []AmountRanking
+	AmountHigh    []AmountRanking
+	AmountMiddle  []AmountRanking
+	AmountLower   []AmountRanking
 }
 
 func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
@@ -192,6 +203,24 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		pBot := float64(totalBottom) / float64(totalShots) * 100
 		pMis := float64(totalMisses) / float64(totalShots) * 100
 
+		//Collect Hanging Totals
+		trav := 0
+		high := 0
+		middle := 0
+		lower := 0
+		for _, entry := range team.Data {
+			switch entry.Successful {
+			case 1:
+				lower++
+			case 2:
+				middle++
+			case 3:
+				high++
+			case 4:
+				trav++
+			}
+		}
+
 		stats := TeamStats{
 			Team:          team.Team,
 			PercentTop:    pTop,
@@ -200,6 +229,10 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			AmountTop:     totalTop,
 			AmountBottom:  totalBottom,
 			AmountMisses:  totalMisses,
+			AmountTrav:    trav,
+			AmountHigh:    high,
+			AmountMiddle:  middle,
+			AmountLower:   lower,
 		}
 		allStats = append(allStats, stats)
 	}
@@ -233,15 +266,53 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	rankingsMissed = sortShotList(rankingsMissed, len(rankingsMissed))
 
+	rankingsTrav := []AmountRanking{}
+	rankingsHigh := []AmountRanking{}
+	rankingsMiddle := []AmountRanking{}
+	rankingsLower := []AmountRanking{}
+	for _, te := range allStats {
+		t := AmountRanking{Team: te.Team, Amount: te.AmountTrav}
+		h := AmountRanking{Team: te.Team, Amount: te.AmountHigh}
+		m := AmountRanking{Team: te.Team, Amount: te.AmountMiddle}
+		l := AmountRanking{Team: te.Team, Amount: te.AmountLower}
+
+		rankingsTrav = append(rankingsTrav, t)
+		rankingsHigh = append(rankingsHigh, h)
+		rankingsMiddle = append(rankingsMiddle, m)
+		rankingsLower = append(rankingsLower, l)
+	}
+	rankingsTrav = sortAmountList(rankingsTrav, len(rankingsTrav))
+	rankingsHigh = sortAmountList(rankingsHigh, len(rankingsHigh))
+	rankingsMiddle = sortAmountList(rankingsMiddle, len(rankingsMiddle))
+	rankingsLower = sortAmountList(rankingsLower, len(rankingsLower))
+
 	rankings := TeamRankings{
 		PercentTop:    rankingsTop,
 		PercentBottom: rankingsBottom,
 		PercentMisses: rankingsMissed,
+		AmountTrav:    rankingsTrav,
+		AmountHigh:    rankingsHigh,
+		AmountMiddle:  rankingsMiddle,
+		AmountLower:   rankingsLower,
 	}
 	info, _ := json.Marshal(rankings)
 	fmt.Fprint(w, string(info))
 }
+func sortAmountList(list []AmountRanking, n int) []AmountRanking {
+	if n == 1 {
+		return list
+	}
 
+	for i := 0; i < n-1; i++ {
+		if list[i].Amount < list[i+1].Amount {
+			temp := list[i]
+			list[i] = list[i+1]
+			list[i+1] = temp
+		}
+		list = sortAmountList(list, n-1)
+	}
+	return list
+}
 func sortShotList(list []ShotRanking, n int) []ShotRanking {
 	if n == 1 {
 		return list

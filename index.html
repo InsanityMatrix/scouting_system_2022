@@ -383,34 +383,36 @@
 				<hr class = "underline"></hr>
 				<div class = "info">
 					<p>Did not attempt climb</p>
-					<input id="noAttempt" type = "checkbox" value = "true">
+					<input id="noAttempt" type = "checkbox" value = "true" onChange = "noAttempt()">
 				</div>
-				<br></br>
-				<h4 id = "title">Rungs</h4>
-				<hr id = "small-rule"></hr>
-				<div class = "info">
-					<p>Attempted Lower</p>
-					<input type = "checkbox" id = "aLow"></input>
-					<p>Successful Lower</p>
-					<input type = "checkbox" id = "sLow"></input>
-				</div>
-				<div class = "info">
-					<p>Attempted Middle</p>
-					<input type = "checkbox" id = "aMid"></input>
-					<p>Successful Middle</p>
-					<input type = "checkbox" id = "sMid"></input>
-				</div>
-				<div class = "info">
-					<p>Attempted High</p>
-					<input type = "checkbox" id = "aHigh">
-					<p>Successful High</p>
-					<input type = "checkbox" id = "sHigh">
-				</div>
-				<div class = "info">
-					<p>Attempted Traversal</p>
-					<input type = "checkbox" id = "aTrav">
-					<p>Successful Traversal</p>
-					<input type = "checkbox" id = "sTrav">
+				<div id = "climb">
+					<br></br>
+					<h4 id = "title">Rungs</h4>
+					<hr id = "small-rule"></hr>
+					<div class = "info">
+						<p>Attempted Lower</p>
+						<input type = "checkbox" id = "aLow" onChange = "disable('aLow')"></input>
+						<p>Successful Lower</p>
+						<input type = "checkbox" id = "sLow" disabled></input>
+					</div>
+					<div class = "info">
+						<p>Attempted Middle</p>
+						<input type = "checkbox" id = "aMid" onChange = "disable('aMid')"></input>
+						<p>Successful Middle</p>
+						<input type = "checkbox" id = "sMid" disabled></input>
+					</div>
+					<div class = "info">
+						<p>Attempted High</p>
+						<input type = "checkbox" id = "aHigh" onChange = "disable('aHigh')">
+						<p>Successful High</p>
+						<input type = "checkbox" id = "sHigh" disabled>
+					</div>
+					<div class = "info">
+						<p>Attempted Traversal</p>
+						<input type = "checkbox" id = "aTrav" onChange = "disable('aTrav')">
+						<p>Successful Traversal</p>
+						<input type = "checkbox" id = "sTrav" disabled>
+					</div>
 				</div>
 				<br></br>
 				<div class = "info" >
@@ -443,6 +445,23 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src = "assets/bootstrap.js"></script>
 	<script>
+		//Disable checkboxes in endgame
+		function noAttempt() {
+			if (document.getElementById("noAttempt").checked == true) {
+				document.getElementById("climb").hidden = true;
+			} else {
+				document.getElementById("climb").hidden = false;
+			}
+		}
+		function disable(ident) {
+			var ident2 = "s" + ident.substring(1, ident.length);
+			if (document.getElementById(ident).checked == true) {
+				document.getElementById(ident2).disabled = false;
+			} else {
+				document.getElementById(ident2).disabled = true;
+			}
+		}
+		
 		setInterval(function(){
 			$(".radio-group:has(input[type=radio]:checked)" ).css("background", "#1E5AA8");
 			$(".radio-group:has(input[type=radio]:not(:checked))").css("background", "#3c3c3c");

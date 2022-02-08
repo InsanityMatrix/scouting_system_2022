@@ -15,8 +15,11 @@
         <!-- Navbar with search functionality -->
         <div class="navbar" id="navbar">
 			<ul class = "nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link" id = "navPregame" data-toggle="tab" href = "/report">Overview</a>
+				</li>
 				<li class="nav-item active">
-					<a class="nav-link" id = "navPregame" data-toggle="tab" href = "#pregameTab">Data</a>
+					<a class="nav-link" id = "navPregame" data-toggle="tab" href = "/data">Team Data</a>
 				</li>
 				<input type="text" class = "nav-item" id = "search" placeholder="Search....">
 			</ul>
@@ -194,39 +197,12 @@
 						document.getElementById("sHigh").innerText = ((sTrav + sHigh/attemptedHigh) * 100) + "%";
 						document.getElementById("sTrav").innerText = ((sTrav/attemptedTrav) * 100) + "%"; 
 
-						//Make Table of all the data and put it on the dataField
-						let table = document.createElement('table');
-						
-						insertIntakes(table);
-
-						
-						insertAS(table,typicalAllianceStation);
-
-						document.getElementById("dataField").appendChild(table);
+	
 					};	
 					
 				});
 			}
-			function insertAS(table, as) {
-				let tr = table.insertRow();
-				let td = tr.insertCell();
-				td.appendChild(document.createTextNode('Typical Alliance Station'));
-				td = tr.insertCell();
-				td.appendChild(document.createTextNode(as));
-			}
-			function insertIntakes(table) {
-				let tr = table.insertRow();
-				let td = tr.insertCell();
-				td.appendChild(document.createTextNode('Top Intake'));
-				td = tr.insertCell();
-				td.appendChild(document.createTextNode(currentData["Data"][0].TopIntake));
-				tr = table.insertRow();
-				td = tr.insertCell();
-				td.appendChild(document.createTextNode('Floor Intake'));
-				td = tr.insertCell();
-				td.appendChild(document.createTextNode(currentData["Data"][0].FloorIntake));
-				
-			}
+			
 			function updateMap(mode) {
 				let autonBtn = document.getElementById("autonBtn");
 				let teleopBtn = document.getElementById("teleopBtn");

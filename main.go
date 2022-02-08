@@ -50,6 +50,7 @@ func newRouter() *mux.Router {
 
 	r.HandleFunc("/", indexHandler)
 	r.HandleFunc("/data", dataHandler)
+	r.HandleFunc("/report", reportHandler)
 	r.HandleFunc("/submit", submitScoutHandler)
 	r.HandleFunc("/team/{team}", teamDataHandler)
 	r.HandleFunc("/overview", teamOverviewHandler)
@@ -96,6 +97,15 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func dataHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	tmpl, err := template.ParseFiles("data.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	tmpl.Execute(w, map[string]string{})
+}
+func reportHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	tmpl, err := template.ParseFiles("report.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

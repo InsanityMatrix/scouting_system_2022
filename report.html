@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Analyzing Scouting Data</title>
+        <link rel = "stylesheet" href = "assets/index.css">
+	    <link rel = "stylesheet" href = "assets/bootstrap.css">
+        <link rel="stylesheet" href="assets/data.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    </head>
+    <body id="back">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Navbar with search functionality -->
+        <div class="navbar" id="navbar">
+			<ul class = "nav nav-tabs">
+				<li class="nav-item active">
+					<a class="nav-link" id = "navPregame" data-toggle="tab" href = "/report">Overview</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id = "navPregame" data-toggle="tab" href = "/data">Team Data</a>
+				</li>
+			</ul>
+            <hr class="navBottom" />
+        </div>
+        
+        <div class="container">
+            <div class="col-sm-3 rankings" id="percentTop">
+                <div class="row leader">
+                    <h3>Highest % Top Basket</h3>
+                </div>
+                <div class="row leader">
+                    <div class="col-sm-4">
+                        <h6>Team</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Percentage</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Amount</h6>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4 rankings" id="percentBottom">
+                <div class="row leader">
+                    <h3>Highest % Bottom Basket</h3>
+                </div>
+                <div class="row leader">
+                    <div class="col-sm-4">
+                        <h6>Team</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Percentage</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Amount</h6>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3 rankings" id="percentMissed">
+                <div class="row leader">
+                    <h3>Highest % Missed</h3>
+                </div>
+                <div class="row leader">
+                    <div class="col-sm-4">
+                        <h6>Team</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Percentage</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Amount</h6>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var overview;
+           $.getJSON("/overview", function(data){
+            overview = data;
+            let ptBoard = document.getElementById("percentTop");
+            let btBoard = document.getElementById("percentBottom");
+            let mBoard = document.getElementById("percentMissed");
+            let lnRankings = data.PercentTop.length < 5 ? data.PercentTop.length : 5;
+            for(var i = 0; i < lnRankings; i++) {
+                //Highest % Top Basket
+                
+                let nPTRank = document.createElement("div");
+                nPTRank.classList.add("row");
+                nPTRank.classList.add("rank")
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-md-4");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentTop[i].Team))
+
+                    let pDiv = document.createElement("div");
+                    pDiv.classList.add("col-md-4");
+                    let percentage = Math.round(data.PercentTop[i].Percentage * 100) / 100;
+                    pDiv.appendChild(document.createTextNode(percentage + "%"));
+
+                    let tDiv = document.createElement("div");
+                    tDiv.classList.add("col-md-4");
+                    tDiv.appendChild(document.createTextNode(data.PercentTop[i].Total));
+
+                    nPTRank.appendChild(tnDiv);
+                    nPTRank.appendChild(pDiv);
+                    nPTRank.appendChild(tDiv);
+                }
+                ptBoard.appendChild(nPTRank);
+
+                let nBTRank = document.createElement("div");
+                nBTRank.classList.add("row");
+                nBTRank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-md-4");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentBottom[i].Team))
+
+                    let pDiv = document.createElement("div");
+                    pDiv.classList.add("col-md-4");
+                    let percentage = Math.round(data.PercentBottom[i].Percentage * 100) / 100;
+                    pDiv.appendChild(document.createTextNode(percentage + "%"));
+
+                    let tDiv = document.createElement("div");
+                    tDiv.classList.add("col-md-4");
+                    tDiv.appendChild(document.createTextNode(data.PercentBottom[i].Total));
+
+                    nBTRank.appendChild(tnDiv);
+                    nBTRank.appendChild(pDiv);
+                    nBTRank.appendChild(tDiv);
+                }
+                btBoard.appendChild(nBTRank);
+
+                let nMRank = document.createElement("div");
+                nMRank.classList.add("row");
+                nMRank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-md-4");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentMisses[i].Team))
+
+                    let pDiv = document.createElement("div");
+                    pDiv.classList.add("col-md-4");
+                    let percentage = Math.round(data.PercentMisses[i].Percentage * 100) / 100;
+                    pDiv.appendChild(document.createTextNode(percentage + "%"));
+
+                    let tDiv = document.createElement("div");
+                    tDiv.classList.add("col-md-4");
+                    tDiv.appendChild(document.createTextNode(data.PercentMisses[i].Total));
+
+                    nMRank.appendChild(tnDiv);
+                    nMRank.appendChild(pDiv);
+                    nMRank.appendChild(tDiv);
+                }
+                mBoard.appendChild(nMRank);
+            }
+           });
+        </script>
+        <script src = "assets/bootstrap.js"></script>
+    </body>
+</html>

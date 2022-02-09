@@ -26,54 +26,110 @@
         </div>
         
         <div class="container">
-            <div class="col-sm-3 rankings" id="percentTop">
-                <div class="row leader">
-                    <h3>Highest % Top Basket</h3>
+            <div class="row">
+                <div class="col-sm-3 rankings" id="percentTop">
+                    <div class="row leader">
+                        <h3>Highest % Top Basket</h3>
+                    </div>
+                    <div class="row leader">
+                        <div class="col-sm-4">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Percentage</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Amount</h6>
+                        </div>  
+                    </div>
                 </div>
-                <div class="row leader">
-                    <div class="col-sm-4">
-                        <h6>Team</h6>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-4 rankings" id="percentBottom">
+                    <div class="row leader">
+                        <h3>Highest % Bottom Basket</h3>
                     </div>
-                    <div class="col-sm-4">
-                        <h6>Percentage</h6>
+                    <div class="row leader">
+                        <div class="col-sm-4">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Percentage</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Amount</h6>
+                        </div>  
                     </div>
-                    <div class="col-sm-4">
-                        <h6>Amount</h6>
-                    </div>  
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3 rankings" id="percentMissed">
+                    <div class="row leader">
+                        <h3>Highest % Missed</h3>
+                    </div>
+                    <div class="row leader">
+                        <div class="col-sm-4">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Percentage</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Amount</h6>
+                        </div>  
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-4 rankings" id="percentBottom">
-                <div class="row leader">
-                    <h3>Highest % Bottom Basket</h3>
+            <div class="row">
+                <div class="col-sm-3 rankings" id="amtTrav">
+                    <div class="row leader">
+                        <h3>Most Traversal Bar Hangs</h3>
+                    </div>
+                    <div class="row leader">
+                        <div class="col-sm-6">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Amount</h6>
+                        </div> 
+                    </div>
                 </div>
-                <div class="row leader">
-                    <div class="col-sm-4">
-                        <h6>Team</h6>
+                <div class="col-sm-3 rankings" id="amtHigh">
+                    <div class="row leader">
+                        <h3>Most High Bar Hangs</h3>
                     </div>
-                    <div class="col-sm-4">
-                        <h6>Percentage</h6>
+                    <div class="row leader">
+                        <div class="col-sm-6">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Amount</h6>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <h6>Amount</h6>
-                    </div>  
                 </div>
-            </div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-3 rankings" id="percentMissed">
-                <div class="row leader">
-                    <h3>Highest % Missed</h3>
+                <div class="col-sm-3 rankings" id="amtMiddle">
+                    <div class="row leader">
+                        <h3>Most Middle Bar Hangs</h3>
+                    </div>
+                    <div class="row leader">
+                        <div class="col-sm-6">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Amount</h6>
+                        </div>  
+                    </div>
                 </div>
-                <div class="row leader">
-                    <div class="col-sm-4">
-                        <h6>Team</h6>
+                <div class="col-sm-3 rankings" id="amtLow">
+                    <div class="row leader">
+                        <h3>Most Low Bar Hangs</h3>
                     </div>
-                    <div class="col-sm-4">
-                        <h6>Percentage</h6>
+                    <div class="row leader">
+                        <div class="col-sm-6">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Amount</h6>
+                        </div>  
                     </div>
-                    <div class="col-sm-4">
-                        <h6>Amount</h6>
-                    </div>  
                 </div>
             </div>
         </div>
@@ -85,6 +141,10 @@
             let ptBoard = document.getElementById("percentTop");
             let btBoard = document.getElementById("percentBottom");
             let mBoard = document.getElementById("percentMissed");
+            let tBoard = document.getElementById("amtTrav");
+            let hBoard = document.getElementById("amtHigh");
+            let miBoard = document.getElementById("amtMiddle");
+            let lBoard = document.getElementById("amtLow");                                                                     
             let lnRankings = data.PercentTop.length < 5 ? data.PercentTop.length : 5;
             for(var i = 0; i < lnRankings; i++) {
                 //Highest % Top Basket
@@ -94,16 +154,16 @@
                 nPTRank.classList.add("rank")
                 {
                     let tnDiv = document.createElement("div");
-                    tnDiv.classList.add("col-md-4");
+                    tnDiv.classList.add("col-sm-4");
                     tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentTop[i].Team))
 
                     let pDiv = document.createElement("div");
-                    pDiv.classList.add("col-md-4");
+                    pDiv.classList.add("col-sm-4");
                     let percentage = Math.round(data.PercentTop[i].Percentage * 100) / 100;
                     pDiv.appendChild(document.createTextNode(percentage + "%"));
 
                     let tDiv = document.createElement("div");
-                    tDiv.classList.add("col-md-4");
+                    tDiv.classList.add("col-sm-4");
                     tDiv.appendChild(document.createTextNode(data.PercentTop[i].Total));
 
                     nPTRank.appendChild(tnDiv);
@@ -117,16 +177,16 @@
                 nBTRank.classList.add("rank");
                 {
                     let tnDiv = document.createElement("div");
-                    tnDiv.classList.add("col-md-4");
-                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentBottom[i].Team))
+                    tnDiv.classList.add("col-sm-4");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentBottom[i].Team));
 
                     let pDiv = document.createElement("div");
-                    pDiv.classList.add("col-md-4");
+                    pDiv.classList.add("col-sm-4");
                     let percentage = Math.round(data.PercentBottom[i].Percentage * 100) / 100;
                     pDiv.appendChild(document.createTextNode(percentage + "%"));
 
                     let tDiv = document.createElement("div");
-                    tDiv.classList.add("col-md-4");
+                    tDiv.classList.add("col-sm-4");
                     tDiv.appendChild(document.createTextNode(data.PercentBottom[i].Total));
 
                     nBTRank.appendChild(tnDiv);
@@ -140,16 +200,16 @@
                 nMRank.classList.add("rank");
                 {
                     let tnDiv = document.createElement("div");
-                    tnDiv.classList.add("col-md-4");
-                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentMisses[i].Team))
+                    tnDiv.classList.add("col-sm-4");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.PercentMisses[i].Team));
 
                     let pDiv = document.createElement("div");
-                    pDiv.classList.add("col-md-4");
+                    pDiv.classList.add("col-sm-4");
                     let percentage = Math.round(data.PercentMisses[i].Percentage * 100) / 100;
                     pDiv.appendChild(document.createTextNode(percentage + "%"));
 
                     let tDiv = document.createElement("div");
-                    tDiv.classList.add("col-md-4");
+                    tDiv.classList.add("col-sm-4");
                     tDiv.appendChild(document.createTextNode(data.PercentMisses[i].Total));
 
                     nMRank.appendChild(tnDiv);
@@ -157,6 +217,75 @@
                     nMRank.appendChild(tDiv);
                 }
                 mBoard.appendChild(nMRank);
+
+                let nTRank = document.createElement("div");
+                nTRank.classList.add("row");
+                nTRank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-sm-6");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.AmountTrav[i].Team));
+
+                    let aDiv = document.createElement("div");
+                    aDiv.classList.add("col-sm-6");
+                    aDiv.appendChild(document.createTextNode(data.AmountTrav[i].Amount));
+
+                    nTRank.appendChild(tnDiv);
+                    nTRank.appendChild(aDiv);
+                }
+                console.log(nTRank);
+                tBoard.appendChild(nTRank);
+
+                let nHRank = document.createElement("div");
+                nHRank.classList.add("row");
+                nHRank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-sm-6");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.AmountHigh[i].Team));
+
+                    let aDiv = document.createElement("div");
+                    aDiv.classList.add("col-sm-6");
+                    aDiv.appendChild(document.createTextNode(data.AmountHigh[i].Amount));
+
+                    nHRank.appendChild(tnDiv);
+                    nHRank.appendChild(aDiv);
+                }
+                hBoard.appendChild(nTRank);
+
+                nMRank = document.createElement("div");
+                nMRank.classList.add("row");
+                nMRank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-sm-6");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.AmountMiddle[i].Team));
+
+                    let aDiv = document.createElement("div");
+                    aDiv.classList.add("col-sm-6");
+                    aDiv.appendChild(document.createTextNode(data.AmountMiddle[i].Amount));
+
+                    nMRank.appendChild(tnDiv);
+                    nMRank.appendChild(aDiv);
+                }
+                miBoard.appendChild(nMRank);
+
+                let nLRank = document.createElement("div");
+                nLRank.classList.add("row");
+                nLRank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-sm-6");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.AmountLower[i].Team));
+
+                    let aDiv = document.createElement("div");
+                    aDiv.classList.add("col-sm-6");
+                    aDiv.appendChild(document.createTextNode(data.AmountLower[i].Amount));
+
+                    nLRank.appendChild(tnDiv);
+                    nLRank.appendChild(aDiv);
+                }
+                lBoard.appendChild(nLRank);
             }
            });
         </script>

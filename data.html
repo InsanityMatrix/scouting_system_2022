@@ -16,10 +16,10 @@
         <div class="navbar" id="navbar">
 			<ul class = "nav navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" id = "navPregame" href = "report">Overview</a>
+					<a class="nav-link" id = "navReport" href = "report">Overview</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" id = "navPregame" href = "data">Team Data</a>
+					<a class="nav-link" id = "navData" href = "data">Team Data</a>
 				</li>
 		
 				
@@ -28,19 +28,19 @@
 				<li><input type="text" class = "nav-item navbar-right" id = "search" placeholder="Search...."></li>
 				<li><button type="button" class = "nav-item navbar-right btn-lg" id="searchBtn" onclick="getData();">Search</button></li>
 			</ul>
-            <hr class="navBottom" />
+			<hr class="navBottom-data"/>
         </div>
         <!-- Page with all the data -->
 		<div id="dataField">
 			<div class = "row">
-				<div class = "legend col-md-3">
-					<p>hiusehi</p>
+				<div class = "shotlist col-md-3">
+					<p>SHOTLIST</p>
 				</div>
 				<div class = "col-md-6">
 					<canvas id="hotSpotMap" width="824" height="346"></canvas>
 				</div>
 				<div class = "legend col-md-3">
-					<p>hiusehi</p>
+					<p>KEY</p>
 				</div>
 			</div>
 			<!-- Auton/Teleop Buttons-->

@@ -43,57 +43,57 @@
 .nav-tabs > li.active > #navPregame,
 .nav-tabs > li.active > #navPregame:hover{
 	background-image: linear-gradient(to right, rgb(206,226,132), rgb(198,220,128));
-	color: 3c3c3c;
+	color: #3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navPregame:hover {
 	background-image: linear-gradient(to right, rgb(176,196,102), rgb(168,190,98));
 	border: 0px;
-	color: 3c3c3c;
+	color: #3c3c3c;
 }
 .nav-tabs > li.active > #navAuton,
 .nav-tabs > li.active > #navAuton:hover{
 	background-image: linear-gradient(to right, rgb(194,218,126), rgb(186,212,122));
-	color: 3c3c3c;
+	color: #3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navAuton:hover {
 	background-image: linear-gradient(to right, rgb(164,188,96), rgb(156,182,92));
 	border: 0px;
-	color: 3c3c3c;
+	color: #3c3c3c;
 }
 .nav-tabs > li.active > #navTeleop,
 .nav-tabs > li.active > #navTeleop:hover{
 	background-image: linear-gradient(to right, rgb(184,211,122), rgb(176,205,117));
-	color: 3c3c3c;
+	color: #3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navTeleop:hover {
 	background-image: linear-gradient(to right, rgb(154,181,92), rgb(146,175,87));
 	border: 0px;
-	color: 3c3c3c;
+	color: #3c3c3c;
 }
 .nav-tabs > li.active > #navEndgame,
 .nav-tabs > li.active > #navEndgame:hover{
 	background-image: linear-gradient(to right, rgb(174,204,116), rgb(164,197,111));
-	color: 3c3c3c;
+	color: #3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navEndgame:hover {
 	background-image: linear-gradient(to right, rgb(144,174,86), rgb(134,167,81));
 	border: 0px;
-	color: 3c3c3c;
+	color: #3c3c3c;
 }
 .nav-tabs > li.active > #navPostgame,
 .nav-tabs > li.active > #navPostgame:hover{
 	background-image: linear-gradient(to right, rgb(163,196,111), rgb(151,187,105));
-	color: 3c3c3c;
+	color: #3c3c3c;
 	border: 0px;
 }
 .nav-tabs > li > #navPostgame:hover {
 	background-image: linear-gradient(to right, rgb(133,166,81), rgb(121,157,75));
 	border: 0px;
-	color: 3c3c3c;
+	color: #3c3c3c;
 }
 /*End tab coloration code*/
 .navBottom {

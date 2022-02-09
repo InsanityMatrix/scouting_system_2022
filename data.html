@@ -14,14 +14,19 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Navbar with search functionality -->
         <div class="navbar" id="navbar">
-			<ul class = "nav nav-tabs">
+			<ul class = "nav navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" id = "navPregame" href = "report">Overview</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" id = "navPregame" href = "data">Team Data</a>
 				</li>
-				<input type="text" class = "nav-item" id = "search" placeholder="Search....">
+		
+				
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><input type="text" class = "nav-item navbar-right" id = "search" placeholder="Search...."></li>
+				<li><button type="button" class = "nav-item navbar-right btn-lg" id="searchBtn" onclick="getData();">Search</button></li>
 			</ul>
             <hr class="navBottom" />
         </div>
@@ -233,7 +238,15 @@
 					context.fillStyle = 'orange';
 					for(var i = 0; i < auton.length; i++) {
 						let shot = auton[i];
-
+						if(auton[i].Result == "topbasket") {
+							context.fillStyle = 'green';
+						} else if(auton[i].Result == "bottombasket") {
+							context.fillStyle = 'purple';
+						} else if(auton[i].Result == "bounced") {
+							context.fillStyle = 'yellow';
+						} else {
+							context.fillStyle = 'orange';
+						}
 						context.fillRect(shot.X, shot.Y, 5, 5);
 					}
 				};

@@ -45,6 +45,11 @@ type TeamOverview struct {
 	TeleopShots []Shot
 }
 
+type TeamPoints struct {
+	Team   int
+	Points float64
+}
+
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
 

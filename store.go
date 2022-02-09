@@ -10,6 +10,21 @@ type dbStore struct {
 	db *sql.DB
 }
 
+func sortPointList(list []TeamPoints, n int) []TeamPoints {
+	if n == 1 {
+		return list
+	}
+
+	for i := 0; i < n-1; i++ {
+		if list[i].Points < list[i+1].Points {
+			temp := list[i]
+			list[i] = list[i+1]
+			list[i+1] = temp
+		}
+		list = sortPointList(list, n-1)
+	}
+	return list
+}
 func (store *dbStore) getAllTeams() []int {
 	var allTeams []int
 	rows, err := store.db.Query("SELECT team FROM scouting;")
@@ -38,6 +53,30 @@ func (store *dbStore) getAllTeams() []int {
 	}
 
 	return allTeams
+}
+
+func (store *dbStore) getBestAuton(teams []int) []TeamPoints {
+	//Make List to store teams and their average auton points
+	t := []TeamPoints{}
+	for _, team := range teams {
+		data, auton, _ := store.getTeamData(team)
+		//Go through auton pts array and add up all points
+		points := 0
+		for _, shot := range auton {
+			if shot.Result == "topbasket" {
+				points += 4
+			} else if shot.Result == "bottombasket" {
+				points += 2
+			}
+		}
+		//Get Average Points per round
+		avgPoints := float64(points) / float64(len(data))
+		nTeam := TeamPoints{Team: team, Points: avgPoints}
+		t = append(t, nTeam)
+	}
+	//Sort so that most auton points are at top
+	t = sortPointList(t, len(t))
+	return t
 }
 func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 	rows, err := store.db.Query("SELECT match,alliancestation,preloaded,movedstart,topintake,floorintake,attemptedlower,attemptedmiddle,attemptedhigh,attemptedtraversal,successful,endgamecomment,defense,attempted,disconnected,comments FROM scouting WHERE team=$1", team)

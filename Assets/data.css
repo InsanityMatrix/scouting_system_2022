@@ -49,3 +49,20 @@
     text-align: center;
     background-color: #111 !important;
 }
+
+.nav-link {
+    display: inline-block;
+	margin-left: 5px;
+	margin-top: 10px;
+	color: white;
+	font-family: 'Oswald', sans-serif;
+	font-weight: bold;
+	border: 0px;
+	z-index: 0;
+}
+.nav-link:hover {
+	color: white;
+}
+.nav-item {
+	height: inherit;
+}

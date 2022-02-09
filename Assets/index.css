@@ -112,6 +112,7 @@ p {
 	color: white;
 	font-family: 'Oswald', sans-serif;
 	display: inline-block;
+	font-size: 18px;
 }
 #title {
 	color: white;
@@ -150,6 +151,7 @@ input[type=text] {
 label {
 	color: white;
 	font-family: inherit;
+	font-size: 18px;
 }
 /* Pregame-specific */
 #station {
@@ -242,7 +244,12 @@ button.submit:hover {
 	background-color: #1e43a8;
 	border: none;
 }
-
+#autonField {
+	border: 5px solid red;
+}
+#teleopField {
+	border: 5px solid blue;
+}
 /* Endgame-specific */
 #small-rule {
 	width: 40%;

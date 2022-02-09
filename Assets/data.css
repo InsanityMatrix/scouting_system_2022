@@ -50,6 +50,12 @@
     background-color: #111 !important;
 }
 
+<<<<<<< HEAD
+.legend {
+	background-color: gray;
+	margin-top: 5px;
+	height: 346px;
+=======
 .nav-link {
     display: inline-block;
 	margin-left: 5px;
@@ -65,4 +71,5 @@
 }
 .nav-item {
 	height: inherit;
+>>>>>>> 9ffda3f538625ef5a213e2e76cfd342dbb4cbea6
 }

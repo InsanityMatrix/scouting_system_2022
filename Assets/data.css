@@ -49,3 +49,9 @@
     text-align: center;
     background-color: #111 !important;
 }
+
+.legend {
+	background-color: gray;
+	margin-top: 5px;
+	height: 346px;
+}

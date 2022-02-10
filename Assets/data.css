@@ -50,16 +50,20 @@
     background-color: #111 !important;
 }
 
-.legend {
+.sideBox {
 	background-color: gray;
 	margin-top: 5px;
 	height: 346px;
-	padding-left: 2px;
+	color: white;
+	font-family: 'Oswald', sans-serif;
+	margin-bottom: 5px;
 }
 .shotlist {
-	background-color: gray;
-	margin-top: 5px;
-	height: 346px;
+	border-bottom-right-radius: 5px;
+}
+.legend {
+	padding-left: 2px;
+	border-bottom-left-radius: 5px;
 }
 .nav-link {
     display: inline-block;
@@ -85,6 +89,7 @@
 	border: 0px;
 	border: 1px solid transparent;
 	border-radius: 4px 4px 0 0;
+	padding-bottom: 5px;
 }
 .navbar-nav > li > #navReport:hover {
 	background-image: linear-gradient(to right, rgb(176,196,102), rgb(168,190,98));
@@ -92,6 +97,7 @@
 	color: #3c3c3c;
 	border: 1px solid transparent;
 	border-radius: 4px 4px 0 0;
+	padding-bottom: 5px;
 }
 .navbar-nav > li.active > #navData,
 .navbar-nav > li.active > #navData:hover{
@@ -100,6 +106,7 @@
 	border: 0px;
 	border: 1px solid transparent;
 	border-radius: 4px 4px 0 0;
+	padding-bottom: 5px;
 }
 .navbar-nav > li > #navData:hover {
 	background-image: linear-gradient(to right, rgb(164,188,96), rgb(156,182,92));
@@ -107,6 +114,7 @@
 	color: #3c3c3c;
 	border: 1px solid transparent;
 	border-radius: 4px 4px 0 0;
+	padding-bottom: 5px;
 }
 .navBottom-data {
 	width: 100%;

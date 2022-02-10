@@ -21,8 +21,6 @@
 				<li class="nav-item active">
 					<a class="nav-link" id = "navData" href = "data">Team Data</a>
 				</li>
-		
-				
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><input type="text" class = "nav-item navbar-right" id = "search" placeholder="Search...."></li>
@@ -33,23 +31,35 @@
         <!-- Page with all the data -->
 		<div id="dataField">
 			<div class = "row">
-				<div class = "shotlist col-md-3">
+				<div class = "shotlist col-md-3 sideBox">
 					<p>SHOTLIST</p>
+					<ul>
+						<li>Shots go here!</li>
+						<li>(X,Y) - [Made/Missed]</li>
+					</ul>
 				</div>
 				<div class = "col-md-6">
 					<canvas id="hotSpotMap" width="824" height="346"></canvas>
 				</div>
-				<div class = "legend col-md-3">
+				<div class = "legend col-md-3 sideBox">
 					<p>KEY</p>
+					<ul id = "shots">
+						<li style = "color: green">Green - Top Basket</li>
+						<li style = "color: purple">Purple - Bottom Basket</li>
+						<li style = "color: yellow">Yellow - Bounced</li>
+						<li style = "color: orange">Orange - Missed</li>
+					</ul>
 				</div>
 			</div>
 			<!-- Auton/Teleop Buttons-->
-			<div class="row mapControl" style = "width: 98%;">
-				<div class="col-md-6" >
-					<button id="autonBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Auton');">Auton</button>
-				</div>
-				<div class="col-md-6" >
-					<button id="teleopBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Teleop');">Teleop</button>
+			<div class="mapControl" style = "width: 98%; margin-left: 15px;">
+				<div class = "row">
+					<div class="col-md-6" >
+						<button id="autonBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Auton');">Auton</button>
+					</div>
+					<div class="col-md-6" >
+						<button id="teleopBtn" class="btn btn-primary btn-lg btn-block" type="button" onclick="updateMap('Teleop');">Teleop</button>
+					</div>
 				</div>
 			</div>
 			<div id="dataCards" style = "width: 98%;">
@@ -232,6 +242,7 @@
 			function drawShotDots(auton) {
 				context.clearRect(0,0, canvas.width, canvas.height);
 				let field_image = new Image();
+				let endResult = "";
 				field_image.src = "assets/field.png";
 				field_image.onload = function (){
 					context.drawImage(field_image, 0, 0);
@@ -240,14 +251,19 @@
 						let shot = auton[i];
 						if(auton[i].Result == "topbasket") {
 							context.fillStyle = 'green';
+							endResult = "Top Basket";
 						} else if(auton[i].Result == "bottombasket") {
 							context.fillStyle = 'purple';
+							endResult = "Bottom Basket";
 						} else if(auton[i].Result == "bounced") {
 							context.fillStyle = 'yellow';
+							endResult = "Bounced";
 						} else {
 							context.fillStyle = 'orange';
+							endResult = "Missed";
 						}
 						context.fillRect(shot.X, shot.Y, 5, 5);
+						document.getElementById("shots").innerHTML = (document.getElementById("shots").innerHTML + "<li>(" + shot.X + "," + shot.Y + ") - " + endResult + "/li>);
 					}
 				};
 			}

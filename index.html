@@ -35,6 +35,10 @@
 		}, 3010);
 	}
 	
+	function checkDone() {
+		if (
+	}
+	
 	//Auton field
 	var autonField = {};
 	var autonShots = [];
@@ -282,6 +286,7 @@
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
 					<select id = "station">
+						<option>...</option>
 						<option value="l">Left</option>
 						<option value="m">Middle</option>
 						<option value="r">Right</option>
@@ -297,6 +302,7 @@
 					<input type = "radio" name="preloaded" id = "preloadNo" value="no">No</input>
 				</div>
 				<h2 class = "badTimeMessage"  id = "pregameBadTime">Invalid input!</h2>
+				<h2 class = "tabSwitch">Once you're done, head to the Auton tab!</h2>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "autonTab">

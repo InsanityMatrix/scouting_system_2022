@@ -82,7 +82,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Database open!")
 	db.SetMaxOpenConns(100)
 	db.SetConnMaxLifetime(30 * time.Second)
 	InitStore(dbStore{db: db})
@@ -170,6 +169,7 @@ type TeamRankings struct {
 	AmountHigh    []AmountRanking
 	AmountMiddle  []AmountRanking
 	AmountLower   []AmountRanking
+	AutonPoints   []TeamPoints
 }
 
 func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
@@ -189,6 +189,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	//Now get stats of each team separately
 	allStats := []TeamStats{}
+	counter := 0
 	for _, team := range overviewList {
 		totalShots := len(team.AutonShots) + len(team.TeleopShots)
 		totalMisses := 0
@@ -250,7 +251,11 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			AmountLower:   lower,
 		}
 		allStats = append(allStats, stats)
+
+		counter++
+		fmt.Println("Team " + strconv.Itoa(counter))
 	}
+	fmt.Println(strconv.Itoa(counter) + " Teams Stats Collected")
 
 	//SORT TOP BASKET DATA
 	rankingsTop := []ShotRanking{}
@@ -261,7 +266,10 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			Total:      t.AmountTop,
 		})
 	}
-	rankingsTop = sortShotList(rankingsTop, len(rankingsTop))
+	fmt.Println(rankingsTop)
+	fmt.Println("Sorting top shots ranking")
+	rankingsTop = sortShotList(rankingsTop)
+	fmt.Println("Sorted top shots ranking")
 	rankingsBottom := []ShotRanking{}
 	for _, t := range allStats {
 		rankingsBottom = append(rankingsBottom, ShotRanking{
@@ -270,7 +278,9 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			Total:      t.AmountBottom,
 		})
 	}
-	rankingsBottom = sortShotList(rankingsBottom, len(rankingsBottom))
+	fmt.Println("Sorting bottom shots ranking")
+	rankingsBottom = sortShotList(rankingsBottom)
+	fmt.Println("Sorted bottom shots ranking")
 	rankingsMissed := []ShotRanking{}
 	for _, t := range allStats {
 		rankingsMissed = append(rankingsMissed, ShotRanking{
@@ -279,7 +289,9 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			Total:      t.AmountMisses,
 		})
 	}
-	rankingsMissed = sortShotList(rankingsMissed, len(rankingsMissed))
+	fmt.Println("Sorting missed shots ranking")
+	rankingsMissed = sortShotList(rankingsMissed)
+	fmt.Println("Sorted missed shots ranking")
 
 	rankingsTrav := []AmountRanking{}
 	rankingsHigh := []AmountRanking{}
@@ -296,10 +308,13 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		rankingsMiddle = append(rankingsMiddle, m)
 		rankingsLower = append(rankingsLower, l)
 	}
+	fmt.Println("Sorting bar hanging")
 	rankingsTrav = sortAmountList(rankingsTrav, len(rankingsTrav))
 	rankingsHigh = sortAmountList(rankingsHigh, len(rankingsHigh))
 	rankingsMiddle = sortAmountList(rankingsMiddle, len(rankingsMiddle))
 	rankingsLower = sortAmountList(rankingsLower, len(rankingsLower))
+	fmt.Println("Sorted bar hanging")
+	bestAuton := store.getBestAuton(teams)
 
 	rankings := TeamRankings{
 		PercentTop:    rankingsTop,
@@ -309,6 +324,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		AmountHigh:    rankingsHigh,
 		AmountMiddle:  rankingsMiddle,
 		AmountLower:   rankingsLower,
+		AutonPoints:   bestAuton,
 	}
 	info, _ := json.Marshal(rankings)
 	fmt.Fprint(w, string(info))
@@ -328,11 +344,57 @@ func sortAmountList(list []AmountRanking, n int) []AmountRanking {
 	}
 	return list
 }
+
+func mergeSortShotList(fp []ShotRanking, sp []ShotRanking) []ShotRanking {
+	var n = make([]ShotRanking, len(fp)+len(sp))
+
+	var fpIndex = 0
+	var spIndex = 0
+
+	var nIndex = 0
+
+	for fpIndex < len(fp) && spIndex < len(sp) {
+		if fp[fpIndex].Percentage < sp[spIndex].Percentage {
+			n[nIndex] = fp[fpIndex]
+			fpIndex++
+		} else if sp[spIndex].Percentage < fp[fpIndex].Percentage {
+			n[nIndex] = sp[spIndex]
+			spIndex++
+		}
+
+		nIndex++
+	}
+
+	for fpIndex < len(fp) {
+		n[nIndex] = fp[fpIndex]
+		fpIndex++
+		nIndex++
+	}
+	for spIndex < len(sp) {
+		n[nIndex] = sp[spIndex]
+		spIndex++
+		nIndex++
+	}
+	return n
+}
+func sortShotList(arr []ShotRanking) []ShotRanking {
+	if len(arr) == 1 {
+		return arr
+	}
+
+	fmt.Println(len(arr))
+	var fp = sortShotList(arr[0 : len(arr)/2])
+	var sp = sortShotList(arr[len(arr)/2:])
+
+	return mergeSortShotList(fp, sp)
+}
+
+/*
 func sortShotList(list []ShotRanking, n int) []ShotRanking {
 	if n == 1 {
 		return list
 	}
-
+	fmt.Println("iteration " + strconv.Itoa(n))
 	for i := 0; i < n-1; i++ {
 		if list[i].Percentage < list[i+1].Percentage {
 			temp := list[i]
@@ -344,11 +406,11 @@ func sortShotList(list []ShotRanking, n int) []ShotRanking {
 	}
 	return list
 }
+*/
 func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
 	//Will parse form, log, redirect
 
 	err := r.ParseForm()
-	fmt.Println("Submit accessed")
 	if err != nil {
 		fmt.Println(fmt.Errorf("error: %v", err))
 		w.WriteHeader(http.StatusInternalServerError)
@@ -398,8 +460,6 @@ func submitScoutHandler(w http.ResponseWriter, r *http.Request) {
 		newShot.Result = r.Form.Get("teleopShots[" + strconv.Itoa(i) + "][result]")
 		teleopShots = append(teleopShots, newShot)
 	}
-
-	fmt.Println("Submitting to database")
 
 	store.logScout(match, team, allianceStation, preloaded, movedStart,
 		topIntake, floorIntake, attemptedLower, attemptedMiddle, attemptedHigh,

@@ -140,6 +140,24 @@
             </div>
         </div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 rankings" id="autonRankings">
+                    <div class="row leader">
+                        <h3>Best Auton (Average Points)</h3>
+                    </div>
+                    <div class="row leader">
+                        <div class="col-sm-6">
+                            <h6>Team</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6>Average Points</h6>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             var overview;
            $.getJSON("/overview", function(data){
@@ -149,6 +167,7 @@
             let mBoard = document.getElementById("percentMissed");
             let tBoard = document.getElementById("amtTrav");
             let hBoard = document.getElementById("amtHigh");
+            let aBoard = document.getElementById("autonRankings");
             let miBoard = document.getElementById("amtMiddle");
             let lBoard = document.getElementById("amtLow");                                                                     
             let lnRankings = data.PercentTop.length < 5 ? data.PercentTop.length : 5;
@@ -291,6 +310,23 @@
                     nLRank.appendChild(aDiv);
                 }
                 lBoard.appendChild(nLRank);
+
+                let nARank = document.createElement("div");
+                nARank.classList.add("row");
+                nARank.classList.add("rank");
+                {
+                    let tnDiv = document.createElement("div");
+                    tnDiv.classList.add("col-sm-6");
+                    tnDiv.appendChild(document.createTextNode((i+1) + ". " + data.AutonPoints[i].Team));
+
+                    let aDiv = document.createElement("div");
+                    aDiv.classList.add("col-sm-6");
+                    aDiv.appendChild(document.createTextNode(data.AutonPoints[i].Points));
+
+                    nARank.appendChild(tnDiv);
+                    nARank.appendChild(aDiv);
+                }
+                aBoard.appendChild(nARank);
             }
            });
         </script>

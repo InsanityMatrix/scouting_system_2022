@@ -34,8 +34,8 @@
 				<div class = "shotlist col-md-3 sideBox">
 					<p>SHOTLIST</p>
 					<ul>
-						<li>Shots go here!</li>
-						<li>(X,Y) - [Made/Missed]</li>
+						<li></li>
+						<li></li>
 					</ul>
 				</div>
 				<div class = "col-md-6">
@@ -43,7 +43,7 @@
 				</div>
 				<div class = "legend col-md-3 sideBox">
 					<p>KEY</p>
-					<ul id = "shots">
+					<ul>
 						<li style = "color: green">Green - Top Basket</li>
 						<li style = "color: purple">Purple - Bottom Basket</li>
 						<li style = "color: yellow">Yellow - Bounced</li>
@@ -242,7 +242,10 @@
 			function drawShotDots(auton) {
 				context.clearRect(0,0, canvas.width, canvas.height);
 				let field_image = new Image();
-				let endResult = "";
+				let top = 0;
+				let bottom = 0;
+				let bounced = 0;
+				let missed = 0;
 				field_image.src = "assets/field.png";
 				field_image.onload = function (){
 					context.drawImage(field_image, 0, 0);
@@ -251,20 +254,20 @@
 						let shot = auton[i];
 						if(auton[i].Result == "topbasket") {
 							context.fillStyle = 'green';
-							endResult = "Top Basket";
+							top++;
 						} else if(auton[i].Result == "bottombasket") {
 							context.fillStyle = 'purple';
-							endResult = "Bottom Basket";
+							bottom++;
 						} else if(auton[i].Result == "bounced") {
 							context.fillStyle = 'yellow';
-							endResult = "Bounced";
+							bounced++;
 						} else {
 							context.fillStyle = 'orange';
-							endResult = "Missed";
+							missed++;
 						}
 						context.fillRect(shot.X, shot.Y, 5, 5);
-						document.getElementById("shots").innerHTML = (document.getElementById("shots").innerHTML + "<li>(" + shot.X + "," + shot.Y + ") - " + endResult + "/li>");
 					}
+					document.getElementById("shots").innerHTML = ("<li>Top Basket: " + top + "</li><li>Bottom Basket: " + bottom + "</li><li>Bounced: " + bounced + "</li><li>Missed: " + missed + "</li>");
 				};
 			}
 		</script>

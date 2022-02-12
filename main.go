@@ -189,7 +189,6 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	//Now get stats of each team separately
 	allStats := []TeamStats{}
-	counter := 0
 	for _, team := range overviewList {
 		totalShots := len(team.AutonShots) + len(team.TeleopShots)
 		totalMisses := 0
@@ -251,11 +250,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			AmountLower:   lower,
 		}
 		allStats = append(allStats, stats)
-
-		counter++
-		fmt.Println("Team " + strconv.Itoa(counter))
 	}
-	fmt.Println(strconv.Itoa(counter) + " Teams Stats Collected")
 
 	//SORT TOP BASKET DATA
 	rankingsTop := []ShotRanking{}
@@ -266,10 +261,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			Total:      t.AmountTop,
 		})
 	}
-	fmt.Println(rankingsTop)
-	fmt.Println("Sorting top shots ranking")
 	rankingsTop = sortShotList(rankingsTop)
-	fmt.Println("Sorted top shots ranking")
 	rankingsBottom := []ShotRanking{}
 	for _, t := range allStats {
 		rankingsBottom = append(rankingsBottom, ShotRanking{
@@ -278,9 +270,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			Total:      t.AmountBottom,
 		})
 	}
-	fmt.Println("Sorting bottom shots ranking")
 	rankingsBottom = sortShotList(rankingsBottom)
-	fmt.Println("Sorted bottom shots ranking")
 	rankingsMissed := []ShotRanking{}
 	for _, t := range allStats {
 		rankingsMissed = append(rankingsMissed, ShotRanking{
@@ -289,9 +279,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 			Total:      t.AmountMisses,
 		})
 	}
-	fmt.Println("Sorting missed shots ranking")
 	rankingsMissed = sortShotList(rankingsMissed)
-	fmt.Println("Sorted missed shots ranking")
 
 	rankingsTrav := []AmountRanking{}
 	rankingsHigh := []AmountRanking{}
@@ -308,12 +296,10 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		rankingsMiddle = append(rankingsMiddle, m)
 		rankingsLower = append(rankingsLower, l)
 	}
-	fmt.Println("Sorting bar hanging")
 	rankingsTrav = sortAmountList(rankingsTrav)
 	rankingsHigh = sortAmountList(rankingsHigh)
 	rankingsMiddle = sortAmountList(rankingsMiddle)
 	rankingsLower = sortAmountList(rankingsLower)
-	fmt.Println("Sorted bar hanging")
 	bestAuton := store.getBestAuton(teams)
 
 	rankings := TeamRankings{

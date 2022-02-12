@@ -357,7 +357,7 @@ func mergeSortShotList(fp []ShotRanking, sp []ShotRanking) []ShotRanking {
 		if fp[fpIndex].Percentage < sp[spIndex].Percentage {
 			n[nIndex] = fp[fpIndex]
 			fpIndex++
-		} else if sp[spIndex].Percentage < fp[fpIndex].Percentage {
+		} else if sp[spIndex].Percentage <= fp[fpIndex].Percentage {
 			n[nIndex] = sp[spIndex]
 			spIndex++
 		}

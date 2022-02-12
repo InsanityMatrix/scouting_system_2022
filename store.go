@@ -10,20 +10,46 @@ type dbStore struct {
 	db *sql.DB
 }
 
-func sortPointList(list []TeamPoints, n int) []TeamPoints {
-	if n == 1 {
-		return list
+func mergeSort(fp []TeamPoints, sp []TeamPoints) []TeamPoints {
+	var n = make([]TeamPoints, len(fp)+len(sp))
+
+	var fpIndex = 0
+	var spIndex = 0
+
+	var nIndex = 0
+
+	for fpIndex < len(fp) && spIndex < len(sp) {
+		if fp[fpIndex].Points < sp[spIndex].Points {
+			n[nIndex] = fp[fpIndex]
+			fpIndex++
+		} else {
+			n[nIndex] = sp[spIndex]
+			spIndex++
+		}
+
+		nIndex++
 	}
 
-	for i := 0; i < n-1; i++ {
-		if list[i].Points < list[i+1].Points {
-			temp := list[i]
-			list[i] = list[i+1]
-			list[i+1] = temp
-		}
-		list = sortPointList(list, n-1)
+	for fpIndex < len(fp) {
+		n[nIndex] = fp[fpIndex]
+		fpIndex++
+		nIndex++
 	}
-	return list
+	for spIndex < len(sp) {
+		n[nIndex] = sp[spIndex]
+		spIndex++
+		nIndex++
+	}
+	return n
+}
+func sortPointList(arr []TeamPoints) []TeamPoints {
+	if len(arr) == 1 {
+		return arr
+	}
+	var fp = sortPointList(arr[0 : len(arr)/2])
+	var sp = sortPointList(arr[len(arr)/2:])
+
+	return mergeSort(fp, sp)
 }
 func (store *dbStore) getAllTeams() []int {
 	var allTeams []int
@@ -75,7 +101,7 @@ func (store *dbStore) getBestAuton(teams []int) []TeamPoints {
 		t = append(t, nTeam)
 	}
 	//Sort so that most auton points are at top
-	t = sortPointList(t, len(t))
+	t = sortPointList(t)
 	return t
 }
 func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {

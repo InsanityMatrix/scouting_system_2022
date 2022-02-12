@@ -309,10 +309,10 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		rankingsLower = append(rankingsLower, l)
 	}
 	fmt.Println("Sorting bar hanging")
-	rankingsTrav = sortAmountList(rankingsTrav, len(rankingsTrav))
-	rankingsHigh = sortAmountList(rankingsHigh, len(rankingsHigh))
-	rankingsMiddle = sortAmountList(rankingsMiddle, len(rankingsMiddle))
-	rankingsLower = sortAmountList(rankingsLower, len(rankingsLower))
+	rankingsTrav = sortAmountList(rankingsTrav)
+	rankingsHigh = sortAmountList(rankingsHigh)
+	rankingsMiddle = sortAmountList(rankingsMiddle)
+	rankingsLower = sortAmountList(rankingsLower)
 	fmt.Println("Sorted bar hanging")
 	bestAuton := store.getBestAuton(teams)
 
@@ -329,20 +329,48 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 	info, _ := json.Marshal(rankings)
 	fmt.Fprint(w, string(info))
 }
-func sortAmountList(list []AmountRanking, n int) []AmountRanking {
-	if n == 1 {
-		return list
+
+func mergeSortAmountList(fp []AmountRanking, sp []AmountRanking) []AmountRanking {
+	var n = make([]AmountRanking, len(fp)+len(sp))
+
+	var fpIndex = 0
+	var spIndex = 0
+
+	var nIndex = 0
+
+	for fpIndex < len(fp) && spIndex < len(sp) {
+		if fp[fpIndex].Amount < sp[spIndex].Amount {
+			n[nIndex] = fp[fpIndex]
+			fpIndex++
+		} else {
+			n[nIndex] = sp[spIndex]
+			spIndex++
+		}
+
+		nIndex++
 	}
 
-	for i := 0; i < n-1; i++ {
-		if list[i].Amount < list[i+1].Amount {
-			temp := list[i]
-			list[i] = list[i+1]
-			list[i+1] = temp
-		}
-		list = sortAmountList(list, n-1)
+	for fpIndex < len(fp) {
+		n[nIndex] = fp[fpIndex]
+		fpIndex++
+		nIndex++
 	}
-	return list
+	for spIndex < len(sp) {
+		n[nIndex] = sp[spIndex]
+		spIndex++
+		nIndex++
+	}
+	return n
+}
+func sortAmountList(arr []AmountRanking) []AmountRanking {
+	if len(arr) == 1 {
+		return arr
+	}
+
+	var fp = sortAmountList(arr[0 : len(arr)/2])
+	var sp = sortAmountList(arr[len(arr)/2:])
+
+	return mergeSortAmountList(fp, sp)
 }
 
 func mergeSortShotList(fp []ShotRanking, sp []ShotRanking) []ShotRanking {

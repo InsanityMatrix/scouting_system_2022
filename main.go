@@ -339,7 +339,7 @@ func mergeSortAmountList(fp []AmountRanking, sp []AmountRanking) []AmountRanking
 	var nIndex = 0
 
 	for fpIndex < len(fp) && spIndex < len(sp) {
-		if fp[fpIndex].Amount < sp[spIndex].Amount {
+		if fp[fpIndex].Amount > sp[spIndex].Amount {
 			n[nIndex] = fp[fpIndex]
 			fpIndex++
 		} else {
@@ -382,7 +382,7 @@ func mergeSortShotList(fp []ShotRanking, sp []ShotRanking) []ShotRanking {
 	var nIndex = 0
 
 	for fpIndex < len(fp) && spIndex < len(sp) {
-		if fp[fpIndex].Total < sp[spIndex].Total {
+		if fp[fpIndex].Total > sp[spIndex].Total {
 			n[nIndex] = fp[fpIndex]
 			fpIndex++
 		} else {

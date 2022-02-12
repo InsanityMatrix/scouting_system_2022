@@ -19,7 +19,7 @@ func mergeSort(fp []TeamPoints, sp []TeamPoints) []TeamPoints {
 	var nIndex = 0
 
 	for fpIndex < len(fp) && spIndex < len(sp) {
-		if fp[fpIndex].Points < sp[spIndex].Points {
+		if fp[fpIndex].Points > sp[spIndex].Points {
 			n[nIndex] = fp[fpIndex]
 			fpIndex++
 		} else {

@@ -14,7 +14,7 @@
 	<script>
 	//Pregame inputs
 	function teamInputs() {
-		var num = document.getElementById("teamNum").value;
+		var num = parseInt(document.getElementById("teamNum").value,10);
 		if (!((num >= 0) || (num < 10000))) {
 			document.getElementById("teamNum").value = "";
 			document.getElementById("pregameBadTime").classList.add("fadeOut");
@@ -25,7 +25,7 @@
 	}
 	
 	function matchInputs() {
-		var num = document.getElementById("matchNum").value;
+		var num = parseInt(document.getElementById("matchNum").value,10);
 		if (!((num >= 0) || (num < 1000))) {
 			document.getElementById("matchNum").value = "";
 			document.getElementById("pregameBadTime").classList.add("fadeOut");
@@ -35,9 +35,6 @@
 		}, 3010);
 	}
 	
-	function checkDone() {
-		if (
-	}
 	
 	//Auton field
 	var autonField = {};

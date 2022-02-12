@@ -354,10 +354,10 @@ func mergeSortShotList(fp []ShotRanking, sp []ShotRanking) []ShotRanking {
 	var nIndex = 0
 
 	for fpIndex < len(fp) && spIndex < len(sp) {
-		if fp[fpIndex].Percentage < sp[spIndex].Percentage {
+		if fp[fpIndex].Total < sp[spIndex].Total {
 			n[nIndex] = fp[fpIndex]
 			fpIndex++
-		} else if sp[spIndex].Percentage <= fp[fpIndex].Percentage {
+		} else {
 			n[nIndex] = sp[spIndex]
 			spIndex++
 		}
@@ -382,7 +382,6 @@ func sortShotList(arr []ShotRanking) []ShotRanking {
 		return arr
 	}
 
-	fmt.Println(len(arr))
 	var fp = sortShotList(arr[0 : len(arr)/2])
 	var sp = sortShotList(arr[len(arr)/2:])
 

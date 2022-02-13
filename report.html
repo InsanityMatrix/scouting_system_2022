@@ -176,7 +176,7 @@
                 
                 let nPTRank = document.createElement("div");
                 nPTRank.classList.add("row");
-                nPTRank.classList.add("rank")
+                nPTRank.classList.add("rank");
                 {
                     let tnDiv = document.createElement("div");
                     tnDiv.classList.add("col-sm-4");
@@ -328,7 +328,148 @@
                 }
                 aBoard.appendChild(nARank);
             }
+            //Add Expand Buttons
+            ptBoard.appendChild(makeExpandButton("percentTop"));
+            btBoard.appendChild(makeExpandButton("percentBottom"));
+            mBoard.appendChild(makeExpandButton("percentMissed"));
+            tBoard.appendChild(makeExpandButton("amtTrav"));
+            hBoard.appendChild(makeExpandButton("amtHigh"));
+            aBoard.appendChild(makeExpandButton("autonRankings"));
+            miBoard.appendChild(makeExpandButton("amtMiddle"));
+            lBoard.appendChild(makeExpandButton("amtLow"));
            });
+
+           function expandSection(section) {
+               let s = document.getElementById(section);
+               //Check if already expanded so that can unexpand
+               if(s.childNodes.length > 8) {
+                   //Expanded, so shrink
+                   let itemsToRemove = s.childNodes.length - 7;
+                   for(var i = 0; i < itemsToRemove; i++) {
+                       s.removeChild(s.lastChild);
+                   }
+                   s.appendChild(makeExpandButton(section));
+                   return;
+               }
+               //Get List based on section
+               var list;
+               switch(section) {
+                    case "percentTop":
+                        list = overview.PercentTop;
+                        break;
+                    case "percentBottom":
+                        list = overview.PercentBottom;
+                        break;
+                    case "percentMissed":
+                        list = overview.PercentMissed;
+                        break;
+                    case "amtTrav":
+                        list = overview.AmountTrav;
+                        break;
+                    case "amtHigh":
+                        list = overview.AmountHigh;
+                        break;
+                    case "autonRankings":
+                        list = overview.AutonPoints;
+                        break;
+                    case "amtMiddle":
+                        list = overview.AmountMiddle;
+                        break;
+                    case "amtLow":
+                        list = overview.AmountLower;
+                        break;
+                    default:
+                        list = null;
+               }
+               //Check to make sure not already filled with few teams
+               if(s.childNodes.length == list.length + 3) {
+                   return;
+               }
+               s.removeChild(s.lastChild);
+               if(section.includes("percent")) {
+                for(var i = 5; i < list.length; i++) {
+                   let nPRank = document.createElement("div");
+                   nPRank.classList.add("row");
+                   nPRank.classList.add("rank");
+                   {
+                       let tnDiv = document.createElement("div");
+                       tnDiv.classList.add("col-sm-4");
+                       tnDiv.appendChild(document.createTextNode((i+1) + ". " + list[i].Team));
+
+                       let pDiv = document.createElement("div");
+                       pDiv.classList.add("col-sm-4");
+                       let percentage = Math.round(list[i].Percentage * 100) / 100;
+                       pDiv.appendChild(document.createTextNode(percentage + "%"));
+                       let tDiv = document.createElement("div");
+                        tDiv.classList.add("col-sm-4");
+                        tDiv.appendChild(document.createTextNode(list[i].Total));
+
+                        nPRank.appendChild(tnDiv);
+                        nPRank.appendChild(pDiv);
+                        nPRank.appendChild(tDiv);
+                   }
+                   s.appendChild(nPRank);
+                }
+                s.appendChild(makeExpandButton(section));
+               } else if (section.includes("amt")) {
+                   for(var i = 5; i < list.length; i++) {
+                    let nTRank = document.createElement("div");
+                    nTRank.classList.add("row");
+                    nTRank.classList.add("rank");
+                    {
+                        let tnDiv = document.createElement("div");
+                        tnDiv.classList.add("col-sm-6");
+                        tnDiv.appendChild(document.createTextNode((i+1) + ". " + list[i].Team));
+
+                        let aDiv = document.createElement("div");
+                        aDiv.classList.add("col-sm-6");
+                        aDiv.appendChild(document.createTextNode(list[i].Amount));
+
+                        nTRank.appendChild(tnDiv);
+                        nTRank.appendChild(aDiv);
+                    }
+                    s.appendChild(nTRank);
+                   }
+                   s.appendChild(makeExpandButton(section));
+               } else {
+                   for(var i = 5; i < list.length; i++) {
+                    let nARank = document.createElement("div");
+                    nARank.classList.add("row");
+                    nARank.classList.add("rank");
+                    {
+                        let tnDiv = document.createElement("div");
+                        tnDiv.classList.add("col-sm-6");
+                        tnDiv.appendChild(document.createTextNode((i+1) + ". " + list[i].Team));
+
+                        let aDiv = document.createElement("div");
+                        aDiv.classList.add("col-sm-6");
+                        aDiv.appendChild(document.createTextNode(list[i].Points));
+
+                        nARank.appendChild(tnDiv);
+                        nARank.appendChild(aDiv);
+                    }
+                    s.appendChild(nARank);
+                   }
+                   s.appendChild(makeExpandButton(section));
+               }
+
+           }
+
+           function makeExpandButton(section) {
+               let newBtnDiv = document.createElement("div");
+               newBtnDiv.classList.add("row");
+               let newBtn = document.createElement("button");
+               newBtn.classList.add("btn");
+               newBtn.classList.add("btn-primary");
+               newBtn.classList.add("btn-block");
+               newBtn.classList.add("btn-large");
+               newBtn.addEventListener("click", function(){
+                expandSection(section);
+               });
+               newBtn.textContext = "Expand";
+               newBtnDiv.appendChild(newBtn);
+               return newBtnDiv;
+           }
         </script>
         <script src = "assets/bootstrap.js"></script>
     </body>

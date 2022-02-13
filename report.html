@@ -342,9 +342,9 @@
            function expandSection(section) {
                let s = document.getElementById(section);
                //Check if already expanded so that can unexpand
-               if(s.childNodes.length > 8) {
+               if(s.childNodes.length > 11) {
                    //Expanded, so shrink
-                   let itemsToRemove = s.childNodes.length - 7;
+                   let itemsToRemove = s.childNodes.length - 10;
                    for(var i = 0; i < itemsToRemove; i++) {
                        s.removeChild(s.lastChild);
                    }
@@ -361,7 +361,7 @@
                         list = overview.PercentBottom;
                         break;
                     case "percentMissed":
-                        list = overview.PercentMissed;
+                        list = overview.PercentMisses;
                         break;
                     case "amtTrav":
                         list = overview.AmountTrav;

@@ -1,5 +1,3 @@
-Find out why overview hanging
-make sure cannot enter 0 as match or team number
-two tier filter over view amount then percentage
-shot stats by match
 expand lists on report page
+two tier filter overview amount then percentage
+shot stats by match

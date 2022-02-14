@@ -157,8 +157,8 @@ label {
 #station {
 	color: black;
 }
-.tabSwitch {
-	color: white;
+#tabSwitch {
+	color: #58b2d1;
 	font-family: 'Oswald', sans-serif;
 	opacity: 0;
 }
@@ -169,7 +169,6 @@ label {
 }
 .fadeOut {
 	animation-name: fadeOut;
-	animation-fill-mode: forwards;
 	animation-duration: 3s;
 }
 @keyframes fadeOut {

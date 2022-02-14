@@ -9,99 +9,77 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+	
+	<script src = "assets/index.js"></script>
 </head>
 <body id = "back">
 	<script>
-	//Pregame inputs
-	function teamInputs() {
-		var num = parseInt(document.getElementById("teamNum").value,10);
-		if (!((num >= 0) || (num < 10000))) {
-			document.getElementById("teamNum").value = "";
-			document.getElementById("pregameBadTime").classList.add("fadeOut");
-		}
-		setTimeout(function() {
-			document.getElementById("pregameBadTime").classList.remove("fadeOut");
-		}, 3010);
-	}
-	
-	function matchInputs() {
-		var num = parseInt(document.getElementById("matchNum").value,10);
-		if (!((num >= 0) || (num < 1000))) {
-			document.getElementById("matchNum").value = "";
-			document.getElementById("pregameBadTime").classList.add("fadeOut");
-		}
-		setTimeout(function() {
-			document.getElementById("pregameBadTime").classList.remove("fadeOut");
-		}, 3010);
-	}
-	
-	
-	//Auton field
-	var autonField = {};
-	var autonShots = [];
-	var aShotsMade = 0;
-	var aShotsMissed = 0;
-	
-	function makeAutonField() {
-		autonField = {
-			canvas: document.getElementById("autonField"),
-			context : null,
-			currPos: {x : 0, y: 0}
-		};
-		autonField.context = autonField.canvas.getContext('2d');
-		autonField.canvas.addEventListener("click", function(evt){
-			let rect = autonField.canvas.getBoundingClientRect();
-			autonField.currPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
-			if(autonField.currPos.x < 100) {
-				return;
-			} else if( autonField.currPos.x > 720) {
-				return;
-			}
-			if(autonField.currPos.y < 14) {
-				return;
-			} else if(autonField.currPos.y > 328) {
-				return;
-			}
-			document.getElementById("aOverlay").style.display = "block";
-		});
-		document.getElementById("aSubmit").addEventListener("click", autonSubmit);
-		let field_image = new Image();
-		field_image.src = "assets/field.png";
-		field_image.onload = function() {
-			autonField.context.drawImage(field_image, 0,0)
-		};
-	}
-	function autonSubmit() {
-		document.getElementById("aOverlay").style.display = "none";
-		let res = "n/a";
-		if (document.getElementById("atopbasket").checked == true) {
-			document.getElementById("atopbasket").checked = false;
-			res = "topbasket";
-		} else if (document.getElementById("abottombasket").checked == true) {
-			document.getElementById("abottombasket").checked = false;
-			res = "bottombasket";
-		} else if (document.getElementById("abounced").checked == true) {
-			document.getElementById("abounced").checked = false;
-			res = "bounced";
-		} else if (document.getElementById("amissed").checked == true) {
-			document.getElementById("amissed").checked = false;
-			res = "missed";
-		}
-		if(res == "n/a") {
-			return;
-		}
-		let newShot = {position: autonField.currPos, result: res};
-		autonShots.push(newShot);
+		//Auton field
+		var autonField = {};
+		var autonShots = [];
+		var aShotsMade = 0;
+		var aShotsMissed = 0;
 		
-		//Update shot counters
-		if ((res == "topbasket") || (res == "bottombasket")) {
-			aShotsMade = aShotsMade + 1;
-			document.getElementById("amadeCounter").innerHTML = "Total shots made: " + aShotsMade;
-		} else {
-			aShotsMissed = aShotsMissed + 1;
-			document.getElementById("amissCounter").innerHTML = "Total shots missed: " + aShotsMissed;
+		function makeAutonField() {
+			autonField = {
+				canvas: document.getElementById("autonField"),
+				context : null,
+				currPos: {x : 0, y: 0}
+			};
+			autonField.context = autonField.canvas.getContext('2d');
+			autonField.canvas.addEventListener("click", function(evt){
+				let rect = autonField.canvas.getBoundingClientRect();
+				autonField.currPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+				if(autonField.currPos.x < 100) {
+					return;
+				} else if( autonField.currPos.x > 720) {
+					return;
+				}
+				if(autonField.currPos.y < 14) {
+					return;
+				} else if(autonField.currPos.y > 328) {
+					return;
+				}
+				document.getElementById("aOverlay").style.display = "block";
+			});
+			document.getElementById("aSubmit").addEventListener("click", autonSubmit);
+			let field_image = new Image();
+			field_image.src = "assets/field.png";
+			field_image.onload = function() {
+				autonField.context.drawImage(field_image, 0,0)
+			};
 		}
-	}
+		function autonSubmit() {
+			document.getElementById("aOverlay").style.display = "none";
+			let res = "n/a";
+			if (document.getElementById("atopbasket").checked == true) {
+				document.getElementById("atopbasket").checked = false;
+				res = "topbasket";
+			} else if (document.getElementById("abottombasket").checked == true) {
+				document.getElementById("abottombasket").checked = false;
+				res = "bottombasket";
+			} else if (document.getElementById("abounced").checked == true) {
+				document.getElementById("abounced").checked = false;
+				res = "bounced";
+			} else if (document.getElementById("amissed").checked == true) {
+				document.getElementById("amissed").checked = false;
+				res = "missed";
+			}
+			if(res == "n/a") {
+				return;
+			}
+			let newShot = {position: autonField.currPos, result: res};
+			autonShots.push(newShot);
+			
+			//Update shot counters
+			if ((res == "topbasket") || (res == "bottombasket")) {
+				aShotsMade = aShotsMade + 1;
+				document.getElementById("amadeCounter").innerHTML = "Total shots made: " + aShotsMade;
+			} else {
+				aShotsMissed = aShotsMissed + 1;
+				document.getElementById("amissCounter").innerHTML = "Total shots missed: " + aShotsMissed;
+			}
+		}
 	</script>
 	<script>
 		var telField = {};
@@ -278,11 +256,11 @@
 				<hr class = "underline"></hr>
 				<div class = "info">
 					<p>What team are you scouting?</p>
-					<input id="teamNum" type = "text" onKeyPress = "teamInputs()" autocomplete="off" maxlength="6"></input>
+					<input id="teamNum" type = "text" onKeyPress = "teamInputs()"  onChange = "checkDone()" autocomplete="off" maxlength="6"></input>
 				</div>
 				<div class = "info">
 					<p>Which alliance station are they at?</p>
-					<select id = "station">
+					<select id = "station" onChange = "checkDone()">
 						<option>...</option>
 						<option value="l">Left</option>
 						<option value="m">Middle</option>
@@ -291,15 +269,15 @@
 				</div>
 				<div class = "info">
 					<p>What is the match number?</p>
-					<input id="matchNum" type = "text" onKeyPress = "matchInputs()" autocomplete="off" maxlength="3"></input>
+					<input id="matchNum" type = "text" onKeyPress = "matchInputs()"  onChange = "checkDone()" autocomplete="off" maxlength="3"></input>
 				</div>
 				<div class = "info">
 					<p>Did they preload any cargo?</p>
-					<input type = "radio" name="preloaded" id = "preloadYes" value="yes">Yes</input>
-					<input type = "radio" name="preloaded" id = "preloadNo" value="no">No</input>
+					<input type = "radio" name="preloaded" id = "preloadYes" value="yes"  onChange = "checkDone()">Yes</input>
+					<input type = "radio" name="preloaded" id = "preloadNo" value="no"  onChange = "checkDone()">No</input>
 				</div>
 				<h2 class = "badTimeMessage"  id = "pregameBadTime">Invalid input!</h2>
-				<h2 class = "tabSwitch">Once you're done, head to the Auton tab!</h2>
+				<h2 id = "tabSwitch">Once you're done, head to the Auton tab at the top of the screen!</h2>
 			</center>
 		</div>
 		<div class = "tab-pane" id = "autonTab">
@@ -448,23 +426,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src = "assets/bootstrap.js"></script>
 	<script>
-		//Disable checkboxes in endgame
-		function noAttempt() {
-			if (document.getElementById("noAttempt").checked == true) {
-				document.getElementById("climb").hidden = true;
-			} else {
-				document.getElementById("climb").hidden = false;
-			}
-		}
-		function disable(ident) {
-			var ident2 = "s" + ident.substring(1, ident.length);
-			if (document.getElementById(ident).checked == true) {
-				document.getElementById(ident2).disabled = false;
-			} else {
-				document.getElementById(ident2).disabled = true;
-			}
-		}
-		
 		setInterval(function(){
 			$(".radio-group:has(input[type=radio]:checked)" ).css("background", "#1E5AA8");
 			$(".radio-group:has(input[type=radio]:not(:checked))").css("background", "#3c3c3c");

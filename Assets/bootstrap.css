@@ -1608,7 +1608,7 @@ pre code {
   margin-left: auto;
 }
 .row {
-  margin-right: -15px;
+  margin-right: 0px;
   margin-left: -15px;
 }
 .row-no-gutters {
@@ -4435,10 +4435,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-nav > li {
     float: left;
   }
-  .navbar-nav > li > a {
+  /*.navbar-nav > li > a {
     padding-top: 15px;
     padding-bottom: 15px;
-  }
+  }*/
 }
 .navbar-form {
   padding: 10px 15px;
@@ -4562,7 +4562,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    margin-right: -15px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;

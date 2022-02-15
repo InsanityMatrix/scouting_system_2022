@@ -1,3 +1,2 @@
-expand lists on report page
-two tier filter overview amount then percentage
+Show times disconnected & Match
 shot stats by match

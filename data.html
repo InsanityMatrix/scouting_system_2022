@@ -35,6 +35,7 @@
 					<p>SHOTLIST</p>
 					<ul id="shots">
 					</ul>
+				
 				</div>
 				<div class = "col-sm-8">
 					<canvas id="hotSpotMap" width="824" height="346"></canvas>
@@ -47,6 +48,13 @@
 						<li style = "color: yellow">Yellow - Bounced</li>
 						<li style = "color: orange">Orange - Missed</li>
 					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<center>
+						<div id="chartContainer" style="width: 100%; height: 250px;"></div>
+					</center>
 				</div>
 			</div>
 			<!-- Auton/Teleop Buttons-->
@@ -73,6 +81,10 @@
 					<div class="col-md-2 col-md-offset-1 infoCard">
 						<h4>Typical Alliance Station</h4>
 						<p id="allianceStation"></p>
+					</div>
+					<div class="col-md-2 col-md-offset-1 infoCard">
+						<h4>Preloaded:</h4>
+						<p id="preloaded"></p>
 					</div>
 				</div>
 				<div class="row">
@@ -101,6 +113,11 @@
 						<p id="sTrav"></p>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4 infoCard" id="disconnected">
+						<h4>Disconnects</h4>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- Scripts -->
@@ -120,6 +137,14 @@
 			function getData() {
 				let team = document.getElementById("search").value;
 				$.getJSON("/team/" + team, function(data){
+
+					//Clear disconnects
+					if(document.getElementById("disconnected").childNodes.length > 2) {
+						let itemsToRemove = document.getElementById("disconnected").childNodes.length - 2;
+						for(var i = 0; i < itemsToRemove; i++) {
+							document.getElementById("disconnected").removeChild(document.getElementById("disconnected").lastChild);
+						}
+					}
 					currentData = data;
 					let field_image = new Image();
 					field_image.src = "assets/field.png";
@@ -127,6 +152,8 @@
 						context.drawImage(field_image, 0,0);
 						//Draw Auton dots on the map
 						drawShotDots(data["Auton"]);
+
+
 
 						var typicalAllianceStation;
 						var attemptedLower = 0;
@@ -142,8 +169,18 @@
 						let timesL = 0;
 						let timesM = 0;
 						let timesR = 0;
+
+						let preloaded = 0;
+						let disconnects = [];
+						let pt = data["Data"].length;
 						for(var i = 0; i < data["Data"].length; i++) {
 							let d = data["Data"][i];
+							if(d.Disconnected) {
+								disconnects.push(d.Match)
+							}
+							if(d.Preloaded) {
+								preloaded++;
+							}
 							if(d.AttemptedLower) {
 								attemptedLower++;
 							}
@@ -206,7 +243,7 @@
 						document.getElementById("topIntake").innerText = data["Data"][0].TopIntake ? "Yes" : "No";
 						document.getElementById("floorIntake").innerText = data["Data"][0].FloorIntake ? "Yes" : "No";
 						document.getElementById("allianceStation").innerText = typicalAllianceStation;
-						
+						document.getElementById("preloaded").innerText = (preloaded*100/pt).toFixed(2) + "%";
 
 						document.getElementById("attemptedLower").innerText = attemptedLower + " times";
 						document.getElementById("attemptedMiddle").innerText = attemptedMiddle + " times";
@@ -218,7 +255,15 @@
 						document.getElementById("sHigh").innerText = ((sTrav + sHigh/attemptedHigh) * 100) + "%";
 						document.getElementById("sTrav").innerText = ((sTrav/attemptedTrav) * 100) + "%"; 
 
-	
+						console.log(disconnects);
+						for(var i = 0; i < disconnects.length; i++) {
+							
+							let p = document.createElement("p")
+							let d = document.createTextNode("Match " + disconnects[i] + " disconnected\n");
+							p.appendChild(d);
+							document.getElementById("disconnected").appendChild(p)
+							document.getElementById("disconnected").appendChild(document.createElement("br"));
+						}
 					};	
 					
 				});
@@ -266,11 +311,33 @@
 						context.fillRect(shot.X, shot.Y, 5, 5);
 					}
 					document.getElementById("shots").innerHTML = ("<li>Top Basket: " + top + "</li><li>Bottom Basket: " + bottom + "</li><li>Bounced: " + bounced + "</li><li>Missed: " + missed + "</li>");
+					let total = top + bottom + bounced + missed;
+					var chart = new CanvasJS.Chart("chartContainer", {
+						animationEnabled: true,
+						title: {
+							text: ""
+						},
+						data: [{
+							type: "pie",
+							startAngle: 240,
+							yValueFormatString: "##0.00\"%\"",
+							indexLabel: "{label} {y}",
+							dataPoints: [
+								{y: (top*100/total).toFixed(1), label: "Top", color: "#008000"},
+								{y: (bottom*100/total).toFixed(1), label: "Bottom", color: "#800080"},
+								{y: (bounced*100/total).toFixed(1), label: "Bounced", color: "#ebff28"},
+								{y: (missed*100/total).toFixed(1), label: "Missed", color: "#ffa154"}
+							]
+						}]
+					});
+					chart.render();
+
 				};
 			}
 		</script>
         <!-- Sources -->
         
 	    <script src = "assets/bootstrap.js"></script>
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     </body>
 </html>

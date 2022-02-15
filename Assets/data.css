@@ -136,3 +136,6 @@
 canvas {
 	margin-top: 5px;
 }
+.btn {
+	border-radius: 0;
+}

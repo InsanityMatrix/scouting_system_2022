@@ -321,7 +321,7 @@
 
                     let aDiv = document.createElement("div");
                     aDiv.classList.add("col-sm-6");
-                    aDiv.appendChild(document.createTextNode(data.AutonPoints[i].Points));
+                    aDiv.appendChild(document.createTextNode((Math.round(data.AutonPoints[i].Points* 100) / 100)));
 
                     nARank.appendChild(tnDiv);
                     nARank.appendChild(aDiv);
@@ -443,7 +443,7 @@
 
                         let aDiv = document.createElement("div");
                         aDiv.classList.add("col-sm-6");
-                        aDiv.appendChild(document.createTextNode(list[i].Points));
+                        aDiv.appendChild(document.createTextNode((Math.round(list[i].Points* 100) / 100)));
 
                         nARank.appendChild(tnDiv);
                         nARank.appendChild(aDiv);
@@ -466,7 +466,7 @@
                newBtn.addEventListener("click", function(){
                 expandSection(section);
                });
-               newBtn.textContext = "Expand";
+               newBtn.textContent = "Expand";
                newBtnDiv.appendChild(newBtn);
                return newBtnDiv;
            }

@@ -128,3 +128,11 @@
     border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
     border-image: initial;
 }
+
+.row {
+	margin-left: 0 !important;
+}
+
+canvas {
+	margin-top: 5px;
+}

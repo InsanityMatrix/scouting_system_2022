@@ -128,14 +128,17 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 	autonShots := []Shot{}
 	teleopShots := []Shot{}
 	for _, entry := range teamData {
+                tExists := true
+                aExists := true
 		//Get Auton Shots
 		rows, err = store.db.Query("SELECT X,Y,Result FROM auton_" + strconv.Itoa(entry.Match) + "_" + strconv.Itoa(entry.Team) + ";")
 		if err != nil {
 			fmt.Println(err)
-			return teamData, []Shot{}, []Shot{}
+			aExists = false
 		}
 		defer rows.Close()
 
+                if aExists {
 		for rows.Next() {
 			shot := Shot{}
 			err = rows.Scan(&shot.X, &shot.Y, &shot.Result)
@@ -144,22 +147,25 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 			}
 			autonShots = append(autonShots, shot)
 		}
+                }
 		//Get Teleop Shots
 		rows, err = store.db.Query("SELECT X,Y,Result FROM teleop_" + strconv.Itoa(entry.Match) + "_" + strconv.Itoa(entry.Team) + ";")
 		if err != nil {
 			fmt.Println(err)
-			return teamData, []Shot{}, []Shot{}
+			tExists = false
 		}
 		defer rows.Close()
-
+                if tExists {
 		for rows.Next() {
 			shot := Shot{}
 			err = rows.Scan(&shot.X, &shot.Y, &shot.Result)
 			if err != nil {
 				fmt.Println(err)
-			}
+			} else {
 			teleopShots = append(teleopShots, shot)
+                        }
 		}
+                }
 	}
 
 	return teamData, autonShots, teleopShots

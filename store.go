@@ -200,6 +200,7 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 		store.db.Query("CREATE TABLE " + autonShotsTB + " (id SERIAL PRIMARY KEY, X decimal, Y decimal, Result text);")
 	}
 	//To insert list into table
+        if len(autonShots > 0) {
 	autonQuery := "INSERT INTO " + autonShotsTB + " (X,Y,Result) VALUES "
 	vals := []interface{}{}
 	ticker := 1
@@ -218,7 +219,7 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 	if err != nil {
 		fmt.Println(err)
 	}
-
+        }
 	//TELEOP
 	teleopShotsTB := "teleop_" + strconv.Itoa(match) + "_" + strconv.Itoa(team)
 	row = store.db.QueryRow("SELECT EXISTS ( SELECT FROM information_schema.tables WHERE table_schema='public' AND table_name=$1);", teleopShotsTB)
@@ -234,6 +235,7 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 		store.db.Query("CREATE TABLE " + teleopShotsTB + " (id SERIAL PRIMARY KEY, X decimal, Y decimal, Result text);")
 	}
 	//To insert list into table
+        if len(teleopShots) > 0 {
 	teleopQuery := "INSERT INTO " + teleopShotsTB + " (X, Y, Result) VALUES "
 	vals = []interface{}{}
 	ticker = 1
@@ -245,6 +247,7 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 	teleopQuery = teleopQuery[0 : len(teleopQuery)-1]
 	stmt, _ = store.db.Prepare(teleopQuery)
 	stmt.Exec(vals...)
+        }
 }
 
 //ESSENTIALS:

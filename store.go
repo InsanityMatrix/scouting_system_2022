@@ -120,7 +120,7 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 		data.Team = team
 		if err != nil {
 			fmt.Println(err)
-			return []TeamData{}, []Shot{}, []Shot{}
+			return teamData, []Shot{}, []Shot{}
 		}
 		teamData = append(teamData, data)
 	}

@@ -250,9 +250,11 @@
 						document.getElementById("attemptedHigh").innerText = attemptedHigh + " times";
 						document.getElementById("attemptedTrav").innerText = attemptedTrav + " times";
 
-						document.getElementById("sLow").innerText = "0%";
-						document.getElementById("sMid").innerText = (((sTrav + sHigh + sMid) / attemptedMiddle) * 100) + "%";
-						document.getElementById("sHigh").innerText = ((sTrav + sHigh/attemptedHigh) * 100) + "%";
+						document.getElementById("sLow").innerText = sLow / attemptedLower;
+						var successfulMidRatio = sMid / (attemptedMiddle - sHigh - sTrav);
+						document.getElementById("sMid").innerText = (successfulMidRatio * 100) + "%";
+						var successfulHighRatio = sHigh / (attemptedHigh - sTrav);
+						document.getElementById("sHigh").innerText = (successfulHighRatio * 100) + "%";
 						document.getElementById("sTrav").innerText = ((sTrav/attemptedTrav) * 100) + "%"; 
 
 						console.log(disconnects);

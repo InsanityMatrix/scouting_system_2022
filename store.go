@@ -131,14 +131,21 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
                 tExists := true
                 aExists := true
 		//Get Auton Shots
+                aname := "auton_" + strconv.Itoa(entry.Match) + "_" + strconv.Itoa(entry.Team)
+                row := store.db.QueryRow("SELECT EXISTS ( SELECT FROM information_schema.tables WHERE table_schema='public' AND table_name=$1);", aname)
+	        err = row.Scan(&aExists)
+
+	        if err != nil {
+		    fmt.Println(err)
+	        }
+		if aExists {
 		rows, err = store.db.Query("SELECT X,Y,Result FROM auton_" + strconv.Itoa(entry.Match) + "_" + strconv.Itoa(entry.Team) + ";")
 		if err != nil {
 			fmt.Println(err)
-			aExists = false
 		}
 		defer rows.Close()
 
-                if aExists {
+                
 		for rows.Next() {
 			shot := Shot{}
 			err = rows.Scan(&shot.X, &shot.Y, &shot.Result)
@@ -149,13 +156,20 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 		}
                 }
 		//Get Teleop Shots
+		tname := "teleop_" + strconv.Itoa(entry.Match) + "_" + strconv.Itoa(entry.Team)
+                row = store.db.QueryRow("SELECT EXISTS ( SELECT FROM information_schema.tables WHERE table_schema='public' AND table_name=$1);", tname)
+	        err = row.Scan(&tExists)
+
+	        if err != nil {
+		    fmt.Println(err)
+	        }
+		if tExists {
 		rows, err = store.db.Query("SELECT X,Y,Result FROM teleop_" + strconv.Itoa(entry.Match) + "_" + strconv.Itoa(entry.Team) + ";")
 		if err != nil {
 			fmt.Println(err)
-			tExists = false
 		}
 		defer rows.Close()
-                if tExists {
+                
 		for rows.Next() {
 			shot := Shot{}
 			err = rows.Scan(&shot.X, &shot.Y, &shot.Result)
@@ -167,7 +181,6 @@ func (store *dbStore) getTeamData(team int) ([]TeamData, []Shot, []Shot) {
 		}
                 }
 	}
-
 	return teamData, autonShots, teleopShots
 }
 func (store *dbStore) logScout(match int, team int, allianceStation string, preloaded bool,
@@ -200,7 +213,7 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 		store.db.Query("CREATE TABLE " + autonShotsTB + " (id SERIAL PRIMARY KEY, X decimal, Y decimal, Result text);")
 	}
 	//To insert list into table
-        if len(autonShots > 0) {
+        if len(autonShots) > 0 {
 	autonQuery := "INSERT INTO " + autonShotsTB + " (X,Y,Result) VALUES "
 	vals := []interface{}{}
 	ticker := 1
@@ -237,15 +250,15 @@ func (store *dbStore) logScout(match int, team int, allianceStation string, prel
 	//To insert list into table
         if len(teleopShots) > 0 {
 	teleopQuery := "INSERT INTO " + teleopShotsTB + " (X, Y, Result) VALUES "
-	vals = []interface{}{}
-	ticker = 1
+	vals := []interface{}{}
+	ticker := 1
 	for _, shot := range teleopShots {
 		teleopQuery += fmt.Sprintf("($%d, $%d, $%d),", ticker, ticker+1, ticker+2)
 		ticker += 3
 		vals = append(vals, shot.X, shot.Y, shot.Result)
 	}
 	teleopQuery = teleopQuery[0 : len(teleopQuery)-1]
-	stmt, _ = store.db.Prepare(teleopQuery)
+	stmt, _ := store.db.Prepare(teleopQuery)
 	stmt.Exec(vals...)
         }
 }

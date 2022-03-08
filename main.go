@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-
+	"math"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 )
@@ -251,7 +251,6 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		allStats = append(allStats, stats)
 	}
-
 	//SORT TOP BASKET DATA
 	rankingsTop := []ShotRanking{}
 	for _, t := range allStats {
@@ -280,7 +279,7 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 	rankingsMissed = sortShotList(rankingsMissed)
-
+	fmt.Println("shots sorted")
 	rankingsTrav := []AmountRanking{}
 	rankingsHigh := []AmountRanking{}
 	rankingsMiddle := []AmountRanking{}
@@ -300,6 +299,9 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 	rankingsHigh = sortAmountList(rankingsHigh)
 	rankingsMiddle = sortAmountList(rankingsMiddle)
 	rankingsLower = sortAmountList(rankingsLower)
+	rankingsTop = replaceNanShotList(rankingsTop)
+	rankingsBottom = replaceNanShotList(rankingsBottom)
+	rankingsMissed = replaceNanShotList(rankingsMissed)
 	bestAuton := store.getBestAuton(teams)
 
 	rankings := TeamRankings{
@@ -312,7 +314,10 @@ func teamOverviewHandler(w http.ResponseWriter, r *http.Request) {
 		AmountLower:   rankingsLower,
 		AutonPoints:   bestAuton,
 	}
-	info, _ := json.Marshal(rankings)
+	info, err := json.Marshal(rankings)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Fprint(w, string(info))
 }
 
@@ -358,7 +363,14 @@ func sortAmountList(arr []AmountRanking) []AmountRanking {
 
 	return mergeSortAmountList(fp, sp)
 }
-
+func replaceNanShotList(list []ShotRanking) []ShotRanking {
+  for i := 0; i < len(list); i++ {
+    if math.IsNaN(list[i].Percentage) {
+        list[i].Percentage = 0
+    }
+  }
+  return list
+}
 func mergeSortShotList(fp []ShotRanking, sp []ShotRanking) []ShotRanking {
 	var n = make([]ShotRanking, len(fp)+len(sp))
 

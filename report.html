@@ -173,7 +173,7 @@
             let lnRankings = data.PercentTop.length < 5 ? data.PercentTop.length : 5;
             for(var i = 0; i < lnRankings; i++) {
                 //Highest % Top Basket
-                
+                let ptBoard = document.getElementById("percentTop");
                 let nPTRank = document.createElement("div");
                 nPTRank.classList.add("row");
                 nPTRank.classList.add("rank");
@@ -348,8 +348,37 @@
                         //Sort List by percentages
                         overview.PercentTop = mergeSortP(list);
                         console.log("done sorting");
-                        expandSection(section);
-                        expandSection(section);
+                        let ptBoard = document.getElementById("percentTop");
+                        let itemsToRemove = ptBoard.childNodes.length - 5;
+                        for(var i = 0; i < itemsToRemove; i++) {
+                            ptBoard.removeChild(ptBoard.lastChild);
+                        }
+                        for(var i = 0; i < 5; i++) {
+                            
+                            let nPTRank = document.createElement("div");
+                            nPTRank.classList.add("row");
+                            nPTRank.classList.add("rank");
+                            {
+                                let tnDiv = document.createElement("div");
+                                tnDiv.classList.add("col-sm-4");
+                                tnDiv.appendChild(document.createTextNode((i+1) + ". " + list[i].Team))
+
+                                let pDiv = document.createElement("div");
+                                pDiv.classList.add("col-sm-4");
+                                let percentage = Math.round(list[i].Percentage * 100) / 100;
+                                pDiv.appendChild(document.createTextNode(percentage + "%"));
+
+                                let tDiv = document.createElement("div");
+                                tDiv.classList.add("col-sm-4");
+                                tDiv.appendChild(document.createTextNode(list[i].Total));
+
+                                nPTRank.appendChild(tnDiv);
+                                nPTRank.appendChild(pDiv);
+                                nPTRank.appendChild(tDiv);
+                            }
+                            ptBoard.appendChild(nPTRank);
+                        }
+                        ptBoard.appendChild(makeExpandButton(section));
                         break;
                     case "percentBottom":
                         list = overview.PercentBottom;
@@ -381,7 +410,7 @@
                const c = [];
 
                while(a.length && b.length) {
-                   c.push(a[0].Percentage > b[0].Percentage ? b.shift() : a.shift());
+                   c.push(a[0].Percentage < b[0].Percentage ? b.shift() : a.shift());
                }
 
                //if we still have values, let's add them at the end of `c`

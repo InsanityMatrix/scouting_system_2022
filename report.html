@@ -35,10 +35,10 @@
                         <div class="col-sm-4">
                             <h6>Team</h6>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" onclick="sort('percentTop', 'percentage');">
                             <h6>Percentage</h6>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" onclick="sort('percentTop', 'Amount');">
                             <h6>Amount</h6>
                         </div>  
                     </div>
@@ -339,6 +339,75 @@
             lBoard.appendChild(makeExpandButton("amtLow"));
            });
 
+           function sort(section, category) {
+            var list;
+               switch(section) {
+                    case "percentTop":
+                        list = overview.PercentTop;
+                        //Sort List by percentages
+                        overview.PercentTop = mergeSortP(list);
+                        expandSection(section);
+                        expandSection(section);
+                        break;
+                    case "percentBottom":
+                        list = overview.PercentBottom;
+                        break;
+                    case "percentMissed":
+                        list = overview.PercentMisses;
+                        break;
+                    case "amtTrav":
+                        list = overview.AmountTrav;
+                        break;
+                    case "amtHigh":
+                        list = overview.AmountHigh;
+                        break;
+                    case "autonRankings":
+                        list = overview.AutonPoints;
+                        break;
+                    case "amtMiddle":
+                        list = overview.AmountMiddle;
+                        break;
+                    case "amtLow":
+                        list = overview.AmountLower;
+                        break;
+                    default:
+                        list = null;
+               }
+           }
+
+           const _mergeArrays = (a, b) => {
+               const c = [];
+
+               while(a.length && b.length) {
+                   c.push(a[0].Percentage > b[0].Percentage ? b.shift() : a.shift());
+               }
+
+               //if we still have values, let's add them at the end of `c`
+               while (a.length) {
+                   c.push(a.shift());
+               }
+               while(b.length) {
+                   c.push(b.shift())
+               }
+               return c;
+           }
+           const mergeSortP = (a) => {
+                if (a.length < 2) return a;
+                const middle = Math.floor(a.length / 2);
+                const a_l = a.slice(0, middle);
+                const a_r = a.slice(middle, a.length);
+                const sorted_l = mergeSort(a_l);
+                const sorted_r = mergeSort(a_r);
+                return _mergeArrays(sorted_l, sorted_r);
+           }
+           function sortByPercentage(list) {
+               //Go through list function and make each ##.##
+               for(var i = 0; i < list.length; i++) {
+                list[i].Percentage = Math.round(list[i].Percentage * 100) / 100;
+               }
+               //Merge Sort
+
+           }
            function expandSection(section) {
                let s = document.getElementById(section);
                //Check if already expanded so that can unexpand

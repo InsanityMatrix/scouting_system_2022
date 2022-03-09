@@ -343,9 +343,11 @@
             var list;
                switch(section) {
                     case "percentTop":
+                        console.log("Sorting");
                         list = overview.PercentTop;
                         //Sort List by percentages
                         overview.PercentTop = mergeSortP(list);
+                        console.log("done sorting");
                         expandSection(section);
                         expandSection(section);
                         break;

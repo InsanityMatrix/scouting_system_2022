@@ -343,13 +343,15 @@
             var list;
                switch(section) {
                     case "percentTop":
-                        console.log("Sorting");
+                        
                         list = overview.PercentTop;
                         //Sort List by percentages
                         if(category == 'percentage') {
+                            console.log("Sorting Percents");
                             overview.PercentTop = mergeSortP(list);
                             list = overview.PercentTop;
                         }else {
+                            console.log("Sorting Amounts");
                             overview.PercentTop = mergeSortA(list);
                             list = overview.PercentTop;
                         }
@@ -461,15 +463,6 @@
                 const sorted_l = mergeSortA(a_l);
                 const sorted_r = mergeSortA(a_r);
                 return __mergeArrays(sorted_l, sorted_r);
-           }
-
-           function sortByPercentage(list) {
-               //Go through list function and make each ##.##
-               for(var i = 0; i < list.length; i++) {
-                list[i].Percentage = Math.round(list[i].Percentage * 100) / 100;
-               }
-               //Merge Sort
-
            }
            function expandSection(section) {
                let s = document.getElementById(section);

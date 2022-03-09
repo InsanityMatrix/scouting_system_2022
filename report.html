@@ -434,7 +434,7 @@
                const c = [];
 
                while(a.length && b.length) {
-                   c.push(a[0].Amount < b[0].Amount ? b.shift() : a.shift());
+                   c.push(a[0].Total < b[0].Total ? b.shift() : a.shift());
                }
 
                //if we still have values, let's add them at the end of `c`

@@ -38,7 +38,7 @@
                         <div class="col-sm-4" onclick="sort('percentTop', 'percentage');">
                             <h6>Percentage</h6>
                         </div>
-                        <div class="col-sm-4" onclick="sort('percentTop', 'Amount');">
+                        <div class="col-sm-4" onclick="sort('percentTop', 'amount');">
                             <h6>Amount</h6>
                         </div>  
                     </div>
@@ -346,6 +346,13 @@
                         console.log("Sorting");
                         list = overview.PercentTop;
                         //Sort List by percentages
+                        if(category == 'percentage') {
+                            overview.PercentTop = mergeSortP(list);
+                            list = overview.PercentTop;
+                        }else {
+                            overview.PercentTop = mergeSortA(list);
+                            list = overview.PercentTop;
+                        }
                         overview.PercentTop = mergeSortP(list);
                         console.log("done sorting");
                         let ptBoard = document.getElementById("percentTop");
@@ -422,6 +429,22 @@
                }
                return c;
            }
+           const __mergeArrays = (a, b) => {
+               const c = [];
+
+               while(a.length && b.length) {
+                   c.push(a[0].Amount < b[0].Amount ? b.shift() : a.shift());
+               }
+
+               //if we still have values, let's add them at the end of `c`
+               while (a.length) {
+                   c.push(a.shift());
+               }
+               while(b.length) {
+                   c.push(b.shift())
+               }
+               return c;
+           }
            const mergeSortP = (a) => {
                 if (a.length < 2) return a;
                 const middle = Math.floor(a.length / 2);
@@ -431,6 +454,16 @@
                 const sorted_r = mergeSortP(a_r);
                 return _mergeArrays(sorted_l, sorted_r);
            }
+           const mergeSortA = (a) => {
+                if (a.length < 2) return a;
+                const middle = Math.floor(a.length / 2);
+                const a_l = a.slice(0, middle);
+                const a_r = a.slice(middle, a.length);
+                const sorted_l = mergeSortP(a_l);
+                const sorted_r = mergeSortP(a_r);
+                return __mergeArrays(sorted_l, sorted_r);
+           }
+
            function sortByPercentage(list) {
                //Go through list function and make each ##.##
                for(var i = 0; i < list.length; i++) {

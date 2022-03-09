@@ -396,8 +396,8 @@
                 const middle = Math.floor(a.length / 2);
                 const a_l = a.slice(0, middle);
                 const a_r = a.slice(middle, a.length);
-                const sorted_l = mergeSort(a_l);
-                const sorted_r = mergeSort(a_r);
+                const sorted_l = mergeSortP(a_l);
+                const sorted_r = mergeSortP(a_r);
                 return _mergeArrays(sorted_l, sorted_r);
            }
            function sortByPercentage(list) {

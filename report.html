@@ -52,10 +52,10 @@
                         <div class="col-sm-4">
                             <h6>Team</h6>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4"  onclick="sort('percentBottom', 'percentage');">
                             <h6>Percentage</h6>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4"  onclick="sort('percentTop', 'amount');">
                             <h6>Amount</h6>
                         </div>  
                     </div>
@@ -390,6 +390,42 @@
                         break;
                     case "percentBottom":
                         list = overview.PercentBottom;
+                        if(category == 'percentage') {
+                            overview.PercentBottom = mergeSortP(list);
+                            list = overview.PercentBottom;
+                        } else {
+                            overview.PercentBottom = mergeSortA(list);
+                            list = overview.PercentBottom;
+                        }
+                        let btBoard = document.getElementById("percentBottom");
+                        itemsToRemove = btBoard.childNodes.length - 5;
+                        for(var i = 0; i < itemsToRemove; i++) {
+                            btBoard.removeChild(btBoard.lastChild);
+                        }
+                        for (var i = 0; i < 5; i++) {
+                            let nBTRank = document.createElement("div");
+                            nBTRank.classList.add("row");
+                            nBTRank.classList.add("rank");
+                            {
+                                let tnDiv = document.createElement("div");
+                                tnDiv.classList.add("col-sm-4");
+                                tnDiv.appendChild(document.createTextNode((i+1) + ". " + list[i].Team));
+
+                                let pDiv = document.createElement("div");
+                                pDiv.classList.add("col-sm-4");
+                                let percentage = Math.round(list[i].Percentage * 100) / 100;
+                                pDiv.appendChild(document.createTextNode(percentage + "%"));
+
+                                let tDiv = document.createElement("div");
+                                tDiv.classList.add("col-sm-4");
+                                tDiv.appendChild(document.createTextNode(list[i].Total));
+
+                                nBTRank.appendChild(tnDiv);
+                                nBTRank.appendChild(pDiv);
+                                nBTRank.appendChild(tDiv);
+                            }
+                            btBoard.appendChild(nBTRank);
+                        }
                         break;
                     case "percentMissed":
                         list = overview.PercentMisses;

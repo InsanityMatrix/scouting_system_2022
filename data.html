@@ -184,22 +184,26 @@
 							if(d.AttemptedLower) {
 								attemptedLower++;
 							}
-							if(d.AttemptedMiddle) {
-								attemptedMiddle++;
-							}
-							if(d.AttemptedHigh) {
-								attemptedHigh++;
-							}
 							if(d.AttemptedTrav) {
 								attemptedTrav++;
+								attemptedHigh++;
+								attemptedMiddle++;
+							} else if(d.AttemptedHigh) {
+								attemptedHigh++;
+								attemptedMiddle++;
+							}else if(d.AttemptedMiddle) {
+								attemptedMiddle++;
 							}
 
 							switch (d.Successful) {
 								case 4:
 									sTrav++;
+									sHigh++;
+									sMid++;
 									break;
 								case 3:
 									sHigh++;
+									sMid++;
 									break;
 								case 2:
 									sMid++;
@@ -251,9 +255,9 @@
 						document.getElementById("attemptedTrav").innerText = attemptedTrav + " times";
 
 						document.getElementById("sLow").innerText = sLow / attemptedLower;
-						var successfulMidRatio = sMid / (attemptedMiddle - sHigh - sTrav);
+						var successfulMidRatio = sMid / attemptedMiddle;
 						document.getElementById("sMid").innerText = (successfulMidRatio * 100) + "%";
-						var successfulHighRatio = sHigh / (attemptedHigh - sTrav);
+						var successfulHighRatio = sHigh / attemptedHigh;
 						document.getElementById("sHigh").innerText = (successfulHighRatio * 100) + "%";
 						document.getElementById("sTrav").innerText = ((sTrav/attemptedTrav) * 100) + "%"; 
 

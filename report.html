@@ -341,6 +341,7 @@
 
            function sort(section, category) {
             var list;
+            var itemsToRemove;
                switch(section) {
                     case "percentTop":
                         
@@ -357,7 +358,7 @@
                         }
                         console.log("done sorting");
                         let ptBoard = document.getElementById("percentTop");
-                        let itemsToRemove = ptBoard.childNodes.length - 5;
+                        itemsToRemove = ptBoard.childNodes.length - 5;
                         for(var i = 0; i < itemsToRemove; i++) {
                             ptBoard.removeChild(ptBoard.lastChild);
                         }

@@ -181,35 +181,45 @@
 							if(d.Preloaded) {
 								preloaded++;
 							}
-							if(d.AttemptedLower) {
-								attemptedLower++;
-							}
-							if(d.AttemptedTrav) {
-								attemptedTrav++;
-								attemptedHigh++;
-								attemptedMiddle++;
-							} else if(d.AttemptedHigh) {
-								attemptedHigh++;
-								attemptedMiddle++;
-							}else if(d.AttemptedMiddle) {
-								attemptedMiddle++;
-							}
+							
+							
 
 							switch (d.Successful) {
 								case 4:
 									sTrav++;
+									attemptedTrav++;
 									sHigh++;
+									attemptedHigh++;
 									sMid++;
+									attemptedMiddle++;
 									break;
 								case 3:
 									sHigh++;
+									attemptedHigh++;
 									sMid++;
+									attemptedMiddle++;
 									break;
 								case 2:
 									sMid++;
+									attemptedMiddle++;
 									break;
 								case 1:
 									sLow++;
+									break;
+								default:
+									if(d.AttemptedLower) {
+										attemptedLower++;
+									}
+									if(d.AttemptedTrav) {
+										attemptedTrav++;
+										attemptedHigh++;
+										attemptedMiddle++;
+									} else if(d.AttemptedHigh) {
+										attemptedHigh++;
+										attemptedMiddle++;
+									}else if(d.AttemptedMiddle) {
+										attemptedMiddle++;
+									}
 									break;
 							}
 							if(data["Data"][i].AllianceStation == "l") {
